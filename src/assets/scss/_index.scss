@@ -1,0 +1,149 @@
+$primary: #418279 !default;
+$secondary: #6d9790 !default;
+$light: #f2fff8 !default;
+$success: #2fa1a5 !default;
+$info: #30615b !default;
+$warning: #f2f192 !default;
+$danger: #c51f09 !default;
+$dark: darken(#30615b, 5%) !default;
+
+.logo {
+  height: 30px;
+}
+
+.main-img-pc {
+  position: relative;
+
+  &>img {
+    height: 600px;
+    object-fit: cover;
+    opacity: 0.8;
+    object-position: top;
+  }
+
+  &-caption {
+    width: 600px;
+    height: 320px;
+    position: absolute;
+    left: 10%;
+    top: 150px;
+    opacity: 0.7;
+    padding: 30px;
+
+    &>p {
+      line-height: 1.5em;
+    }
+  }
+
+  &-btn {
+    position: absolute;
+    left: 40%;
+    top: 400px;
+    font-size: 25px;
+    z-index: 99999;
+    opacity: 0.8;
+    animation: jittery 1.15s infinite;
+    border: 0;
+    background: unset;
+  }
+}
+
+.main-img {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  &>img {
+    height: 90vh;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  &-caption {
+    overflow: hidden;
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    bottom: 20%;
+    opacity: 0.7;
+    background-color: $light;
+    padding: 10px;
+
+    &>p {
+      line-height: 1.5em;
+    }
+  }
+
+  &-btn {
+    display: none;
+  }
+}
+
+.copy {
+  width: 96px;
+  background: none;
+  border: 0;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+@keyframes jittery {
+
+  5%,
+  50% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(0.9);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+
+  40% {
+    transform: scale(1.15) rotate(0);
+    opacity: 1;
+    font-size: 25px;
+  }
+}
+
+.main-content {
+  min-height: calc(100vh - 190px) !important;
+}
+
+.mobile-header {
+  height: 60px;
+
+  & .dropdown {
+    &-toggle {
+      line-height: 45px;
+    }
+
+    &-menu {
+      top: 40px;
+      right: 0;
+    }
+  }
+}

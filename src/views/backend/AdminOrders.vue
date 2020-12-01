@@ -1,0 +1,235 @@
+<template>
+  <div class="text-dark">
+    <loading :active.sync="isLoading">
+      <div class="loadingio-spinner-spin-ur5grgaunp">
+        <div class="ldio-dwsbgiuamos">
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </loading>
+
+    <div>
+      <div class="mt-5 pc">
+        <div class="float-left">
+          <h4 class="mt-3 font-weight-bold">
+            <i class="fa fa-list-ol" aria-hidden="true"></i>
+            訂單管理
+          </h4>
+        </div>
+      </div>
+      <table class="table pc table-striped table-bordered mt-4 text-dark">
+        <thead>
+          <tr>
+            <th scope="col">訂單編號</th>
+
+            <th scope="col">明細</th>
+            <th scope="col">應付金額</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item) in orders" :key="item.id">
+            <td>
+              {{ item.id }}
+              <br />
+              <i class="text-success small">
+                成立於:
+                {{ new Date(item.create_at * 1000).toLocaleDateString() }}
+              </i>
+            </td>
+            <td>
+              <div v-for="product in item.products" :key="product.id">
+                {{product.product.title}}
+                <br />
+                <span
+                  class="text-muted"
+                >{{product.product.price| numFormat | dollarSign}} x {{product.qty}}{{product.product.unit}}</span>
+                <br />
+                <span v-if="product.coupon" class="text-success">有使用優惠券</span>
+              </div>
+            </td>
+            <td>
+              <span v-if="item.is_paid" class="text-success">已付款</span>
+              <span v-else class="text-danger">未付款</span>
+              <br />
+              {{ item.total | numFormat | dollarSign }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mobile">
+      <div class="float-left">
+        <h5 class="mb-3 font-weight-bold">
+          <i class="fa fa-list-ol"></i>
+          訂單管理
+        </h5>
+      </div>
+      <table class="table table-striped table-bordered text-dark">
+        <thead>
+          <tr>
+            <th scope="col">訂單編號 - click to see more</th>
+            <th scope="col">付款狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in orders" :key="item.id">
+            <td>
+              <button
+                @click="openModal(item)"
+                class="btn btn-sm btn-outline-primary border-0"
+              >{{item.id}}</button>
+            </td>
+            <td class="text-success" :class="{'text-danger':item.is_paid===false}">
+              <span v-if="item.is_paid">已付款</span>
+              <span v-else>未付款</span>
+              <br />
+              {{ item.total | numFormat | dollarSign }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <Pagination :pages="pagination" @event="getOrders"></Pagination>
+
+    <div
+      class="modal fade"
+      id="orderModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content border-0">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title" id="exampleModalLabel">
+              <span>訂單明細</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span class="text-light" aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-10 mx-auto my-2">
+                <div class="text-primary">訂單編號</div>
+                <div>{{order.id}}</div>
+              </div>
+              <div class="col-10 mx-auto my-2">
+                <div class="text-primary">成立時間</div>
+                <i>{{ new Date(order.create_at * 1000).toLocaleDateString() }}</i>
+              </div>
+              <div class="col-12 my-2">
+                <div class="text-primary">購買清單</div>
+                <div
+                  class="border-bottom w-75 mx-auto"
+                  v-for="product in order.products"
+                  :key="product.id"
+                >
+                  {{product.product.title}}
+                  <br />
+                  {{product.product.price| numFormat | dollarSign}} x {{product.qty}}{{product.product.unit}}
+                  <br />
+                  <span v-if="product.coupon" class="text-success">有使用優惠券</span>
+                </div>
+                合計：{{order.total| numFormat | dollarSign}}
+              </div>
+              <div class="col-10 mx-auto my-2">
+                <div class="text-primary">付款狀態</div>
+                <div>
+                  <div class="text-success" :class="{'text-danger':order.is_paid===false}">
+                    <span v-if="order.is_paid">已付款</span>
+                    <span v-else>未付款</span>
+                    {{ order.total | numFormat | dollarSign }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">確定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Pagination from "@/components/Pagination";
+import $ from "jquery";
+
+export default {
+  data() {
+    return {
+      orders: [],
+      pagination: {},
+      isLoading: false,
+      order: {},
+    };
+  },
+  methods: {
+    getOrders(page = 1) {
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/orders?page=${page}`;
+      vm.$http.get(api).then((res) => {
+        vm.isLoading = false;
+        if (res.data.success) {
+          vm.orders = res.data.orders;
+          vm.pagination = res.data.pagination;
+        } else {
+          vm.$bus.$emit("message:push", res.data.message, "danger");
+        }
+      });
+    },
+    copy(e) {
+      e.currentTarget.select();
+      document.execCommand("Copy");
+      this.$bus.$emit("message:push", "複製成功", "success");
+    },
+    openModal(item) {
+      this.order = item;
+      $("#orderModal").modal("show");
+    },
+  },
+  created() {
+    this.getOrders();
+  },
+  components: {
+    Pagination,
+  },
+};
+</script>
+
+<style scoped>
+.input {
+  border: 0;
+  background: transparent;
+}
+</style>

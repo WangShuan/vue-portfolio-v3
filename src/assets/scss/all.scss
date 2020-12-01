@@ -1,0 +1,47 @@
+@import "~bootstrap/scss/functions";
+@import "./helpers/_var";
+@import "~bootstrap/scss/bootstrap";
+@import "./helpers/_loading";
+@import "./helpers/_base";
+@import "./_dashboard";
+@import "./_index";
+@import "./adout";
+
+.text-darken {
+  color: #213E3F !important;
+}
+
+.myhover {
+  &:hover {
+    background-color: $light;
+    color: $dark;
+    cursor: pointer;
+
+    &>span {
+      background-color: $dark;
+      color: $light;
+    }
+  }
+
+  &.active {
+    &>span {
+      background-color: $light;
+      color: $secondary;
+    }
+  }
+}
+
+.mobile {
+  display: none;
+}
+
+@media screen and (max-width: 420px) {
+  .pc {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+}
