@@ -382,18 +382,45 @@ export default {
     },
     addCart(id, num = 1) {
       const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
-      vm.$http.post(api, { data: { product_id: id, qty: num } }).then((res) => {
-        if (res.data.success) {
-          vm.$bus.$emit("message:push", res.data.message, "success");
-        } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
-        }
-        $("#productModal").modal("hide");
-        vm.getCart();
-        vm.isLoading = false;
+      let rel = vm.cart.carts.find((item) => {
+        return item.product_id === id;
       });
+      let obj;
+      if (rel) {
+        obj = { product_id: rel.product_id, qty: num + rel.qty };
+        vm.isLoading = true;
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+        vm.$http
+          .post(api, {
+            data: obj,
+          })
+          .then((res) => {
+            vm.isLoading = false;
+            if (res.data.success) {
+              vm.delCart(rel.id);
+              vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+            } else {
+              vm.$bus.$emit("message:push", res.data.message, "danger");
+            }
+          });
+      } else {
+        obj = { product_id: id, qty: num };
+        vm.isLoading = true;
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+        vm.$http
+          .post(api, {
+            data: obj,
+          })
+          .then((res) => {
+            vm.isLoading = false;
+            if (res.data.success) {
+              vm.getCart();
+              vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+            } else {
+              vm.$bus.$emit("message:push", res.data.message, "danger");
+            }
+          });
+      }
     },
     getCart() {
       const vm = this;
