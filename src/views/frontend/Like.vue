@@ -231,6 +231,7 @@ export default {
             .then((res) => {
               vm.isLoading = false;
               if (res.data.success) {
+                vm.getCart();
                 vm.$bus.$emit("message:push", "購物車清單已更新", "success");
               } else {
                 vm.$bus.$emit("message:push", res.data.message, "danger");
@@ -270,6 +271,7 @@ export default {
               .then((res) => {
                 vm.isLoading = false;
                 if (res.data.success) {
+                  vm.getCart();
                   vm.$bus.$emit("message:push", "購物車清單已更新", "success");
                 } else {
                   vm.$bus.$emit("message:push", res.data.message, "danger");
