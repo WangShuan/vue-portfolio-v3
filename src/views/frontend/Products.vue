@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-dark">
+  <div class="container">
     <loading :active.sync="isLoading">
       <h4>載入中 請稍候...</h4>
     </loading>
@@ -14,69 +14,90 @@
 
       <div class="col-lg-9">
         <h4 class="my-lg-4 mt-4 text-left">商品列表</h4>
-        <div class="btn-group mobile pad text-dark mb-2">
+        <div class="btn-group mobile pad mb-2">
           當前商品類別：
           <a
-            class="text-primary h6"
+            class="h6 text-muted"
             data-toggle="dropdown"
             data-display="static"
             aria-haspopup="true"
             aria-expanded="false"
           >
-            {{active.name}}
-            <i class="fa fa-caret-down text-warning" aria-hidden="true"></i>
+            {{ active.name }}
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-lg-right">
             <button
               v-for="item in categories"
               :key="item.title"
-              :class="{active: item.title === active.name}"
+              :class="{ active: item.title === active.name }"
               @click.prevent="getProducts(item.path)"
               class="dropdown-item"
               type="button"
-            >{{item.title}}</button>
+            >
+              {{ item.title }}
+            </button>
           </div>
         </div>
 
-        <div class="card-columns">
-          <div
-            :class="{ 'd-none': item.is_enabled !== 1 }"
-            class="card p-1"
-            v-for="item in products"
-            :key="item.id"
-            @click="getProduct(item)"
-          >
-            <img :src="item.imageUrl" :alt="item.title" class="card-img-top" />
-            <div class="card-body p-2">
-              <h5>{{ item.title }}</h5>
-              <p class="card-text text-primary">{{ item.content }}</p>
-            </div>
-            <div class="mb-2">
-              <h4 v-if="item.is_enabled == 1" class="text-center">
-                <template v-if="item.price > 0">
-                  <del class="h6 text-muted">原價 {{ item.origin_price }} 元</del>
-                  <h3 class="ml-2">
-                    <b class="text-danger p-1">{{ item.price }}元</b>
-                  </h3>
-                </template>
-                <h3 v-else>
-                  <b class="text-danger p-1">定價 {{ item.origin_price }}元</b>
-                </h3>
-                <button @click.stop="addCart(item.id)" class="btn w-100 btn-danger">加入購物車</button>
-              </h4>
-
-              <h5 class="text-danger" v-if="item.is_enabled !== 1">
-                <i>
-                  商品未啟用
+        <div class="row">
+          <div class="col-md-4 p-2" v-for="item in products" :key="item.id">
+            <div class="card border-0 shadow-sm">
+              <div
+                style="height: 200px;background-size: cover;background-position: center;"
+                :style="{
+                  backgroundImage: `url(${item.imageUrl || item.image})`,
+                }"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">
+                  {{ item.title }}
                   <br />
-                  <small>(缺貨/已售完)</small>
-                </i>
-              </h5>
+                  <small>
+                    <span class="badge badge-secondary">{{
+                      item.category
+                    }}</span>
+                  </small>
+                </h5>
+                {{ item.content }}
+                <div class="mt-2">
+                  <div class="h5" v-if="!item.price">
+                    {{ item.origin_price }} 元
+                  </div>
+                  <del class="text-muted" v-if="item.price"
+                    >原價 {{ item.origin_price }} 元</del
+                  >
+
+                  <div class="h5" v-if="item.price">
+                    現在只要 {{ item.price }} 元
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer d-flex">
+                <button
+                  type="button"
+                  class="btn border border-dark btn-sm"
+                  @click="$router.push(`/product/${item.id}`)"
+                >
+                  查看更多
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-dark btn-sm ml-auto"
+                  @click="addCart(item.id)"
+                >
+                  加到購物車
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <Pagination v-if="active.path=='all'" :pages="pagination" @event="getPage"></Pagination>
+        <Pagination
+          v-if="active.path == 'all'"
+          :pages="pagination"
+          @event="getPage"
+        ></Pagination>
       </div>
     </div>
   </div>
@@ -112,17 +133,17 @@ export default {
             vm.active.name = "全部";
             vm.pagination.current_page = 1;
           } else if (category == "Castorland") {
-            vm.products = res.data.products.filter(function (item) {
+            vm.products = res.data.products.filter(function(item) {
               return item.category === "Castorland";
             });
             vm.active.name = "Castorland";
           } else if (category == "Clementoni") {
-            vm.products = res.data.products.filter(function (item) {
+            vm.products = res.data.products.filter(function(item) {
               return item.category === "Clementoni";
             });
             vm.active.name = "Clementoni";
           } else if (category == "Ravensburger") {
-            vm.products = res.data.products.filter(function (item) {
+            vm.products = res.data.products.filter(function(item) {
               return item.category === "Ravensburger";
             });
             vm.active.name = "Ravensburger";
@@ -147,26 +168,7 @@ export default {
         }
       });
     },
-    // addCart(id, num = 1) {
-    //   const vm = this;
-    //   vm.isLoading = true;
-    //   const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
-    //   this.$http
-    //     .post(api, { data: { product_id: id, qty: num } })
-    //     .then((res) => {
-    //       vm.isLoading = false;
-    //       if (res.data.success) {
-    //         vm.$bus.$emit("message:push", res.data.message, "success");
-    //       } else {
-    //         vm.$bus.$emit("message:push", res.data.message, "danger");
-    //       }
-    //     });
-    // },
     getProduct(item) {
-      if (item.is_enabled !== 1) {
-        this.$bus.$emit("message:push", "無法前往未啟用之商品頁面", "danger");
-        return false;
-      }
       this.$router.push(`/product/${item.id}`);
     },
     addCart(id, num = 1) {
@@ -249,13 +251,13 @@ export default {
           !set.has(item.category) ? set.add(item.category) : false
         );
         let temCategory = [...set];
-        temCategory.forEach(function (item) {
+        temCategory.forEach(function(item) {
           vm.categories.push({ title: item, num: 0, path: "" });
         });
         vm.categories.unshift({ title: "全部", num: 0, path: "" });
         let arr2 = [];
         for (let i = 1; i < vm.categories.length; i++) {
-          let arr = res.data.products.filter(function (item) {
+          let arr = res.data.products.filter(function(item) {
             return item.category === vm.categories[i].title;
           });
           arr2.push(arr.length);
@@ -282,10 +284,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card {
-  cursor: pointer;
-}
-
 .media-img {
   width: 35%;
 }

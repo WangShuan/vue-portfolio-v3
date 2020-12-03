@@ -4,14 +4,24 @@
       <h4>登出中 請稍候...</h4>
     </loading>
 
-    <nav class="navbar pc navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
-      <router-link class="navbar-brand col-md-3 text-white col-lg-2 mr-0 font-weight-bold" to="/">
+    <nav
+      class="navbar pc navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow"
+    >
+      <router-link
+        class="navbar-brand col-md-3 text-white col-lg-2 mr-0 font-weight-bold"
+        to="/"
+      >
         <i class="fa fa-cog" aria-hidden="true"></i>
         拼圖迷後台管理
       </router-link>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link text-light font-weight-bold" href="#" @click.prevent="signout">登出</a>
+          <a
+            class="nav-link text-light font-weight-bold"
+            href="#"
+            @click.prevent="signout"
+            >登出</a
+          >
         </li>
       </ul>
     </nav>
@@ -33,7 +43,8 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-            >選單</a>
+              >選單</a
+            >
             <div class="dropdown-menu w-auto dropdown-menu-right">
               <router-link class="dropdown-item text-dark" to="/admin/products">
                 <i class="fa-wrench fa" aria-hidden="true"></i>
@@ -47,7 +58,10 @@
                 <i class="fa fa-ticket" aria-hidden="true"></i>
                 優惠碼管理
               </router-link>
-              <router-link class="dropdown-item text-dark" to="/test/test_orders">
+              <router-link
+                class="dropdown-item text-dark"
+                to="/test/test_orders"
+              >
                 <i class="fa fa-flask" aria-hidden="true"></i>
                 模擬訂單功能
               </router-link>

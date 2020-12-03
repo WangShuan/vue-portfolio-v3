@@ -39,7 +39,12 @@
         </h4>
       </div>
       <div class="float-right">
-        <button class="btn btn-dark font-weight-bold mt-2 mb-3" @click="openModal(true)">添加新優惠券</button>
+        <button
+          class="btn btn-dark font-weight-bold mt-2 mb-3"
+          @click="openModal(true)"
+        >
+          添加新優惠券
+        </button>
       </div>
       <table class="table table-striped table-bordered mt-4 text-dark">
         <thead>
@@ -57,7 +62,7 @@
               <br />
               <i class="text-muted">
                 優惠碼 -
-                <b class="text-danger">{{item.code}}</b>
+                <b class="text-danger">{{ item.code }}</b>
               </i>
             </td>
             <td>{{ new Date(item.due_date).toLocaleDateString() }}</td>
@@ -69,8 +74,15 @@
               <button
                 class="btn btn-primary btn-sm mr-lg-2 font-weight-bold"
                 @click="openModal(false, item)"
-              >編輯</button>
-              <button class="btn btn-danger btn-sm font-weight-bold" @click="openDelModal(item)">刪除</button>
+              >
+                編輯
+              </button>
+              <button
+                class="btn btn-danger btn-sm font-weight-bold"
+                @click="openDelModal(item)"
+              >
+                刪除
+              </button>
             </td>
           </tr>
         </tbody>
@@ -85,7 +97,12 @@
         </h5>
       </div>
       <div class="float-right mb-3">
-        <button class="btn btn-dark font-weight-bold btn-sm" @click="openModal(true)">添加新優惠券</button>
+        <button
+          class="btn btn-dark font-weight-bold btn-sm"
+          @click="openModal(true)"
+        >
+          添加新優惠券
+        </button>
       </div>
       <table class="table table-striped table-bordered text-dark">
         <thead>
@@ -110,10 +127,12 @@
               <br />
               <i class="text-success">
                 優惠碼 -
-                <b>{{item.code}}</b>
+                <b>{{ item.code }}</b>
               </i>
               <br />
-              <i class="text-danger">{{ new Date(item.due_date).toLocaleDateString() }} 截止</i>
+              <i class="text-danger"
+                >{{ new Date(item.due_date).toLocaleDateString() }} 截止</i
+              >
             </td>
           </tr>
         </tbody>
@@ -136,7 +155,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>新增優惠券</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span class="text-light" aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -197,15 +221,29 @@
                       :true-value="1"
                       :false-value="0"
                     />
-                    <label class="form-check-label" for="is_enabled">是否啟用</label>
+                    <label class="form-check-label" for="is_enabled"
+                      >是否啟用</label
+                    >
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" @click="updateCoupon(tempCoupon)">確認</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              取消
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="updateCoupon(tempCoupon)"
+            >
+              確認
+            </button>
           </div>
         </div>
       </div>
@@ -225,7 +263,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>刪除產品</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span class="text-light" aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -235,8 +278,20 @@
             商品(刪除後將無法恢復)。
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-danger" @click="deleteCoupon()">確認刪除</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              取消
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              @click="deleteCoupon()"
+            >
+              確認刪除
+            </button>
           </div>
         </div>
       </div>

@@ -50,7 +50,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item) in orders" :key="item.id">
+          <tr v-for="item in orders" :key="item.id">
             <td>
               {{ item.id }}
               <br />
@@ -61,13 +61,16 @@
             </td>
             <td>
               <div v-for="product in item.products" :key="product.id">
-                {{product.product.title}}
+                {{ product.product.title }}
                 <br />
-                <span
-                  class="text-muted"
-                >{{product.product.price| numFormat | dollarSign}} x {{product.qty}}{{product.product.unit}}</span>
+                <span class="text-muted"
+                  >{{ product.product.price | numFormat | dollarSign }} x
+                  {{ product.qty }}{{ product.product.unit }}</span
+                >
                 <br />
-                <span v-if="product.coupon" class="text-success">有使用優惠券</span>
+                <span v-if="product.coupon" class="text-success"
+                  >有使用優惠券</span
+                >
               </div>
             </td>
             <td>
@@ -101,9 +104,14 @@
               <button
                 @click="openModal(item)"
                 class="btn btn-sm btn-outline-primary border-0"
-              >{{item.id}}</button>
+              >
+                {{ item.id }}
+              </button>
             </td>
-            <td class="text-success" :class="{'text-danger':item.is_paid===false}">
+            <td
+              class="text-success"
+              :class="{ 'text-danger': item.is_paid === false }"
+            >
               <span v-if="item.is_paid">已付款</span>
               <span v-else>未付款</span>
               <br />
@@ -130,7 +138,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>訂單明細</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span class="text-light" aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -138,11 +151,13 @@
             <div class="row">
               <div class="col-10 mx-auto my-2">
                 <div class="text-primary">訂單編號</div>
-                <div>{{order.id}}</div>
+                <div>{{ order.id }}</div>
               </div>
               <div class="col-10 mx-auto my-2">
                 <div class="text-primary">成立時間</div>
-                <i>{{ new Date(order.create_at * 1000).toLocaleDateString() }}</i>
+                <i>{{
+                  new Date(order.create_at * 1000).toLocaleDateString()
+                }}</i>
               </div>
               <div class="col-12 my-2">
                 <div class="text-primary">購買清單</div>
@@ -151,18 +166,24 @@
                   v-for="product in order.products"
                   :key="product.id"
                 >
-                  {{product.product.title}}
+                  {{ product.product.title }}
                   <br />
-                  {{product.product.price| numFormat | dollarSign}} x {{product.qty}}{{product.product.unit}}
+                  {{ product.product.price | numFormat | dollarSign }} x
+                  {{ product.qty }}{{ product.product.unit }}
                   <br />
-                  <span v-if="product.coupon" class="text-success">有使用優惠券</span>
+                  <span v-if="product.coupon" class="text-success"
+                    >有使用優惠券</span
+                  >
                 </div>
-                合計：{{order.total| numFormat | dollarSign}}
+                合計：{{ order.total | numFormat | dollarSign }}
               </div>
               <div class="col-10 mx-auto my-2">
                 <div class="text-primary">付款狀態</div>
                 <div>
-                  <div class="text-success" :class="{'text-danger':order.is_paid===false}">
+                  <div
+                    class="text-success"
+                    :class="{ 'text-danger': order.is_paid === false }"
+                  >
                     <span v-if="order.is_paid">已付款</span>
                     <span v-else>未付款</span>
                     {{ order.total | numFormat | dollarSign }}
@@ -172,7 +193,13 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">確定</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              確定
+            </button>
           </div>
         </div>
       </div>

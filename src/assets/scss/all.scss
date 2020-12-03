@@ -5,30 +5,10 @@
 @import "./helpers/_base";
 @import "./_dashboard";
 @import "./_index";
-@import "./adout";
 
-.text-darken {
-  color: #213E3F !important;
-}
-
-.myhover {
-  &:hover {
-    background-color: $light;
-    color: $dark;
-    cursor: pointer;
-
-    &>span {
-      background-color: $dark;
-      color: $light;
-    }
-  }
-
-  &.active {
-    &>span {
-      background-color: $light;
-      color: $secondary;
-    }
-  }
+.list-group-item:hover {
+  cursor: pointer;
+  background-color: $light;
 }
 
 .mobile {

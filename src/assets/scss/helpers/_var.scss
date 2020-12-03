@@ -50,13 +50,13 @@ $colors: map-merge(("blue": $blue,
   $colors);
 
 $primary: #418279 !default;
-$secondary: #6d9790 !default;
-$light: #f2fff8 !default;
-$success: #2fa1a5 !default;
-$info: #30615b !default;
-$warning: #f2f192 !default;
+$secondary: $gray-600 !default;
+$light: $gray-100 !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
 $danger: #c51f09 !default;
-$dark: darken(#30615b, 5%) !default;
+$dark: $gray-800 !default;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(("primary": $primary,

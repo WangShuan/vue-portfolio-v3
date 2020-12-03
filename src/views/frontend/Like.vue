@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading">
       <h4>載入中 請稍候...</h4>
     </loading>
-    <h3 class="my-4 pc text-primary">
+    <h3 class="my-4 pc text-dark">
       <i class="fa fa-heart-o" aria-hidden="true"></i>
       喜好項目
     </h3>
@@ -11,11 +11,13 @@
       <h4 class="my-5 pc">
         您的喜好項目為空，
         <br />請
-        <router-link to="/products/all" class="text-danger mr-1">回商品列表</router-link>添加喜好項目。
+        <router-link to="/products/all" class="text-danger mr-1"
+          >回商品列表</router-link
+        >添加喜好項目。
       </h4>
     </div>
 
-    <h5 class="my-3 mobile text-primary">
+    <h5 class="my-3 mobile text-dark">
       <i class="fa fa-heart-o" aria-hidden="true"></i>
       喜好項目
     </h5>
@@ -24,7 +26,9 @@
       <h6 class="my-5 mobile">
         您的喜好項目為空。
         <br />請
-        <router-link to="/products/all" class="text-danger mr-1">回商品列表</router-link>添加喜好項目。
+        <router-link to="/products/all" class="text-danger mr-1"
+          >回商品列表</router-link
+        >添加喜好項目。
       </h6>
     </div>
 
@@ -46,15 +50,21 @@
               >
                 <i class="fa fa-trash" aria-hidden="true"></i> 取消收藏
               </button>
-              <button @click="addCart(item.id)" type="button" class="btn-outline-dark btn-sm btn">
+              <button
+                @click="addCart(item.id)"
+                type="button"
+                class="btn-outline-dark btn-sm btn"
+              >
                 加入購物車
                 <i class="fa fa-shopping-basket" aria-hidden="true"></i>
               </button>
             </td>
             <td class="align-middle">{{ item.title }}</td>
-            <td class="align-middle">{{ item.price | numFormat | dollarSign }} / {{item.unit}}</td>
             <td class="align-middle">
-              <router-link class="text-success" :to="`/product/${item.id}`">
+              {{ item.price | numFormat | dollarSign }} / {{ item.unit }}
+            </td>
+            <td class="align-middle">
+              <router-link class="text-secondary" :to="`/product/${item.id}`">
                 查看更多
                 <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
               </router-link>
@@ -81,20 +91,27 @@
                 <button
                   @click="addCart(item.id)"
                   type="button"
-                  class="btn-outline-primary btn-sm btn"
+                  class="btn-outline-dark btn-sm btn"
                 >
                   <i class="fa fa-shopping-basket" aria-hidden="true"></i>
                 </button>
               </td>
-              <td class="align-middle text-primary">
-                <router-link :to="`/product/${item.id}`">{{ item.title }}</router-link>
-                <i class="fa ml-2 fa-arrow-circle-right" aria-hidden="true"></i>
+              <td class="align-middle">
+                <router-link class="text-muted" :to="`/product/${item.id}`">{{
+                  item.title
+                }}</router-link>
+                <i
+                  class="fa ml-2 text-muted fa-arrow-circle-right"
+                  aria-hidden="true"
+                ></i>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <button class="btn btn-outline-danger my-3" @click="addCart(products)">全部加入購物車</button>
+      <button class="btn btn-dark my-3" @click="addCart(products)">
+        全部加入購物車
+      </button>
     </div>
   </div>
 </template>
@@ -124,7 +141,7 @@ export default {
             arr = [arr];
           }
           vm.isLoading = false;
-          vm.products = vm.products.filter(function (item) {
+          vm.products = vm.products.filter(function(item) {
             return arr.indexOf(item.id) !== -1;
           });
         } else {
@@ -239,7 +256,7 @@ export default {
             });
         }
       } else {
-        id.forEach(function (item) {
+        id.forEach(function(item) {
           let rel = vm.cart.find((cart) => {
             return cart.product_id === item.id;
           });

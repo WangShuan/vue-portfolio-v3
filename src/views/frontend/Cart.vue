@@ -1,20 +1,14 @@
 <template>
-  <div class="container text-dark">
+  <div class="container">
     <loading :active.sync="isLoading">
       <h4>載入中 請稍候...</h4>
     </loading>
     <div class="pc row">
-      <div class="col-lg-8 mb-3">
-        <h4 class="my-4 text-primary">
+      <div class="col-lg-7 mb-3" :class="{ 'col-lg-8': cart.total > 0 }">
+        <h4 class="my-4 text-dark">
           <i class="fa fa-shopping-cart" aria-hidden="true"></i> 購物車清單
         </h4>
-        <div v-if="cart.total === 0">
-          <h4 class="mt-5">
-            您的購物車沒有任何商品，
-            <router-link to="/products/all" class="text-danger">回商品列表</router-link>選購。
-          </h4>
-        </div>
-        <div v-else>
+        <div v-if="cart.total > 0">
           <table class="table table-striped table-bordered text-dark">
             <thead class="thead">
               <th>操作</th>
@@ -34,86 +28,134 @@
                   </button>
                 </td>
                 <td class="align-middle">
-                  <router-link :to="'/product/'+item.product.id">
-                    {{
-                    item.product.title
-                    }}
-                  </router-link>
-                  <div class="text-danger" v-if="final_total !== total">已套用優惠券</div>
+                  <u
+                    ><router-link
+                      class="text-muted"
+                      :to="`/product/${item.product.id}`"
+                    >
+                      {{ item.product.title }}
+                    </router-link></u
+                  >
+                  <div class="text-muted" v-if="final_total !== total">
+                    已套用優惠券
+                  </div>
                 </td>
                 <td class="align-middle">
-                  <div class="btn-group" role="group" aria-label="Basic example">
+                  <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Basic example"
+                  >
                     <button
                       type="button"
                       class="btn btn-outline-secondary"
                       @click.prevent="lessQty(item.id)"
-                    >﹣</button>
-                    <button class="btn btn-outline-secondary" disabled>{{item.qty}}</button>
+                    >
+                      ﹣
+                    </button>
+                    <button class="btn btn-outline-secondary" disabled>
+                      {{ item.qty }}
+                    </button>
                     <button
                       @click.prevent="addQty(item.id)"
                       type="button"
                       class="btn btn-outline-secondary"
-                    >﹢</button>
+                    >
+                      ﹢
+                    </button>
                   </div>
                 </td>
                 <td class="align-middle text-right">
                   <del class="text-muted" v-if="final_total !== total">
-                    {{
-                    item.product.price | numFormat | dollarSign
-                    }}/{{item.product.unit}}
+                    {{ item.product.price | numFormat | dollarSign }}/{{
+                      item.product.unit
+                    }}
                   </del>
                   <template v-else>
-                    {{
-                    item.product.price | numFormat | dollarSign
-                    }}/{{item.product.unit}}
+                    {{ item.product.price | numFormat | dollarSign }}/{{
+                      item.product.unit
+                    }}
                   </template>
-                  <div class="text-success" v-if="final_total !== total">
+                  <div class="text-dark" v-if="final_total !== total">
                     折扣後
-                    {{ item.product.price*cart.carts[0].coupon.percent/100 | numFormat | dollarSign }}
+                    {{
+                      ((item.product.price * cart.carts[0].coupon.percent) /
+                        100)
+                        | numFormat
+                        | dollarSign
+                    }}
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
           <div class="input-group input-group-sm w-50">
-            <input type="text" class="form-control" :placeholder="hint" v-model="couponCode" />
+            <input
+              type="text"
+              class="form-control"
+              :placeholder="hint"
+              v-model="couponCode"
+            />
             <div class="input-group-append">
               <button
-                class="btn btn-primary font-weight-bold"
+                class="btn btn-secondary font-weight-bold"
                 type="button"
                 @click="addCoupon"
-              >套用優惠碼</button>
+              >
+                套用優惠碼
+              </button>
             </div>
           </div>
         </div>
+        <div v-if="cart.total === 0">
+          <p class="lead mt-5">
+            您的購物車沒有任何商品，
+            <router-link to="/products/all" class="text-muted"
+              >回商品列表 </router-link
+            >選購。
+          </p>
+        </div>
       </div>
-      <div class="col-lg-4 col-md-6 mt-md-5 mt-lg-0 mx-auto" v-if="cart.total>0">
-        <h4 class="my-4 text-primary">
+      <div
+        class="col-lg-4 col-md-6 mt-md-5 mt-lg-0 mx-auto"
+        v-if="cart.total > 0"
+      >
+        <h4 class="my-4">
           <i class="fa fa-pencil" aria-hidden="true"></i> 訂單摘要
         </h4>
         <div class="border p-3">
           <h6>
             <div class="float-left">小計：</div>
-            <div class="float-right">NT$ {{total}}</div>
+            <div class="float-right">NT$ {{ total }}</div>
           </h6>
           <h6 class="py-4">
             <div class="float-left">運費：</div>
-            <del class="float-right">NT$ 200</del>
+            <del class="float-right text-muted">NT$ 200</del>
             <span class="float-right mr-2 text-danger">免運活動</span>
           </h6>
-          <h4 class="mt-5 border-top py-3" :class="{'h5': final_total !== total}">
+          <h4
+            class="mt-5 border-top py-3"
+            :class="{ 'h5 text-secondary': final_total !== total }"
+          >
             <div class="float-left">總計</div>
             <div class="float-right">{{ total | numFormat | dollarSign }}</div>
           </h4>
-          <h4 v-if="final_total !== total" class="py-3 text-danger">
+          <h4 v-if="final_total !== total" class="py-3 text-dark">
             <div class="float-left">最終折扣價</div>
-            <div class="float-right">{{ final_total | numFormat | dollarSign }}</div>
+            <div class="float-right">
+              {{ final_total | numFormat | dollarSign }}
+            </div>
           </h4>
-          <button class="btn w-100 mt-2 btn-danger font-weight-bold" @click="goCheckout">確認結帳</button>
+          <button
+            class="btn w-100 mt-2 btn-outline-danger font-weight-bold"
+            @click="goCheckout"
+          >
+            確認結帳
+          </button>
         </div>
       </div>
-      <div class="col-lg-4 col-md-8 mx-auto" v-else>
-        <h4 class="my-4 pc text-primary">
+      <div class="col-lg-5 col-md-8 mx-auto" v-if="cart.total === 0">
+        <h4 class="my-4 pc">
           <i class="fa fa-star" aria-hidden="true"></i> 為您推薦
         </h4>
         <ul class="list-unstyled my-4">
@@ -123,23 +165,27 @@
             v-for="item in randoms"
             :key="item.id"
           >
-            <img :alt="item.title" :src="item.imageUrl" class="align-self-center media-img" />
+            <img
+              :alt="item.title"
+              :src="item.imageUrl"
+              class="align-self-center media-img"
+            />
             <div class="media-body ml-3 text-left align-self-center">
-              <h6 class="mt-2 mb-1">{{item.title}}</h6>
-              {{item.content}}
+              <h6 class="mt-2 mb-1">{{ item.title }}</h6>
+              {{ item.content }}
               <div class="border-top pt-2 mt-2">
                 <template v-if="item.price > 0">
                   <del class="float-left text-muted">
                     <small>原價 {{ item.origin_price }} 元</small>
                   </del>
                   <h4 class="ml-2 mb-0 float-right">
-                    <b class="text-danger p-1">{{ item.price }}元</b>
+                    <b class="text-dark p-1">{{ item.price }}元</b>
                   </h4>
                 </template>
                 <template v-else>
                   <small class="float-left">售價</small>
                   <h4 class="ml-2 mb-0 float-right">
-                    <b class="text-danger p-1">{{ item.origin_price }}元</b>
+                    <b class="text-dark p-1">{{ item.origin_price }}元</b>
                   </h4>
                 </template>
               </div>
@@ -160,40 +206,51 @@
         <tbody v-for="item in cart.carts" :key="item.id">
           <tr>
             <td class="align-middle">
-              <button type="button" class="btn btn-outline-danger btn-sm" @click="delCart(item.id)">
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                @click="delCart(item.id)"
+              >
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
             </td>
             <td class="text-center">
-              <div class="float-left">{{ item.product.title }} × {{ item.qty }}</div>
+              <div class="float-left">
+                {{ item.product.title }} × {{ item.qty }}
+              </div>
               <div class="float-right">
                 <del
-                  class="text-info"
+                  class="text-muted"
                   v-if="cart.final_total !== cart.total"
-                >{{ item.total | numFormat | dollarSign }}</del>
+                  >{{ item.total | numFormat | dollarSign }}</del
+                >
                 <template v-else>
-                  {{
-                  item.total | numFormat | dollarSign
-                  }}
+                  {{ item.total | numFormat | dollarSign }}
                 </template>
-                <div class="text-danger" v-if="cart.final_total !== cart.total">
+                <div class="text-dark" v-if="cart.final_total !== cart.total">
                   折扣後
                   {{ item.final_total | numFormat | dollarSign }}
                 </div>
               </div>
               <br />
-              <div class="text-success" v-if="cart.final_total !== cart.total">已套用優惠券</div>
+              <div class="text-muted" v-if="cart.final_total !== cart.total">
+                已套用優惠券
+              </div>
             </td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
             <td class="text-right">總計</td>
-            <td colspan="2" class="text-right">{{ cart.total | numFormat | dollarSign }}</td>
+            <td colspan="2" class="text-right">
+              {{ cart.total | numFormat | dollarSign }}
+            </td>
           </tr>
           <tr v-if="cart.final_total !== cart.total">
-            <td class="pl-0 text-right text-danger">應付金額</td>
-            <td class="text-right text-danger">{{ cart.final_total | numFormat | dollarSign }}</td>
+            <td class="pl-0 text-right">應付金額</td>
+            <td class="text-right">
+              {{ cart.final_total | numFormat | dollarSign }}
+            </td>
           </tr>
         </tfoot>
       </table>
@@ -212,27 +269,34 @@
       </div>
       <div class="input-group row input-group-sm mx-0">
         <button
-          class="btn btn-primary rounded-0 col-6 btn-sm font-weight-bold"
+          class="btn btn-secondary rounded-0 col-6 btn-sm font-weight-bold"
           type="button"
           @click="addCoupon"
-        >套用優惠碼</button>
+        >
+          套用優惠碼
+        </button>
         <button
           class="btn btn-danger rounded-0 col-6 btn-sm font-weight-bold"
           @click="goCheckout"
-        >立即結帳</button>
+        >
+          立即結帳
+        </button>
       </div>
       <br />
     </div>
     <div class="mobile" v-if="cart.total === 0">
-      <h5 class="my-4 text-primary">
+      <h5 class="my-4">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i> 購物車清單
       </h5>
-      <h6>
+      <p class="lead">
         您的購物車目前沒有任何商品，
         <br />請
-        <router-link to="/products/all" class="text-danger mr-1">回商品列表</router-link>選購。
-      </h6>
-      <h5 class="my-4 mobile text-primary">
+        <router-link to="/products/all" class="text-muted mr-1"
+          >回商品列表 </router-link
+        >選購。
+      </p>
+      <hr />
+      <h5 class="my-4 mobile">
         <i class="fa fa-star" aria-hidden="true"></i> 為您推薦
       </h5>
       <ul class="list-unstyled my-4">
@@ -242,23 +306,27 @@
           v-for="item in randoms"
           :key="item.id"
         >
-          <img :alt="item.title" :src="item.imageUrl" class="align-self-center media-img" />
+          <img
+            :alt="item.title"
+            :src="item.imageUrl"
+            class="align-self-center media-img"
+          />
           <div class="media-body ml-1 text-left align-self-center">
-            <h6 class="mt-2 mb-1">{{item.title}}</h6>
-            {{item.content}}
+            <h6 class="mt-2 mb-1">{{ item.title }}</h6>
+            {{ item.content }}
             <div class="border-top pt-2 mt-2">
               <template v-if="item.price > 0">
                 <del class="float-left text-muted">
                   <small>原價 {{ item.origin_price }} 元</small>
                 </del>
                 <h4 class="ml-2 mb-0 float-right">
-                  <b class="text-danger p-1">{{ item.price }}元</b>
+                  <b class="text-dark p-1">{{ item.price }}元</b>
                 </h4>
               </template>
               <template v-else>
                 <small class="float-left">售價</small>
                 <h4 class="ml-2 mb-0 float-right">
-                  <b class="text-danger p-1">{{ item.origin_price }}元</b>
+                  <b class="text-dark p-1">{{ item.origin_price }}元</b>
                 </h4>
               </template>
             </div>
@@ -274,35 +342,47 @@
               background-size: cover;
               background-position: center;
             "
-              :style="{backgroundImage: `url(${item.imageUrl || item.image})`}"
+              :style="{
+                backgroundImage: `url(${item.imageUrl || item.image})`,
+              }"
             ></div>
             <div class="card-body">
-              <h5 class="card-title text-darken">
+              <h5 class="card-title">
                 {{ item.title }}
                 <br />
                 <small>
-                  <span class="badge badge-dark p-1">{{item.category}}</span>
+                  <span class="badge badge-dark p-1">{{ item.category }}</span>
                 </small>
               </h5>
               <p class="card-text">{{ item.content }}</p>
               <div>
-                <div class="h5" v-if="!item.price">{{ item.origin_price }} 元</div>
-                <del class="text-muted" v-if="item.price">原價 {{ item.origin_price }} 元</del>
+                <div class="h5" v-if="!item.price">
+                  {{ item.origin_price }} 元
+                </div>
+                <del class="text-muted" v-if="item.price"
+                  >原價 {{ item.origin_price }} 元</del
+                >
 
-                <div class="h5 text-danger" v-if="item.price">現在只要 {{ item.price }} 元</div>
+                <div class="h5 text-dark" v-if="item.price">
+                  現在只要 {{ item.price }} 元
+                </div>
               </div>
             </div>
             <div class="card-footer d-flex">
               <button
                 type="button"
-                class="btn btn-outline-primary btn-sm"
+                class="btn border border-dark btn-sm"
                 @click="$router.push(`/product/${item.id}`)"
-              >查看更多</button>
+              >
+                查看更多
+              </button>
               <button
                 type="button"
-                class="btn btn-outline-danger btn-sm ml-auto"
+                class="btn btn-dark btn-sm ml-auto"
                 @click="addCart(item.id)"
-              >加到購物車</button>
+              >
+                加到購物車
+              </button>
             </div>
           </div>
         </div>
@@ -323,11 +403,16 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>填寫收件資料</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span class="text-light" aria-hidden="true">&times;</span>
             </button>
           </div>
-          <ValidationObserver ref="form" v-slot="{invalid}">
+          <ValidationObserver ref="form" v-slot="{ invalid }">
             <form class="text-dark text-left" @submit.prevent="addOrder">
               <div class="modal-body">
                 <div class="row justify-content-center mx-3">
@@ -352,7 +437,9 @@
                           :class="{ 'is-invalid': failed }"
                           placeholder="請輸入收件人電子郵件"
                         />
-                        <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
+                        <span v-if="failed" class="text-danger">{{
+                          errors[0]
+                        }}</span>
                       </ValidationProvider>
                     </div>
                     <div class="form-row">
@@ -375,7 +462,9 @@
                             :class="{ 'is-invalid': failed }"
                             placeholder="請輸入收件人姓名"
                           />
-                          <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
+                          <span v-if="failed" class="text-danger">{{
+                            errors[0]
+                          }}</span>
                         </ValidationProvider>
                       </div>
                       <div class="form-group col-md-7">
@@ -397,7 +486,9 @@
                             :class="{ 'is-invalid': failed }"
                             placeholder="請輸入收件人聯絡電話"
                           />
-                          <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
+                          <span v-if="failed" class="text-danger">{{
+                            errors[0]
+                          }}</span>
                         </ValidationProvider>
                       </div>
                     </div>
@@ -420,7 +511,9 @@
                           :class="{ 'is-invalid': failed }"
                           placeholder="請輸入收件人地址"
                         />
-                        <span v-if="failed" class="text-danger">{{ errors[0] }}</span>
+                        <span v-if="failed" class="text-danger">{{
+                          errors[0]
+                        }}</span>
                       </ValidationProvider>
                     </div>
 
@@ -441,8 +534,16 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-                <button class="btn btn-danger" :disabled="invalid">資料送出</button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  data-dismiss="modal"
+                >
+                  取消
+                </button>
+                <button class="btn btn-dark" :disabled="invalid">
+                  資料送出
+                </button>
               </div>
             </form>
           </ValidationObserver>
@@ -482,9 +583,17 @@ export default {
       vm.$http.get(api).then((res) => {
         if (res.data.success) {
           vm.cart = res.data.data;
-          if (vm.cart.final_total == vm.cart.total) {
+          if (vm.cart.total === 0) {
+            vm.getProducts();
+          } else if (
+            vm.cart.final_total === vm.cart.total &&
+            vm.cart.total > 0
+          ) {
             vm.hint = "請輸入優惠碼";
-          } else {
+          } else if (
+            vm.cart.final_total !== vm.cart.total &&
+            vm.cart.total > 0
+          ) {
             vm.hint = "當前折扣碼：" + vm.cart.carts[0].coupon.code;
           }
         } else {
@@ -527,7 +636,7 @@ export default {
     },
     addQty(id) {
       const vm = this;
-      vm.cart.carts.forEach(function (item) {
+      vm.cart.carts.forEach(function(item) {
         if (item.id === id) {
           item.qty = item.qty + 1;
         }
@@ -535,7 +644,7 @@ export default {
     },
     lessQty(id) {
       const vm = this;
-      vm.cart.carts.forEach(function (item) {
+      vm.cart.carts.forEach(function(item) {
         if (item.id === id) {
           if (item.qty === 1) {
             vm.delCart(id);
@@ -587,7 +696,7 @@ export default {
         vm.isLoading = false;
         if (res.data.success) {
           vm.randoms = [];
-          let products = res.data.products.filter(function (item) {
+          let products = res.data.products.filter(function(item) {
             return item.is_enabled == 1;
           });
           let arr = products;
@@ -625,17 +734,6 @@ export default {
       });
     },
   },
-  created() {
-    const vm = this;
-    const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
-    vm.$http.get(api).then((res) => {
-      if (res.data.success) {
-        vm.tempCart = res.data.data;
-      }
-    });
-    vm.getCart();
-    vm.getProducts();
-  },
   computed: {
     total() {
       const vm = this;
@@ -661,6 +759,17 @@ export default {
       }
       return final_total;
     },
+  },
+  created() {
+    const vm = this;
+    vm.isLoading = true;
+    const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+    vm.$http.get(api).then((res) => {
+      if (res.data.success) {
+        vm.tempCart = res.data.data;
+      }
+    });
+    vm.getCart();
   },
 };
 </script>

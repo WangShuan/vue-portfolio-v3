@@ -18,22 +18,33 @@
         </button>
       </div>
     </div>
-    <div v-if="this.$route.path.indexOf('admin')==-1">
-      <router-link v-if="this.$route.path.indexOf('test')==-1&&cart.num>0" to="/cart">
+    <div v-if="this.$route.path.indexOf('admin') == -1">
+      <router-link
+        v-if="this.$route.path.indexOf('test') == -1 && cart.num > 0"
+        to="/cart"
+      >
         <div class="cart">
-          <span v-if="cart.num>0" class="badge cart-badge badge-danger">{{cart.num}}</span>
+          <span v-if="cart.num > 0" class="badge cart-badge badge-danger">{{
+            cart.num
+          }}</span>
           <i
-            :class="{ 'text-secondary':cart.num===0,'text-primary':cart.num>0}"
+            :class="{ 'text-muted': cart.num === 0, 'text-dark': cart.num > 0 }"
             class="fa fa-shopping-cart"
             aria-hidden="true"
           ></i>
         </div>
       </router-link>
-      <a href="#" @click.prevent="goCart" v-if="this.$route.path.indexOf('test_order')!==-1">
+      <a
+        href="#"
+        @click.prevent="goCart"
+        v-if="this.$route.path.indexOf('test_order') !== -1"
+      >
         <div class="cart">
-          <span v-if="cart.num>0" class="badge cart-badge badge-danger">{{cart.num}}</span>
+          <span v-if="cart.num > 0" class="badge cart-badge badge-danger">{{
+            cart.num
+          }}</span>
           <i
-            :class="{ 'text-secondary':cart.num===0,'text-primary':cart.num>0}"
+            :class="{ 'text-muted': cart.num === 0, 'text-dark': cart.num > 0 }"
             class="fa fa-shopping-cart"
             aria-hidden="true"
           ></i>

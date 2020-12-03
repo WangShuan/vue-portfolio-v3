@@ -1,41 +1,45 @@
 <template>
-  <div class="container text-dark">
+  <div class="container">
     <loading :active.sync="isLoading">
       <h4>載入中 請稍候...</h4>
     </loading>
     <div class="row">
-      <CategoryList class="pc" :categories="categories" :active="active" @getProducts="getProducts"></CategoryList>
-
-      <div class="col-lg-9">
-        <div class="mobile pad">
+      <div class="col-lg-12">
+        <div class="mobile">
           <div class="btn-group text-dark mt-4 mb-2">
             <h6>當前商品類別：</h6>
             <a
-              class="text-primary h6"
+              class="text-muted h6"
               data-toggle="dropdown"
               data-display="static"
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {{active.name}}
-              <i class="fa fa-caret-down text-warning" aria-hidden="true"></i>
+              {{ active.name }}
+              <i class="fa fa-caret-down" aria-hidden="true"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg-right">
               <button
                 v-for="item in categories"
                 :key="item.title"
-                :class="{active: item.title === active.name}"
+                :class="{ active: item.title === active.name }"
                 @click.prevent="getProducts(item.path)"
                 class="dropdown-item"
                 type="button"
-              >{{item.title}}</button>
+              >
+                {{ item.title }}
+              </button>
             </div>
           </div>
+          <h5 class="my-2 text-left">商品內容</h5>
         </div>
-        <h4 class="my-4 text-left pc pad">商品展示</h4>
-        <h5 class="my-2 text-left mobile">商品內容</h5>
+        <h4 class="py-4 text-left pc pad">商品內容</h4>
         <div class="row mb-3 media">
-          <img :src="product.imageUrl" :alt="product.title" class="mobile media-mobile-img mb-3" />
+          <img
+            :src="product.imageUrl"
+            :alt="product.title"
+            class="mobile media-mobile-img mb-3"
+          />
           <img
             :src="product.imageUrl"
             :alt="product.title"
@@ -43,54 +47,75 @@
           />
           <div class="media-body px-3">
             <div class="text-justify">
-              <h4 class="text-primary">
+              <h4 class="text-dark">
                 {{ product.title }}
                 <span
-                  v-if="product.id==='-MN1R8dGkdl9mtI2viKd'"
+                  v-if="product.id === '-MN1R8dGkdl9mtI2viKd'"
                   class="badge badge-danger small"
-                >銷售冠軍</span>
+                  >銷售冠軍</span
+                >
               </h4>
               <p class="text-dark">{{ product.content }}</p>
               <div class="input-group mb-2">
-                <button v-if="isLiked" class="btn btn-sm btn-danger" @click="liked(product.id)">
+                <button
+                  v-if="isLiked"
+                  class="btn btn-sm btn-danger"
+                  @click="liked(product.id)"
+                >
                   <i class="fa fa-heart" aria-hidden="true"></i>
                   喜歡 ( 987 )
                 </button>
-                <button v-else class="btn btn-sm btn-outline-danger" @click="liked(product.id)">
+                <button
+                  v-else
+                  class="btn btn-sm btn-outline-danger"
+                  @click="liked(product.id)"
+                >
                   <i class="fa fa-heart-o" aria-hidden="true"></i>
                   喜歡 ( 986 )
                 </button>
               </div>
               <div
-                v-if="product.id==='-MN1R8dGkdl9mtI2viKd'"
+                v-if="product.id === '-MN1R8dGkdl9mtI2viKd'"
                 class="text-dark"
-              >已售出 9897 {{ product.unit }} | 剩餘數量 102</div>
-              <div v-else class="text-dark">已售出 876 {{ product.unit }} | 剩餘數量 9999</div>
+              >
+                已售出 9897 {{ product.unit }} | 剩餘數量 102
+              </div>
+              <div v-else class="text-dark">
+                已售出 876 {{ product.unit }} | 剩餘數量 9999
+              </div>
               <hr />
 
               <div class="mt-2 mb-3">
                 <select class="input-group p-2" v-model="product.num">
-                  <option v-for="num in 10" :key="num" :value="num">選購 {{ num }} {{ product.unit }}</option>
+                  <option v-for="num in 10" :key="num" :value="num"
+                    >選購 {{ num }} {{ product.unit }}</option
+                  >
                 </select>
                 <div class="input-group m-0 row">
                   <button
-                    class="btn btn-success col-6 rounded-0"
+                    class="btn border border-dark col-6 rounded-0"
                     @click="addCart(product.id, product.num)"
-                  >加入購物車</button>
+                  >
+                    加入購物車
+                  </button>
                   <button
-                    @click="buyNow(product.id,product.num)"
-                    class="btn btn-danger col-6 rounded-0"
-                  >立即購買</button>
+                    @click="buyNow(product.id, product.num)"
+                    class="btn btn-dark col-6 rounded-0"
+                  >
+                    立即購買
+                  </button>
                 </div>
               </div>
 
               <div>
-                <h5 class="text-right" v-if="product.price>0">
-                  <del class="text-dark h6">原價 {{ product.origin_price }} 元</del>
+                <h5 class="text-right" v-if="product.price > 0">
+                  <del class="text-muted h6"
+                    >原價 {{ product.origin_price }} 元</del
+                  >
                   <br />
 
                   <h2 class="float-right ml-2">
-                    <b class="text-danger p-1">
+                    <b class="text-dark p-1">
                       <span class="small">現在只要</span>
                       {{ product.price }}元
                     </b>
@@ -105,25 +130,37 @@
           <div class="col-md-12 mt-2 text-left">
             <h5 class="bg-light text-dark p-2">商品描述：</h5>
             <pre v-html="product.description" class="m-3 text-dark"></pre>
-            <p class="mt-3 text-center text-muted">***溫馨提醒：所有產品皆有提供七天鑑賞期***</p>
+            <p class="mt-3 text-center text-muted">
+              ***溫馨提醒：所有產品皆有提供七天鑑賞期***
+            </p>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-12 mt-2">
             <a
               href="#"
               @click.prevent="$router.push(`/products/${product.category}`)"
               class="float-right m-2"
-            >更多>></a>
+              >更多>></a
+            >
             <h5 class="bg-light text-left text-dark p-2">類似商品：</h5>
             <div class="row text-dark">
-              <div class="col-md-4 mb-4" v-for="item in products" :key="item.id">
-                <div @click="getProduct(item.id)" class="card border-0 shadow-sm">
+              <div
+                class="col-md-3 mb-4"
+                v-for="item in products"
+                :key="item.id"
+              >
+                <div
+                  @click="getProduct(item.id)"
+                  class="card border-0 shadow-sm"
+                >
                   <div
                     style="height: 200px;background-size: cover;background-position: center;"
-                    :style="{backgroundImage: `url(${item.imageUrl || item.image})`}"
+                    :style="{
+                      backgroundImage: `url(${item.imageUrl || item.image})`,
+                    }"
                   ></div>
                   <div class="card-body">
-                    <h5>{{ item.title }}</h5>
-                    <b class="text-danger">優惠價 {{item.price}}元</b>
+                    <h5 class="text-dark">{{ item.title }}</h5>
+                    <b class="h6 text-muted">優惠價 {{ item.price }}元</b>
                   </div>
                 </div>
               </div>
@@ -136,7 +173,6 @@
 </template>
 
 <script>
-import CategoryList from "@/components/CategoryList";
 export default {
   data() {
     return {
@@ -149,7 +185,6 @@ export default {
       active: { name: "", path: "" },
     };
   },
-  components: { CategoryList },
   methods: {
     getProducts(item) {
       this.$router.push("/products/" + item);
@@ -182,11 +217,11 @@ export default {
           this.$http.get(api).then((res) => {
             vm.isLoading = false;
             if (res.data.success) {
-              let arr = res.data.products.filter(function (item) {
+              let arr = res.data.products.filter(function(item) {
                 return item.category === vm.product.category;
               });
               arr.forEach((item) => {
-                if (vm.products.length < 3 && item.id !== vm.product.id) {
+                if (vm.products.length < 4 && item.id !== vm.product.id) {
                   vm.products.push(item);
                 }
               });
@@ -323,7 +358,7 @@ export default {
   created() {
     const vm = this;
     const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`;
-    this.$http.get(api).then((res) => {
+    vm.$http.get(api).then((res) => {
       if (res.data.success) {
         let arr = res.data.products;
         const set = new Set();
@@ -331,13 +366,13 @@ export default {
           !set.has(item.category) ? set.add(item.category) : false
         );
         let temCategory = [...set];
-        temCategory.forEach(function (item) {
+        temCategory.forEach(function(item) {
           vm.categories.push({ title: item, num: 0, path: "" });
         });
         vm.categories.unshift({ title: "全部", num: 0, path: "" });
         let arr2 = [];
         for (let i = 1; i < vm.categories.length; i++) {
-          let arr = res.data.products.filter(function (item) {
+          let arr = res.data.products.filter(function(item) {
             return item.category === vm.categories[i].title;
           });
           arr2.push(arr.length);
@@ -370,8 +405,9 @@ pre {
 
 .media {
   &-pc-img {
-    object-fit: cover;
+    object-fit: contain;
     height: 330px;
+    width: 100%;
   }
   &-mobile-img {
     width: 90vw;
@@ -382,9 +418,6 @@ pre {
 
 .card {
   cursor: pointer;
-  &:hover {
-    background-color: #f2fff8;
-  }
 }
 
 @media screen and (min-width: 420px) and (max-width: 992px) {

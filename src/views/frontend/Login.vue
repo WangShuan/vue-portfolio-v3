@@ -30,7 +30,9 @@
           自動填入
         </label>
       </div>
-      <button class="btn btn-lg btn-primary mt-3 btn-block" type="submit">登入</button>
+      <button class="btn btn-lg btn-dark mt-3 btn-block" type="submit">
+        登入
+      </button>
     </form>
   </div>
 </template>
@@ -66,7 +68,7 @@ export default {
     },
   },
   watch: {
-    remember: function (newV) {
+    remember: function(newV) {
       const vm = this;
       if (newV) {
         vm.user = { username: "loveabo103103@gmail.com", password: "John1007" };

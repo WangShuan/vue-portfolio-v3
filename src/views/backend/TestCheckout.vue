@@ -47,17 +47,23 @@
               </thead>
               <tbody>
                 <tr v-for="item in order.products" :key="item.id">
-                  <td class="align-middle text-left">{{ item.product.title }}</td>
-                  <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
-                  <td
-                    class="align-middle text-right"
-                  >{{ item.final_total | numFormat | dollarSign }}</td>
+                  <td class="align-middle text-left">
+                    {{ item.product.title }}
+                  </td>
+                  <td class="align-middle">
+                    {{ item.qty }}/{{ item.product.unit }}
+                  </td>
+                  <td class="align-middle text-right">
+                    {{ item.final_total | numFormat | dollarSign }}
+                  </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <td colspan="2" class="text-right">總計</td>
-                  <td class="text-right">{{ order.total | numFormat | dollarSign }}</td>
+                  <td class="text-right">
+                    {{ order.total | numFormat | dollarSign }}
+                  </td>
                 </tr>
               </tfoot>
             </table>
@@ -86,7 +92,9 @@
                   <tr>
                     <th>付款狀態 :</th>
                     <td class="font-weight-bolder">
-                      <span v-if="!order.is_paid" class="text-danger">尚未付款</span>
+                      <span v-if="!order.is_paid" class="text-danger"
+                        >尚未付款</span
+                      >
                       <span v-else class="text-success">付款完成</span>
                     </td>
                   </tr>
@@ -148,5 +156,3 @@ export default {
   },
 };
 </script>
-
-

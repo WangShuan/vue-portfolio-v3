@@ -1,12 +1,3 @@
-$primary: #418279 !default;
-$secondary: #6d9790 !default;
-$light: #f2fff8 !default;
-$success: #2fa1a5 !default;
-$info: #30615b !default;
-$warning: #f2f192 !default;
-$danger: #c51f09 !default;
-$dark: darken(#30615b, 5%) !default;
-
 .logo {
   height: 30px;
 }
@@ -43,8 +34,6 @@ $dark: darken(#30615b, 5%) !default;
     z-index: 99999;
     opacity: 0.8;
     animation: jittery 1.15s infinite;
-    border: 0;
-    background: unset;
   }
 }
 

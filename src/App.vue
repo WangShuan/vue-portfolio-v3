@@ -8,7 +8,7 @@
 export default {
   name: "App",
   watch: {
-    $route: function () {
+    $route: function() {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     },

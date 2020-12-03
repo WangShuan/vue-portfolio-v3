@@ -40,7 +40,12 @@
           </h4>
         </div>
         <div class="float-right">
-          <button class="btn btn-dark font-weight-bold mt-2 mb-3" @click="openModal(true)">添加新產品</button>
+          <button
+            class="btn btn-dark font-weight-bold mt-2 mb-3"
+            @click="openModal(true)"
+          >
+            添加新產品
+          </button>
         </div>
       </div>
       <table class="table pc table-striped table-bordered mt-4 text-dark">
@@ -54,7 +59,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item) in products" :key="item.id">
+          <tr v-for="item in products" :key="item.id">
             <td>
               {{ item.title }}
               <br />
@@ -62,15 +67,26 @@
               <span v-else class="text-danger">未啟用</span>
             </td>
             <td>{{ item.category }}</td>
-            <td class="text-right">{{ item.origin_price | numFormat | dollarSign }}</td>
-            <td class="text-right">{{ item.price | numFormat | dollarSign }}</td>
+            <td class="text-right">
+              {{ item.origin_price | numFormat | dollarSign }}
+            </td>
+            <td class="text-right">
+              {{ item.price | numFormat | dollarSign }}
+            </td>
 
             <td>
               <button
                 class="btn btn-success btn-sm mr-lg-2 mr-md-0 font-weight-bold"
                 @click="openModal(false, item)"
-              >編輯</button>
-              <button class="btn btn-danger btn-sm font-weight-bold" @click="openDelModal(item)">刪除</button>
+              >
+                編輯
+              </button>
+              <button
+                class="btn btn-danger btn-sm font-weight-bold"
+                @click="openDelModal(item)"
+              >
+                刪除
+              </button>
             </td>
           </tr>
         </tbody>
@@ -86,7 +102,12 @@
           </h5>
         </div>
         <div class="float-right">
-          <button class="btn btn-dark btn-sm font-weight-bold" @click="openModal(true)">添加新產品</button>
+          <button
+            class="btn btn-dark btn-sm font-weight-bold"
+            @click="openModal(true)"
+          >
+            添加新產品
+          </button>
         </div>
       </div>
       <table class="table table-bordered table-striped text-dark">
@@ -97,7 +118,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item) in products" :key="item.id">
+          <tr v-for="item in products" :key="item.id">
             <td class="align-middle">
               <button
                 type="button"
@@ -111,9 +132,10 @@
               <a
                 href="#"
                 class="text-info"
-                :class="{'text-danger':!item.is_enabled}"
+                :class="{ 'text-danger': !item.is_enabled }"
                 @click.prevent="openModal(false, item)"
-              >{{ item.title }}</a>
+                >{{ item.title }}</a
+              >
             </td>
           </tr>
         </tbody>
@@ -136,7 +158,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>新增產品</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span class="text-light" aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -169,7 +196,10 @@
                     </label>
                   </label>
                 </div>
-                <i class="mt-2 fa fa-spinner fa-pulse fa-fw fa-3x" v-if="status.imgUploading"></i>
+                <i
+                  class="mt-2 fa fa-spinner fa-pulse fa-fw fa-3x"
+                  v-if="status.imgUploading"
+                ></i>
                 <img
                   img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
                   class="img-fluid"
@@ -267,15 +297,29 @@
                       :true-value="1"
                       :false-value="0"
                     />
-                    <label class="form-check-label" for="is_enabled">是否啟用</label>
+                    <label class="form-check-label" for="is_enabled"
+                      >是否啟用</label
+                    >
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" @click="updateProduct">確認</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              取消
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="updateProduct"
+            >
+              確認
+            </button>
           </div>
         </div>
       </div>
@@ -295,7 +339,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>刪除產品</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span class="text-light" aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -305,8 +354,20 @@
             商品(刪除後將無法恢復)。
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-danger" @click="deleteProduct()">確認刪除</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              取消
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              @click="deleteProduct()"
+            >
+              確認刪除
+            </button>
           </div>
         </div>
       </div>

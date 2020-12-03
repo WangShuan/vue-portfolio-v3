@@ -1,16 +1,6 @@
-$primary: #418279 !default;
-$secondary: #6d9790 !default;
-$light: #f2fff8 !default;
-$success: #2fa1a5 !default;
-$info: #30615b !default;
-$warning: #f2f192 !default;
-$danger: #c51f09 !default;
-$dark: darken(#30615b, 5%) !default;
-
 .sawtooth {
   position: relative;
   overflow: hidden;
-  background-color: lighten($primary, 45%);
   width: 95%;
   margin: auto;
 
@@ -20,7 +10,7 @@ $dark: darken(#30615b, 5%) !default;
 
     &>h1 {
       color: #c92104;
-      text-shadow: 2px 0 0 $dark;
+      text-shadow: 2px 0 0 #ccc;
     }
   }
 
@@ -77,6 +67,6 @@ $dark: darken(#30615b, 5%) !default;
   width: 180px;
   padding: 0;
   border: 0;
-  color: $primary;
+  color: white;
   font-weight: bolder;
 }
