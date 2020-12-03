@@ -238,7 +238,7 @@ export default {
     copy(e) {
       e.currentTarget.select();
       document.execCommand("Copy");
-      this.$bus.$emit("message:push", "複製成功", "success");
+      this.$bus.$emit("message:push", "複製成功", "dark");
     },
     openModal(item) {
       this.order = item;

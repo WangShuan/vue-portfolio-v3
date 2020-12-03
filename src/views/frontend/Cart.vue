@@ -608,7 +608,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`;
       vm.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", res.data.message, "success");
+          vm.$bus.$emit("message:push", res.data.message, "dark");
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
         }
@@ -627,7 +627,7 @@ export default {
       vm.$http.post(api, { data: { code: vm.couponCode } }).then((res) => {
         if (res.data.success) {
           vm.cart.final_total = res.data.final_total;
-          vm.$bus.$emit("message:push", "已套用優惠券", "success");
+          vm.$bus.$emit("message:push", "已套用優惠券", "dark");
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
         }
@@ -678,7 +678,7 @@ export default {
                     vm.couponCode = vm.cart.carts[0].coupon.code;
                     vm.addCoupon();
                   }
-                  vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+                  vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
                   $("#modal").modal("show");
                 }
               } else {
@@ -721,7 +721,7 @@ export default {
             if (res.data.success) {
               $("#modal").modal("hide");
               vm.$router.push(`/checkout/${res.data.orderId}`);
-              vm.$bus.$emit("message:push", res.data.message, "success");
+              vm.$bus.$emit("message:push", res.data.message, "dark");
             } else {
               vm.$bus.$emit("message:push", res.data.message, "danger");
             }

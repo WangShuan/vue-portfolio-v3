@@ -465,7 +465,7 @@ export default {
             vm.isLoading = false;
             if (res.data.success) {
               vm.delCart(rel.id);
-              vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
             } else {
               vm.$bus.$emit("message:push", res.data.message, "danger");
             }
@@ -482,7 +482,7 @@ export default {
             vm.isLoading = false;
             if (res.data.success) {
               vm.getCart();
-              vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
             } else {
               vm.$bus.$emit("message:push", res.data.message, "danger");
             }
@@ -509,7 +509,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`;
       vm.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", res.data.message, "success");
+          vm.$bus.$emit("message:push", res.data.message, "dark");
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
         }
@@ -545,7 +545,7 @@ export default {
             if (res.data.success) {
               $("#modal").modal("hide");
               vm.$router.push(`/test/test_checkout/${res.data.orderId}`);
-              vm.$bus.$emit("message:push", res.data.message, "success");
+              vm.$bus.$emit("message:push", res.data.message, "dark");
             } else {
               vm.$bus.$emit("message:push", res.data.message, "danger");
             }

@@ -195,7 +195,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`;
       vm.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+          vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
         }
@@ -255,7 +255,7 @@ export default {
             vm.isLoading = false;
             if (res.data.success) {
               vm.delCart(rel.id);
-              vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
             } else {
               vm.$bus.$emit("message:push", res.data.message, "danger");
             }
@@ -272,7 +272,7 @@ export default {
             vm.isLoading = false;
             if (res.data.success) {
               vm.getCart();
-              vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
             } else {
               vm.$bus.$emit("message:push", res.data.message, "danger");
             }
@@ -297,7 +297,7 @@ export default {
         vm.isLoading = false;
         if (res.data.success) {
           vm.getCart();
-          vm.$bus.$emit("message:push", res.data.message, "success");
+          vm.$bus.$emit("message:push", res.data.message, "dark");
           vm.$router.push("/cart");
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
@@ -331,12 +331,12 @@ export default {
               arr = id;
             }
             document.cookie = `like=${arr};expires=7;path=/`;
-            vm.$bus.$emit("message:push", "已加入喜好項目", "success");
+            vm.$bus.$emit("message:push", "已加入喜好項目", "dark");
             vm.isLiked = true;
           }
         } else if (document.cookie.indexOf("like") == -1) {
           document.cookie = `like=${id};expires=7;path=/`;
-          vm.$bus.$emit("message:push", "已加入喜好項目", "success");
+          vm.$bus.$emit("message:push", "已加入喜好項目", "dark");
           vm.isLiked = true;
         }
       }

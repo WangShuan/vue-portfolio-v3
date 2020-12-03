@@ -205,7 +205,7 @@ export default {
             vm.isLoading = false;
             if (res.data.success) {
               vm.getCart();
-              vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
             } else {
               vm.$bus.$emit("message:push", res.data.message, "danger");
             }
@@ -218,7 +218,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`;
       vm.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+          vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
         }

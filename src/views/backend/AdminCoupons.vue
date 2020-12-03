@@ -370,7 +370,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/coupon/${vm.tempCoupon.id}`;
       this.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", res.data.message, "success");
+          vm.$bus.$emit("message:push", res.data.message, "dark");
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
         }

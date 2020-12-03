@@ -334,7 +334,7 @@
           <div class="my-4 text-secondary">
             不喜歡?
             <a
-              class="text-link"
+              class="text-dark"
               href="#"
               @click.prevent="randomProducts('隨機推薦已更新!')"
               >點我</a
@@ -436,9 +436,9 @@ export default {
     copy(e) {
       e.currentTarget.select();
       document.execCommand("Copy");
-      this.$bus.$emit("message:push", "複製成功", "success");
+      this.$bus.$emit("message:push", "複製成功", "dark");
     },
-    randomProducts() {
+    randomProducts(msg) {
       const vm = this;
       vm.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`;
@@ -457,6 +457,9 @@ export default {
           for (let i = 0; i < ranNum; i++) {
             let ran = Math.floor(Math.random() * arr.length);
             vm.randoms.push(arr.splice(ran, 1)[0]);
+          }
+          if (msg) {
+            vm.$bus.$emit("message:push", msg, "dark");
           }
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
@@ -482,7 +485,7 @@ export default {
             vm.isLoading = false;
             if (res.data.success) {
               vm.delCart(rel.id);
-              vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
             } else {
               vm.$bus.$emit("message:push", res.data.message, "danger");
             }
@@ -499,7 +502,7 @@ export default {
             vm.isLoading = false;
             if (res.data.success) {
               vm.getCart();
-              vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
             } else {
               vm.$bus.$emit("message:push", res.data.message, "danger");
             }
@@ -512,7 +515,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`;
       vm.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", "購物車清單已更新", "success");
+          vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
         }

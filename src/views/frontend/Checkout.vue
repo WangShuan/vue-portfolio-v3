@@ -276,7 +276,7 @@ export default {
         const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/pay/${vm.orderId}`;
         vm.$http.post(api).then((res) => {
           if (res.data.success) {
-            vm.$bus.$emit("message:push", "結帳確認完成", "success");
+            vm.$bus.$emit("message:push", "結帳確認完成", "dark");
             vm.getOrder();
             $(".down").show();
           } else {

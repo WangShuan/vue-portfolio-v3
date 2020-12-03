@@ -186,13 +186,13 @@ export default {
     copy(e) {
       e.currentTarget.select();
       document.execCommand("Copy");
-      this.$bus.$emit("message:push", "複製成功", "success");
+      this.$bus.$emit("message:push", "複製成功", "dark");
     },
     copyBtn(className) {
       let ipt = document.getElementById(className);
       ipt.select();
       document.execCommand("copy");
-      this.$bus.$emit("message:push", "複製成功", "success");
+      this.$bus.$emit("message:push", "複製成功", "dark");
     },
   },
 };

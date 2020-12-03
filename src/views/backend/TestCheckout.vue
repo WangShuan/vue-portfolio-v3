@@ -142,7 +142,7 @@ export default {
       vm.$http.post(api).then((res) => {
         vm.isLoading = false;
         if (res.data.success) {
-          vm.$bus.$emit("message:push", res.data.message, "success");
+          vm.$bus.$emit("message:push", res.data.message, "dark");
           vm.getOrder();
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
