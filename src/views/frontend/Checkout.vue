@@ -25,8 +25,8 @@
                   運費
                   <i class="small text-muted">(週年慶 - 免運費)</i> ：
                 </div>
-                <div class="float-right text-danger">
-                  <del>NT$ 200</del> NT$ 0
+                <div class="float-right">
+                  <del class="text-secondary mr-2">NT$ 200</del> NT$ 0
                 </div>
                 <br />
               </h6>
@@ -69,8 +69,10 @@
                       <p>
                         {{ item.product.title }}
                         <br />
-                        NT${{ item.product.price }} x {{ item.qty }}
-                        {{ item.product.unit }}
+                        <span class="text-muted"
+                          >NT${{ item.product.price }}</span
+                        >
+                        x{{ item.qty }}
                       </p>
                     </td>
                   </tr>
@@ -80,7 +82,7 @@
           </div>
           <div class="col-lg-8 col-md-6">
             <div class="p-2">
-              <div class="row my-3 text-danger">
+              <div class="row my-3 text-muted">
                 <div class="col-4">1.確認資料</div>
                 <div class="col-4">2.付款方式</div>
                 <div class="col-4">3.完成</div>
@@ -156,7 +158,7 @@
                         </tr>
                         <tr>
                           <th>◆ 戶 名：</th>
-                          <td>拼圖天堂股份有限公司</td>
+                          <td>拼圖迷股份有限公司</td>
                         </tr>
                         <tr>
                           <th>◆ 帳 號：</th>
@@ -168,7 +170,9 @@
                 </div>
               </div>
               <div class="my-3 px-lg-5 down" :class="{ 'd-none': times !== 3 }">
-                <h3 class="my-4 text-success">結帳成功</h3>
+                <h3 v-if="order.is_paid" class="my-4 text-success">
+                  ☑️ 結帳成功
+                </h3>
                 <table class="table table-striped text-dark m-0">
                   <tbody>
                     <tr>
@@ -191,28 +195,32 @@
                     <tr>
                       <th>付款狀態 :</th>
                       <td
-                        class="text-danger"
+                        class="text-muted"
                         v-if="paymethods == 1 && order.is_paid"
                       >
                         已選擇貨到付款
                       </td>
                       <td
-                        class="text-danger"
+                        class="text-muted"
                         v-else-if="paymethods == 2 && order.is_paid"
                       >
                         已選擇ATM 匯款
                       </td>
-                      <td class="text-danger" v-if="order.is_paid == false">
-                        等待付款中
+                      <td class="text-muted" v-if="order.is_paid == false">
+                        <i>等待付款中</i>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <button v-if="times !== 3" class="btn btn-danger my-3">
+              <button v-if="times !== 3" class="btn btn-dark my-3">
                 下一步
               </button>
-              <button class="btn btn-danger my-3" @click="$router.push('/')">
+              <button
+                v-if="times === 3"
+                class="btn btn-dark my-3"
+                @click="$router.push('/products/all')"
+              >
                 再去逛逛
               </button>
             </div>

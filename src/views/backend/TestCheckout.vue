@@ -1,5 +1,5 @@
 <template>
-  <div v-if="order.id" class="text-dark">
+  <div v-if="order.id">
     <loading :active.sync="isLoading">
       <div class="loadingio-spinner-spin-ur5grgaunp">
         <div class="ldio-dwsbgiuamos">
@@ -92,10 +92,8 @@
                   <tr>
                     <th>付款狀態 :</th>
                     <td class="font-weight-bolder">
-                      <span v-if="!order.is_paid" class="text-danger"
-                        >尚未付款</span
-                      >
-                      <span v-else class="text-success">付款完成</span>
+                      <i v-if="!order.is_paid" class="text-muted">尚未付款</i>
+                      <span v-else class="text-dark">付款完成</span>
                     </td>
                   </tr>
                 </tbody>
@@ -103,7 +101,7 @@
             </div>
 
             <div v-if="order.is_paid === false">
-              <button class="btn btn-danger my-3">確認付款</button>
+              <button class="btn btn-dark my-3">確認付款</button>
             </div>
           </div>
         </form>

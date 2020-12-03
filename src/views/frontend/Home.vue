@@ -65,7 +65,7 @@
     <header
       class="navbar mobile-header mobile navbar-expand-lg navbar-light bg-light"
     >
-      <router-link class="h4 float-left mt-2" to="/">
+      <router-link class="h4 float-left text-muted mt-2" to="/">
         <img src="@/assets/image/logo.png" alt="Logo" class="logo" />
         拼圖迷
       </router-link>
@@ -128,8 +128,7 @@
           <p class="h4 font-weight-normal">
             市面上進口拼圖網路商店的銷售冠軍🏆
             <br />擁有歐洲三大進口拼圖獨家代理權！ <br />銷量第一產品 ➡️
-            <b>紐約天際線-2000片</b>
-            <br />本公司產品承諾正版保證- 皆附保證書📖
+            紐約天際線-2000片 <br />本公司產品承諾正版保證- 皆附保證書📖
           </p>
         </div>
         <button
@@ -149,15 +148,17 @@
         <div class="main-img-caption text-dark">
           <h4 class="my-3">歡迎光臨拼圖迷❤️</h4>
           <p class="h6 font-weight-normal">
-            【進口拼圖】網路商店的銷售冠軍🏆
-            <br />擁有歐洲三大拼圖【獨家】代理權！ <br />銷量第一產品 ➡️
-            <a
-              class="text-danger"
-              href="#"
-              @click.prevent="$router.push('/product/-MN1R8dGkdl9mtI2viKd')"
-              >【紐約天際線-2000片】</a
+            進口拼圖網路商店的銷售冠軍🏆
+            <br />擁有歐洲三大拼圖獨家代理權！ <br />銷量第一產品
+            <u
+              ><router-link
+                class="text-muted ml-2"
+                to="/product/-MN1R8dGkdl9mtI2viKd"
+              >
+                紐約天際線-2000片
+              </router-link></u
             >
-            <br />本公司【承諾正版保證】- 皆附保證書📖
+            <br />本公司承諾正版保證 - 皆附保證書📖
           </p>
         </div>
       </div>
@@ -243,7 +244,7 @@
             最新消息
           </h4>
           <div class="mt-5">
-            <h3 class="text-primary">
+            <h3 class="text-muted">
               拼圖迷八週年慶
               <p class="text-dark">全館八折優惠！</p>
             </h3>

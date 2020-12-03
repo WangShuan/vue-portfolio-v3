@@ -1,5 +1,5 @@
 <template>
-  <div class="text-dark">
+  <div>
     <loading :active.sync="isLoading">
       <div class="loadingio-spinner-spin-ur5grgaunp">
         <div class="ldio-dwsbgiuamos">
@@ -63,8 +63,8 @@
             <td>
               {{ item.title }}
               <br />
-              <span v-if="item.is_enabled" class="text-success">已啟用</span>
-              <span v-else class="text-danger">未啟用</span>
+              <span v-if="item.is_enabled" class="text-muted">已啟用</span>
+              <i v-else class="text-muted">未啟用</i>
             </td>
             <td>{{ item.category }}</td>
             <td class="text-right">
@@ -76,13 +76,13 @@
 
             <td>
               <button
-                class="btn btn-success btn-sm mr-lg-2 mr-md-0 font-weight-bold"
+                class="btn btn-outline-dark btn-sm mr-lg-2 mr-md-0 font-weight-bold"
                 @click="openModal(false, item)"
               >
                 編輯
               </button>
               <button
-                class="btn btn-danger btn-sm font-weight-bold"
+                class="btn btn-outline-danger btn-sm font-weight-bold"
                 @click="openDelModal(item)"
               >
                 刪除
@@ -131,8 +131,8 @@
             <td>
               <a
                 href="#"
-                class="text-info"
-                :class="{ 'text-danger': !item.is_enabled }"
+                class="text-dark"
+                :class="{ 'text-muted': !item.is_enabled }"
                 @click.prevent="openModal(false, item)"
                 >{{ item.title }}</a
               >
@@ -183,7 +183,7 @@
                 <div class="form-group">
                   <label for="customFile">
                     或
-                    <label class="btn btn-success btn-sm">
+                    <label class="btn btn-dark btn-sm">
                       <input
                         style="display: none"
                         type="file"
@@ -313,11 +313,7 @@
             >
               取消
             </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="updateProduct"
-            >
+            <button type="button" class="btn btn-dark" @click="updateProduct">
               確認
             </button>
           </div>
@@ -335,7 +331,7 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content border-0">
-          <div class="modal-header bg-danger text-white">
+          <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="exampleModalLabel">
               <span>刪除產品</span>
             </h5>
@@ -348,10 +344,13 @@
               <span class="text-light" aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            是否刪除
-            <strong class="text-danger">{{ tempProduct.title }}</strong>
-            商品(刪除後將無法恢復)。
+          <div class="modal-body lead">
+            是否刪除<br />
+            <strong class="text-light bg-dark p-1">{{
+              tempProduct.title
+            }}</strong>
+            商品<br />
+            (刪除後將無法恢復)。
           </div>
           <div class="modal-footer">
             <button
@@ -363,7 +362,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-danger"
+              class="btn btn-outline-danger"
               @click="deleteProduct()"
             >
               確認刪除
@@ -420,7 +419,7 @@ export default {
     updateProduct() {
       const vm = this;
       let httpMethod = "post";
-      let api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_MYPATH}/admin/product`;
+      let api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/product`;
       if (!vm.isNew) {
         api = `${api}/${vm.tempProduct.id}`;
         httpMethod = "put";

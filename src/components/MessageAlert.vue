@@ -135,7 +135,7 @@ export default {
 }
 
 .cart {
-  background-color: #f2fff8;
+  background-color: #fff;
   width: 50px;
   height: 50px;
   border-radius: 25px;
@@ -143,7 +143,7 @@ export default {
   position: fixed;
   z-index: 99999;
   bottom: 50px;
-  border: 1px solid #c9e9d8;
+  border: 1px solid #aaa;
   &-badge {
     position: absolute;
     top: 3px;

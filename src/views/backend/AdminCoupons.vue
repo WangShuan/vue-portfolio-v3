@@ -1,5 +1,5 @@
 <template>
-  <div class="text-dark">
+  <div>
     <loading :active.sync="isLoading">
       <div class="loadingio-spinner-spin-ur5grgaunp">
         <div class="ldio-dwsbgiuamos">
@@ -62,23 +62,23 @@
               <br />
               <i class="text-muted">
                 優惠碼 -
-                <b class="text-danger">{{ item.code }}</b>
+                <b class="text-secondary">{{ item.code }}</b>
               </i>
             </td>
             <td>{{ new Date(item.due_date).toLocaleDateString() }}</td>
             <td class="font-weight-bold">
-              <span v-if="item.is_enabled" class="text-success">已啟用</span>
-              <span v-else class="text-danger">未啟用</span>
+              <span v-if="item.is_enabled" class="text-dark">已啟用</span>
+              <span v-else class="text-muted">未啟用</span>
             </td>
             <td>
               <button
-                class="btn btn-primary btn-sm mr-lg-2 font-weight-bold"
+                class="btn btn-outline-dark btn-sm mr-lg-2 font-weight-bold"
                 @click="openModal(false, item)"
               >
                 編輯
               </button>
               <button
-                class="btn btn-danger btn-sm font-weight-bold"
+                class="btn btn-dark btn-sm font-weight-bold"
                 @click="openDelModal(item)"
               >
                 刪除
@@ -117,7 +117,7 @@
               <button
                 @click="openDelModal(item)"
                 type="button"
-                class="btn btn-outline-danger btn-sm"
+                class="btn btn-outline-dark btn-sm"
               >
                 <i class="fa fa-trash"></i>
               </button>
@@ -125,12 +125,12 @@
             <td scope="row" @click="openModal(false, item)">
               {{ item.title }} - {{ item.percent }}% off
               <br />
-              <i class="text-success">
+              <i>
                 優惠碼 -
                 <b>{{ item.code }}</b>
               </i>
               <br />
-              <i class="text-danger"
+              <i class="text-muted"
                 >{{ new Date(item.due_date).toLocaleDateString() }} 截止</i
               >
             </td>
@@ -239,7 +239,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn btn-dark"
               @click="updateCoupon(tempCoupon)"
             >
               確認
@@ -259,9 +259,9 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content border-0">
-          <div class="modal-header bg-danger text-white">
+          <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="exampleModalLabel">
-              <span>刪除產品</span>
+              <span>刪除優惠券</span>
             </h5>
             <button
               type="button"
@@ -272,10 +272,13 @@
               <span class="text-light" aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            是否刪除
-            <strong class="text-danger">{{ tempCoupon.title }}</strong>
-            商品(刪除後將無法恢復)。
+          <div class="modal-body lead">
+            是否刪除<br />
+            <strong class="text-light bg-dark p-1">{{
+              tempCoupon.title
+            }}</strong
+            ><br />
+            優惠券(刪除後將無法恢復)。
           </div>
           <div class="modal-footer">
             <button
@@ -285,11 +288,7 @@
             >
               取消
             </button>
-            <button
-              type="button"
-              class="btn btn-danger"
-              @click="deleteCoupon()"
-            >
+            <button type="button" class="btn btn-dark" @click="deleteCoupon()">
               確認刪除
             </button>
           </div>

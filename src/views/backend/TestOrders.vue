@@ -55,11 +55,9 @@
       @addCart="addCart"
     ></Cards>
 
-    <hr />
-
     <div
       id="cart-list-pc"
-      class="col-md-10 py-2 mx-auto pc"
+      class="col-md-10 py-2 border-top mx-auto pc"
       v-if="cart.total > 0"
     >
       <h4 class="my-3">
@@ -77,7 +75,7 @@
             <td class="align-middle">
               <button
                 type="button"
-                class="btn btn-outline-danger btn-sm"
+                class="btn btn-outline-dark btn-sm"
                 @click="delCart(item.id)"
               >
                 <i class="fa fa-trash" aria-hidden="true"></i>
@@ -85,13 +83,22 @@
             </td>
             <td class="align-middle">
               {{ item.product.title }}
-              <div class="text-success" v-if="cart.final_total !== cart.total">
+              <div class="text-muted" v-if="cart.final_total !== cart.total">
                 已套用優惠券
               </div>
             </td>
             <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
-            <td class="align-middle text-right">
-              {{ item.final_total | numFormat | dollarSign }}
+            <td class="text-right">
+              <del class="text-muted" v-if="cart.final_total !== cart.total">{{
+                item.total | numFormat | dollarSign
+              }}</del>
+              <template v-else>
+                {{ item.total | numFormat | dollarSign }}
+              </template>
+              <div class="text-dark" v-if="cart.final_total !== cart.total">
+                折扣後
+                {{ item.final_total | numFormat | dollarSign }}
+              </div>
             </td>
           </tr>
         </tbody>
@@ -103,8 +110,8 @@
             </td>
           </tr>
           <tr v-if="cart.final_total !== cart.total">
-            <td colspan="3" class="text-right text-success">折扣價</td>
-            <td class="text-right text-success">
+            <td colspan="3" class="text-right text-muted">折扣價</td>
+            <td class="text-right text-muted">
               {{ cart.final_total | numFormat | dollarSign }}
             </td>
           </tr>
@@ -139,7 +146,7 @@
             <td class="align-middle">
               <button
                 type="button"
-                class="btn btn-outline-danger btn-sm"
+                class="btn btn-outline-dark btn-sm"
                 @click="delCart(item.id)"
               >
                 <i class="fa fa-trash" aria-hidden="true"></i>
@@ -150,34 +157,39 @@
                 {{ item.product.title }} × {{ item.qty }}
               </div>
               <div class="float-right">
-                <del class="text-info" v-if="cart.final_total !== cart.total">{{
-                  item.total | numFormat | dollarSign
-                }}</del>
+                <del
+                  class="text-muted"
+                  v-if="cart.final_total !== cart.total"
+                  >{{ item.total | numFormat | dollarSign }}</del
+                >
                 <template v-else>
                   {{ item.total | numFormat | dollarSign }}
                 </template>
-                <div class="text-danger" v-if="cart.final_total !== cart.total">
+                <div class="text-dark" v-if="cart.final_total !== cart.total">
                   折扣後
                   {{ item.final_total | numFormat | dollarSign }}
                 </div>
               </div>
               <br />
-              <div class="text-success" v-if="cart.final_total !== cart.total">
+              <div
+                class="text-muted text-left"
+                v-if="cart.final_total !== cart.total"
+              >
                 已套用優惠券
               </div>
             </td>
           </tr>
         </tbody>
         <tfoot>
-          <tr>
+          <tr :class="{ 'text-muted': cart.final_total !== cart.total }">
             <td class="text-right">總計</td>
             <td colspan="2" class="text-right">
               {{ cart.total | numFormat | dollarSign }}
             </td>
           </tr>
           <tr v-if="cart.final_total !== cart.total">
-            <td class="pl-0 text-right text-danger">應付金額</td>
-            <td class="text-right text-danger">
+            <td class="pl-0 text-right text-dark">應付金額</td>
+            <td class="text-right text-dark">
               {{ cart.final_total | numFormat | dollarSign }}
             </td>
           </tr>
@@ -196,7 +208,7 @@
         />
       </div>
       <button
-        class="btn btn-primary rounded-0 w-100 btn-sm font-weight-bold"
+        class="btn btn-dark rounded-0 w-100 btn-sm font-weight-bold"
         type="button"
         @click="addCoupon"
       >
@@ -310,7 +322,7 @@
                 ></textarea>
               </div>
               <div class="text-right">
-                <button class="btn mt-3 btn-danger" :disabled="invalid">
+                <button class="btn mt-3 btn-dark" :disabled="invalid">
                   資料送出
                 </button>
               </div>
@@ -330,7 +342,7 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header bg-primary">
+          <div class="modal-header bg-dark">
             <h5 class="modal-title text-white" id="exampleModalLabel">
               {{ product.title }}
             </h5>
@@ -351,7 +363,7 @@
             />
             <blockquote class="blockquote mt-3">
               <p class="mb-2">{{ product.content }}</p>
-              <pre class="text-info small">{{ product.description }}</pre>
+              <pre class="text-muted small">{{ product.description }}</pre>
             </blockquote>
             <hr />
             <div class="d-flex justify-content-between align-items-baseline">
@@ -361,7 +373,7 @@
               <del class="h6 text-muted" v-if="product.price"
                 >原價 {{ product.origin_price }} 元</del
               >
-              <div class="h5 text-danger" v-if="product.price">
+              <div class="h5 text-dark" v-if="product.price">
                 現在只要 {{ product.price }} 元
               </div>
             </div>
@@ -378,7 +390,7 @@
             </div>
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn btn-dark"
               @click="addCart(product.id, product.num)"
             >
               加入購物車

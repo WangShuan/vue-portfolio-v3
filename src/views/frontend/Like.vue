@@ -10,10 +10,9 @@
     <div v-if="hasLiked == false">
       <h4 class="my-5 pc">
         您的喜好項目為空，
-        <br />請
-        <router-link to="/products/all" class="text-danger mr-1"
-          >回商品列表</router-link
-        >添加喜好項目。
+        <br />
+        將在<span class="h3 text-danger" v-if="time >= 0"> {{ time }} </span
+        >秒後跳轉回商品列表
       </h4>
     </div>
 
@@ -24,11 +23,10 @@
 
     <div v-if="hasLiked == false">
       <h6 class="my-5 mobile">
-        您的喜好項目為空。
-        <br />請
-        <router-link to="/products/all" class="text-danger mr-1"
-          >回商品列表</router-link
-        >添加喜好項目。
+        您的喜好項目為空，
+        <br />
+        將在<span class="h3 text-danger" v-if="time >= 0"> {{ time }} </span
+        >秒後跳轉回商品列表
       </h6>
     </div>
 
@@ -124,6 +122,7 @@ export default {
       isLoading: false,
       hasLiked: true,
       cookie: "",
+      time: 0,
     };
   },
   methods: {
@@ -165,34 +164,6 @@ export default {
       vm.isLoading = false;
       vm.hasLikes();
     },
-    // addCart(id) {
-    //   const vm = this;
-    //   vm.isLoading = true;
-    //   const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
-    //   if (typeof id === "string") {
-    //     vm.$http.post(api, { data: { product_id: id, qty: 1 } }).then((res) => {
-    //       if (res.data.success) {
-    //         vm.$bus.$emit("message:push", res.data.message, "dark");
-    //         vm.isLoading = false;
-    //       } else {
-    //         vm.$bus.$emit("message:push", res.data.message, "danger");
-    //       }
-    //     });
-    //   } else {
-    //     id.forEach(function (item) {
-    //       vm.$http
-    //         .post(api, { data: { product_id: item.id, qty: 1 } })
-    //         .then((res) => {
-    //           if (res.data.success) {
-    //             vm.$bus.$emit("message:push", res.data.message, "dark");
-    //             vm.isLoading = false;
-    //           } else {
-    //             vm.$bus.$emit("message:push", res.data.message, "danger");
-    //           }
-    //         });
-    //     });
-    //   }
-    // },
     hasLikes() {
       const vm = this;
       let cookieAry = document.cookie.split(";");
@@ -206,11 +177,12 @@ export default {
           vm.cookie = arr;
           if (arr.length !== 0) {
             vm.getLikes(arr);
-          } else {
-            vm.hasLiked = false;
+            vm.getCart();
           }
         } else {
           vm.hasLiked = false;
+          vm.time = 3;
+          setInterval(vm.countDown, 1000);
         }
       }
     },
@@ -325,10 +297,19 @@ export default {
         vm.isLoading = false;
       });
     },
+    countDown() {
+      this.time--;
+    },
+  },
+  watch: {
+    time: function(newVal) {
+      if (newVal === 0) {
+        this.$router.push("/products/all");
+      }
+    },
   },
   created() {
     this.hasLikes();
-    this.getCart();
   },
 };
 </script>

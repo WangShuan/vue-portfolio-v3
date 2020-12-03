@@ -7,10 +7,14 @@
         :key="item.id"
       >
         <div class="card border-0 shadow-sm">
-          <img :src="`${item.imageUrl || item.image}`" alt style="width:100%" />
+          <img
+            :src="`${item.imageUrl || item.image}`"
+            alt
+            style="width:100%;height:250px;object-fit:contain "
+          />
           <div class="card-body">
             <h5 class="card-title m-0">{{ item.title }}</h5>
-            <span class="badge badge-info p-1">{{ item.category }}</span>
+            <span class="badge badge-secondary p-1">{{ item.category }}</span>
             <p class="card-text">{{ item.content }}</p>
             <div class="d-flex justify-content-between align-items-baseline">
               <div class="h5" v-if="!item.price">
@@ -19,7 +23,7 @@
               <del class="h6 text-muted m-auto" v-if="item.price"
                 >原價${{ item.origin_price }}</del
               >
-              <div class="h5 text-danger m-auto" v-if="item.price">
+              <div class="h5 text-dark m-auto" v-if="item.price">
                 現在只要${{ item.price }}
               </div>
             </div>
@@ -27,14 +31,14 @@
           <div class="card-footer d-flex">
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm"
+              class="btn border border-dark btn-sm"
               @click="getOneProduct(item.id)"
             >
               查看更多
             </button>
             <button
               type="button"
-              class="btn btn-outline-danger btn-sm ml-auto"
+              class="btn btn-dark btn-sm ml-auto"
               @click="addCart(item.id)"
             >
               加到購物車

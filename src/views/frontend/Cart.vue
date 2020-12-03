@@ -269,14 +269,14 @@
       </div>
       <div class="input-group row input-group-sm mx-0">
         <button
-          class="btn btn-secondary rounded-0 col-6 btn-sm font-weight-bold"
+          class="btn border border-dark rounded-0 col-6 btn-sm font-weight-bold"
           type="button"
           @click="addCoupon"
         >
           套用優惠碼
         </button>
         <button
-          class="btn btn-danger rounded-0 col-6 btn-sm font-weight-bold"
+          class="btn btn-dark rounded-0 col-6 btn-sm font-weight-bold"
           @click="goCheckout"
         >
           立即結帳

@@ -54,7 +54,7 @@
             <td>
               {{ item.id }}
               <br />
-              <i class="text-success small">
+              <i class="text-muted small">
                 成立於:
                 {{ new Date(item.create_at * 1000).toLocaleDateString() }}
               </i>
@@ -68,14 +68,14 @@
                   {{ product.qty }}{{ product.product.unit }}</span
                 >
                 <br />
-                <span v-if="product.coupon" class="text-success"
+                <span v-if="product.coupon" class="text-muted"
                   >有使用優惠券</span
                 >
               </div>
             </td>
-            <td>
-              <span v-if="item.is_paid" class="text-success">已付款</span>
-              <span v-else class="text-danger">未付款</span>
+            <td :class="{ 'text-muted': !item.is_paid }">
+              <span v-if="item.is_paid">☑️ 已付款</span>
+              <span v-else>✖️ 未付款</span>
               <br />
               {{ item.total | numFormat | dollarSign }}
             </td>
@@ -103,17 +103,17 @@
             <td>
               <button
                 @click="openModal(item)"
-                class="btn btn-sm btn-outline-primary border-0"
+                class="btn btn-sm btn-outline-dark border-0"
               >
                 {{ item.id }}
               </button>
             </td>
             <td
-              class="text-success"
-              :class="{ 'text-danger': item.is_paid === false }"
+              class="text-dark"
+              :class="{ 'text-muted': item.is_paid === false }"
             >
-              <span v-if="item.is_paid">已付款</span>
-              <span v-else>未付款</span>
+              <span v-if="item.is_paid">☑️ 已付款</span>
+              <span v-else>✖️ 未付款</span>
               <br />
               {{ item.total | numFormat | dollarSign }}
             </td>
@@ -150,17 +150,17 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-10 mx-auto my-2">
-                <div class="text-primary">訂單編號</div>
+                <div class="text-muted">訂單編號</div>
                 <div>{{ order.id }}</div>
               </div>
               <div class="col-10 mx-auto my-2">
-                <div class="text-primary">成立時間</div>
+                <div class="text-muted">成立時間</div>
                 <i>{{
                   new Date(order.create_at * 1000).toLocaleDateString()
                 }}</i>
               </div>
               <div class="col-12 my-2">
-                <div class="text-primary">購買清單</div>
+                <div class="text-muted">購買清單</div>
                 <div
                   class="border-bottom w-75 mx-auto"
                   v-for="product in order.products"
@@ -171,18 +171,18 @@
                   {{ product.product.price | numFormat | dollarSign }} x
                   {{ product.qty }}{{ product.product.unit }}
                   <br />
-                  <span v-if="product.coupon" class="text-success"
+                  <span v-if="product.coupon" class="text-muted"
                     >有使用優惠券</span
                   >
                 </div>
                 合計：{{ order.total | numFormat | dollarSign }}
               </div>
               <div class="col-10 mx-auto my-2">
-                <div class="text-primary">付款狀態</div>
+                <div class="text-muted">付款狀態</div>
                 <div>
                   <div
-                    class="text-success"
-                    :class="{ 'text-danger': order.is_paid === false }"
+                    class="text-dark"
+                    :class="{ 'text-muted': order.is_paid === false }"
                   >
                     <span v-if="order.is_paid">已付款</span>
                     <span v-else>未付款</span>
