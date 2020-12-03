@@ -44,7 +44,6 @@
         <thead>
           <tr>
             <th scope="col">訂單編號</th>
-
             <th scope="col">明細</th>
             <th scope="col">應付金額</th>
           </tr>

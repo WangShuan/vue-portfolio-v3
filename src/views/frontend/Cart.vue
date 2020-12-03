@@ -696,9 +696,9 @@ export default {
         vm.isLoading = false;
         if (res.data.success) {
           vm.randoms = [];
-          let products = res.data.products.filter(function(item) {
-            return item.is_enabled == 1;
-          });
+          let products = res.data.products.filter(
+            (item) => item.is_enabled === 1
+          );
           let arr = products;
           let ranNum = 4;
           for (let i = 0; i < ranNum; i++) {

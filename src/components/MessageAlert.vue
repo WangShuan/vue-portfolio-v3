@@ -3,7 +3,7 @@
     <div class="message-alert">
       <div
         class="alert alert-dismissible"
-        :class="'alert-' + item.status"
+        :class="`alert-${item.status}`"
         v-for="(item, i) in messages"
         :key="i"
       >

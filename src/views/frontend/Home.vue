@@ -447,9 +447,9 @@ export default {
         vm.isLoading = false;
         if (res.data.success) {
           vm.randoms = [];
-          let products = res.data.products.filter(function(item) {
-            return item.is_enabled == 1;
-          });
+          let products = res.data.products.filter(
+            (item) => item.is_enabled === 1
+          );
           let arr = products;
           let ranNum = 3;
           if (vm.screenWidth > 768) {
@@ -470,9 +470,7 @@ export default {
     },
     addCart(id, num = 1) {
       const vm = this;
-      let rel = vm.cart.find((item) => {
-        return item.product_id === id;
-      });
+      let rel = vm.cart.find((item) => item.product_id === id);
       let obj;
       if (rel) {
         obj = { product_id: rel.product_id, qty: rel.qty + 1 };

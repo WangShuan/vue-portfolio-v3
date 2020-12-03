@@ -140,9 +140,9 @@ export default {
             arr = [arr];
           }
           vm.isLoading = false;
-          vm.products = vm.products.filter(function(item) {
-            return arr.indexOf(item.id) !== -1;
-          });
+          vm.products = vm.products.filter(
+            (item) => arr.indexOf(item.id) !== -1
+          );
         } else {
           vm.$bus.$emit("message:push", res.data.message, "danger");
         }
@@ -189,9 +189,7 @@ export default {
     addCart(id, num = 1) {
       const vm = this;
       if (typeof id === "string") {
-        let rel = vm.cart.find((item) => {
-          return item.product_id === id;
-        });
+        let rel = vm.cart.find((item) => item.product_id === id);
         let obj;
         if (rel) {
           obj = { product_id: rel.product_id, qty: num + rel.qty };
@@ -229,9 +227,7 @@ export default {
         }
       } else {
         id.forEach(function(item) {
-          let rel = vm.cart.find((cart) => {
-            return cart.product_id === item.id;
-          });
+          let rel = vm.cart.find((cart) => cart.product_id === item.id);
           let obj;
           if (rel) {
             obj = { product_id: rel.product_id, qty: num + rel.qty };

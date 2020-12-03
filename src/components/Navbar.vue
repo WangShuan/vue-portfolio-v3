@@ -87,14 +87,15 @@ export default {
   },
   methods: {
     signout() {
-      this.isLoading = true;
+      const vm = this;
+      vm.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}logout`;
-      this.$http.post(api).then((res) => {
+      vm.$http.post(api).then((res) => {
         if (res.data.success) {
-          this.isLoading = false;
-          this.$router.push("/login");
+          vm.isLoading = false;
+          vm.$router.push("/login");
         } else {
-          this.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit("message:push", res.data.message, "danger");
         }
       });
     },

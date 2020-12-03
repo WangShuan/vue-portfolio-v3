@@ -239,9 +239,7 @@ export default {
     },
     addCart(id, num = 1) {
       const vm = this;
-      let rel = vm.cart.find((item) => {
-        return item.product_id === id;
-      });
+      let rel = vm.cart.find((item) => item.product_id === id);
       let obj;
       if (rel) {
         obj = { product_id: rel.product_id, qty: num + rel.qty };
@@ -281,9 +279,7 @@ export default {
     },
     buyNow(id, num = 1) {
       const vm = this;
-      let rel = vm.cart.find((item) => {
-        return item.product_id === id;
-      });
+      let rel = vm.cart.find((item) => item.product_id === id);
       let obj;
       if (rel) {
         obj = { product_id: rel.product_id, qty: num + rel.qty };
