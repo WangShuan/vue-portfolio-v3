@@ -18,6 +18,7 @@
         </button>
       </div>
     </div>
+
     <div v-if="this.$route.path.indexOf('admin') === -1">
       <router-link
         v-if="this.$route.path.indexOf('test') === -1 && cart.num > 0"
@@ -132,6 +133,9 @@ export default {
   top: 56px;
   right: 10px;
   z-index: 1100;
+  & .close {
+    line-height: 16px;
+  }
 }
 
 .cart {

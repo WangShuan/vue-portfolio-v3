@@ -546,7 +546,7 @@ export default {
   mounted() {
     const vm = this;
     vm.randomProducts();
-    vm.$bus.$emit("message:push", "歡迎光臨拼圖迷～❤️", "primary");
+    vm.$bus.$emit("message:push", "歡迎光臨拼圖迷～❤️", "light");
     vm.getCart();
   },
 };
