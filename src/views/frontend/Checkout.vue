@@ -69,10 +69,11 @@
                       <p>
                         {{ item.product.title }}
                         <br />
-                        <span class="text-muted"
-                          >NT${{ item.product.price }}</span
-                        >
-                        x{{ item.qty }}
+                        <span class="text-muted">
+                          NT${{ item.product.price }}
+                        </span>
+                        x
+                        {{ item.qty }}
                       </p>
                     </td>
                   </tr>
@@ -90,7 +91,7 @@
               <div class="progress mx-lg-5">
                 <div class="progress-bar" :class="step"></div>
               </div>
-              <div v-if="times == 1" class="my-3">
+              <div v-if="times === 1" class="my-3">
                 <div class="border p-3 mx-lg-5">
                   <h5 class="my-3">收件人資料</h5>
                   <table class="table text-dark m-0">
@@ -115,7 +116,7 @@
                   </table>
                 </div>
               </div>
-              <div v-else-if="times == 2" class="my-3">
+              <div v-else-if="times === 2" class="my-3">
                 <div class="border p-3 mx-lg-5">
                   <h5 class="my-3">付款方式</h5>
                   <div class="my-3">
@@ -129,9 +130,9 @@
                         value="1"
                         v-model="paymethods"
                       />
-                      <label class="custom-control-label" for="getandpay"
-                        >取貨付款</label
-                      >
+                      <label class="custom-control-label" for="getandpay">
+                        取貨付款
+                      </label>
                     </div>
                     <div class="custom-control custom-radio">
                       <input
@@ -143,12 +144,12 @@
                         v-model="paymethods"
                         value="2"
                       />
-                      <label class="custom-control-label" for="transfer"
-                        >銀行轉帳</label
-                      >
+                      <label class="custom-control-label" for="transfer">
+                        銀行轉帳
+                      </label>
                     </div>
                   </div>
-                  <div class="bank" :class="{ 'd-none': paymethods == 1 }">
+                  <div class="bank" :class="{ 'd-none': paymethods === '1' }">
                     <p class="my-3">ATM 轉帳繳款資料如下</p>
                     <table class="table table-striped table-bordered text-dark">
                       <tbody>
@@ -188,25 +189,36 @@
                       <td>{{ order.user.address }}</td>
                     </tr>
                     <tr>
+                      <th>
+                        購買品項 :
+                      </th>
+                      <td>
+                        <span v-for="item in order.products" :key="item.id">
+                          {{ item.product.title }} x {{ item.qty }}
+                          <br />
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
                       <th>付款方式 :</th>
-                      <td v-if="paymethods == 1">貨到付款</td>
-                      <td v-else-if="paymethods == 2">ATM 匯款</td>
+                      <td v-if="paymethods === '1'">貨到付款</td>
+                      <td v-else-if="paymethods === '2'">ATM 匯款</td>
                     </tr>
                     <tr>
                       <th>付款狀態 :</th>
                       <td
                         class="text-muted"
-                        v-if="paymethods == 1 && order.is_paid"
+                        v-if="paymethods === '1' && order.is_paid"
                       >
                         已選擇貨到付款
                       </td>
                       <td
                         class="text-muted"
-                        v-else-if="paymethods == 2 && order.is_paid"
+                        v-else-if="paymethods === '2' && order.is_paid"
                       >
                         已選擇ATM 匯款
                       </td>
-                      <td class="text-muted" v-if="order.is_paid == false">
+                      <td class="text-muted" v-if="order.is_paid === false">
                         <i>等待付款中</i>
                       </td>
                     </tr>
@@ -245,7 +257,7 @@ export default {
         "w-100": false,
       },
       times: 1,
-      paymethods: 1,
+      paymethods: "1",
       card: {
         name: "",
         num: "",
@@ -277,9 +289,9 @@ export default {
       const vm = this;
       vm.isLoading = true;
       vm.times++;
-      if (times == 1) {
+      if (times === 1) {
         vm.step["w-50"] = true;
-      } else if (times == 2) {
+      } else if (times === 2) {
         vm.step["w-100"] = true;
         const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/pay/${vm.orderId}`;
         vm.$http.post(api).then((res) => {
@@ -302,9 +314,9 @@ export default {
   watch: {
     paymethods: function() {
       const vm = this;
-      if (vm.paymethods == 1) {
+      if (vm.paymethods === "1") {
         $(".bank").hide();
-      } else if (vm.paymethods == 2) {
+      } else if (vm.paymethods === "2") {
         $(".bank").show();
       }
     },
