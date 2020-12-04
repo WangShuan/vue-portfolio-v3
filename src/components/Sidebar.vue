@@ -5,7 +5,10 @@
         <h6
           class="d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
         >
-          <span> <i class="fa fa-user" aria-hidden="true"></i> 管理員 </span>
+          <span>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            管理員
+          </span>
         </h6>
         <ul class="nav text-left ml-3">
           <li class="nav-item">
@@ -27,7 +30,10 @@
         <h6
           class="d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
         >
-          <span> <i class="fa fa-cogs" aria-hidden="true"></i> 功能 </span>
+          <span>
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+            功能
+          </span>
         </h6>
         <ul class="nav text-left ml-3">
           <li class="nav-item">

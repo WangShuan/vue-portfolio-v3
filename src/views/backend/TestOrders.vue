@@ -61,7 +61,8 @@
       v-if="cart.total > 0"
     >
       <h4 class="my-3">
-        <i class="fa fa-shopping-cart" aria-hidden="true"></i> 購物車清單
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        購物車清單
       </h4>
       <table class="table table-striped table-bordered text-dark mt-4">
         <thead class="thead">
@@ -89,9 +90,9 @@
             </td>
             <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
             <td class="text-right">
-              <del class="text-muted" v-if="cart.final_total !== cart.total">{{
-                item.total | numFormat | dollarSign
-              }}</del>
+              <del class="text-muted" v-if="cart.final_total !== cart.total">
+                {{ item.total | numFormat | dollarSign }}
+              </del>
               <template v-else>
                 {{ item.total | numFormat | dollarSign }}
               </template>
@@ -157,11 +158,9 @@
                 {{ item.product.title }} × {{ item.qty }}
               </div>
               <div class="float-right">
-                <del
-                  class="text-muted"
-                  v-if="cart.final_total !== cart.total"
-                  >{{ item.total | numFormat | dollarSign }}</del
-                >
+                <del class="text-muted" v-if="cart.final_total !== cart.total">
+                  {{ item.total | numFormat | dollarSign }}
+                </del>
                 <template v-else>
                   {{ item.total | numFormat | dollarSign }}
                 </template>
@@ -262,9 +261,9 @@
                       :class="{ 'is-invalid': failed }"
                       placeholder="請輸入收件人姓名"
                     />
-                    <span v-if="failed" class="text-danger">{{
-                      errors[0]
-                    }}</span>
+                    <span v-if="failed" class="text-danger">
+                      {{ errors[0] }}
+                    </span>
                   </ValidationProvider>
                 </div>
                 <div class="form-group col-md-7">
@@ -283,9 +282,9 @@
                       :class="{ 'is-invalid': failed }"
                       placeholder="請輸入收件人聯絡電話"
                     />
-                    <span v-if="failed" class="text-danger">{{
-                      errors[0]
-                    }}</span>
+                    <span v-if="failed" class="text-danger">
+                      {{ errors[0] }}
+                    </span>
                   </ValidationProvider>
                 </div>
               </div>
@@ -370,17 +369,17 @@
               <div class="h5" v-if="!product.price">
                 {{ product.origin_price }} 元
               </div>
-              <del class="h6 text-muted" v-if="product.price"
-                >原價 {{ product.origin_price }} 元</del
-              >
+              <del class="h6 text-muted" v-if="product.price">
+                原價 {{ product.origin_price }} 元
+              </del>
               <div class="h5 text-dark" v-if="product.price">
                 現在只要 {{ product.price }} 元
               </div>
             </div>
             <select name class="form-control mt-3" v-model="product.num">
-              <option v-for="num in 10" :key="num" :value="num"
-                >選購 {{ num }} {{ product.unit }}</option
-              >
+              <option v-for="num in 10" :key="num" :value="num">
+                選購 {{ num }} {{ product.unit }}
+              </option>
             </select>
           </div>
           <div class="modal-footer">

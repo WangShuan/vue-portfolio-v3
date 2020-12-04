@@ -62,14 +62,14 @@
               <div v-for="product in item.products" :key="product.id">
                 {{ product.product.title }}
                 <br />
-                <span class="text-muted"
-                  >{{ product.product.price | numFormat | dollarSign }} x
-                  {{ product.qty }}{{ product.product.unit }}</span
-                >
+                <span class="text-muted">
+                  {{ product.product.price | numFormat | dollarSign }} x
+                  {{ product.qty }}{{ product.product.unit }}
+                </span>
                 <br />
-                <span v-if="product.coupon" class="text-muted"
-                  >有使用優惠券</span
-                >
+                <span v-if="product.coupon" class="text-muted">
+                  有使用優惠券
+                </span>
               </div>
             </td>
             <td :class="{ 'text-muted': !item.is_paid }">
@@ -154,9 +154,9 @@
               </div>
               <div class="col-10 mx-auto my-2">
                 <div class="text-muted">成立時間</div>
-                <i>{{
-                  new Date(order.create_at * 1000).toLocaleDateString()
-                }}</i>
+                <i>
+                  {{ new Date(order.create_at * 1000).toLocaleDateString() }}
+                </i>
               </div>
               <div class="col-12 my-2">
                 <div class="text-muted">購買清單</div>
@@ -170,9 +170,9 @@
                   {{ product.product.price | numFormat | dollarSign }} x
                   {{ product.qty }}{{ product.product.unit }}
                   <br />
-                  <span v-if="product.coupon" class="text-muted"
-                    >有使用優惠券</span
-                  >
+                  <span v-if="product.coupon" class="text-muted">
+                    有使用優惠券
+                  </span>
                 </div>
                 合計：{{ order.total | numFormat | dollarSign }}
               </div>

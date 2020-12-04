@@ -11,8 +11,9 @@
       <h4 class="my-5 pc">
         您的喜好項目為空，
         <br />
-        將在<span class="h3 text-danger" v-if="time >= 0"> {{ time }} </span
-        >秒後跳轉回商品列表
+        將在
+        <span class="h3 text-danger" v-if="time >= 0"> {{ time }} </span>
+        秒後跳轉回商品列表
       </h4>
     </div>
 
@@ -25,8 +26,9 @@
       <h6 class="my-5 mobile">
         您的喜好項目為空，
         <br />
-        將在<span class="h3 text-danger" v-if="time >= 0"> {{ time }} </span
-        >秒後跳轉回商品列表
+        將在
+        <span class="h3 text-danger" v-if="time >= 0"> {{ time }} </span>
+        秒後跳轉回商品列表
       </h6>
     </div>
 
@@ -95,9 +97,9 @@
                 </button>
               </td>
               <td class="align-middle">
-                <router-link class="text-muted" :to="`/product/${item.id}`">{{
-                  item.title
-                }}</router-link>
+                <router-link class="text-muted" :to="`/product/${item.id}`">
+                  {{ item.title }}
+                </router-link>
                 <i
                   class="fa ml-2 text-muted fa-arrow-circle-right"
                   aria-hidden="true"

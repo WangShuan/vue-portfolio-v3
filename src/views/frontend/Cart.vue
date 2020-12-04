@@ -6,7 +6,8 @@
     <div class="pc row">
       <div class="col-lg-7 mb-3" :class="{ 'col-lg-8': cart.total > 0 }">
         <h4 class="my-4 text-dark">
-          <i class="fa fa-shopping-cart" aria-hidden="true"></i> 購物車清單
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          購物車清單
         </h4>
         <div v-if="cart.total > 0">
           <table class="table table-striped table-bordered text-dark">
@@ -28,14 +29,14 @@
                   </button>
                 </td>
                 <td class="align-middle">
-                  <u
-                    ><router-link
+                  <u>
+                    <router-link
                       class="text-muted"
                       :to="`/product/${item.product.id}`"
                     >
                       {{ item.product.title }}
-                    </router-link></u
-                  >
+                    </router-link>
+                  </u>
                   <div class="text-muted" v-if="final_total !== total">
                     已套用優惠券
                   </div>
@@ -67,14 +68,14 @@
                 </td>
                 <td class="align-middle text-right">
                   <del class="text-muted" v-if="final_total !== total">
-                    {{ item.product.price | numFormat | dollarSign }}/{{
-                      item.product.unit
-                    }}
+                    {{ item.product.price | numFormat | dollarSign }}
+                    /
+                    {{ item.product.unit }}
                   </del>
                   <template v-else>
-                    {{ item.product.price | numFormat | dollarSign }}/{{
-                      item.product.unit
-                    }}
+                    {{ item.product.price | numFormat | dollarSign }}
+                    /
+                    {{ item.product.unit }}
                   </template>
                   <div class="text-dark" v-if="final_total !== total">
                     折扣後
@@ -110,9 +111,10 @@
         <div v-if="cart.total === 0">
           <p class="lead mt-5">
             您的購物車沒有任何商品，
-            <router-link to="/products/all" class="text-muted"
-              >回商品列表 </router-link
-            >選購。
+            <router-link to="/products/all" class="text-muted">
+              回商品列表
+            </router-link>
+            選購。
           </p>
         </div>
       </div>
@@ -121,7 +123,8 @@
         v-if="cart.total > 0"
       >
         <h4 class="my-4">
-          <i class="fa fa-pencil" aria-hidden="true"></i> 訂單摘要
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+          訂單摘要
         </h4>
         <div class="border p-3">
           <h6>
@@ -156,7 +159,8 @@
       </div>
       <div class="col-lg-5 col-md-8 mx-auto" v-if="cart.total === 0">
         <h4 class="my-4 pc">
-          <i class="fa fa-star" aria-hidden="true"></i> 為您推薦
+          <i class="fa fa-star" aria-hidden="true"></i>
+          為您推薦
         </h4>
         <ul class="list-unstyled my-4">
           <li
@@ -196,7 +200,8 @@
     </div>
     <div class="mobile" v-if="cart.total > 0">
       <h5 class="my-4">
-        <i class="fa fa-shopping-cart" aria-hidden="true"></i> 購物車清單
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        購物車清單
       </h5>
       <table class="table table-striped table-bordered text-dark mt-4">
         <thead class="thead">
@@ -219,11 +224,9 @@
                 {{ item.product.title }} × {{ item.qty }}
               </div>
               <div class="float-right">
-                <del
-                  class="text-muted"
-                  v-if="cart.final_total !== cart.total"
-                  >{{ item.total | numFormat | dollarSign }}</del
-                >
+                <del class="text-muted" v-if="cart.final_total !== cart.total">
+                  {{ item.total | numFormat | dollarSign }}
+                </del>
                 <template v-else>
                   {{ item.total | numFormat | dollarSign }}
                 </template>
@@ -286,18 +289,21 @@
     </div>
     <div class="mobile" v-if="cart.total === 0">
       <h5 class="my-4">
-        <i class="fa fa-shopping-cart" aria-hidden="true"></i> 購物車清單
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        購物車清單
       </h5>
       <p class="lead">
         您的購物車目前沒有任何商品，
         <br />請
-        <router-link to="/products/all" class="text-muted mr-1"
-          >回商品列表 </router-link
-        >選購。
+        <router-link to="/products/all" class="text-muted mr-1">
+          回商品列表
+        </router-link>
+        選購。
       </p>
       <hr />
       <h5 class="my-4 mobile">
-        <i class="fa fa-star" aria-hidden="true"></i> 為您推薦
+        <i class="fa fa-star" aria-hidden="true"></i>
+        為您推薦
       </h5>
       <ul class="list-unstyled my-4">
         <li
@@ -359,9 +365,9 @@
                 <div class="h5" v-if="!item.price">
                   {{ item.origin_price }} 元
                 </div>
-                <del class="text-muted" v-if="item.price"
-                  >原價 {{ item.origin_price }} 元</del
-                >
+                <del class="text-muted" v-if="item.price">
+                  原價 {{ item.origin_price }} 元
+                </del>
 
                 <div class="h5 text-dark" v-if="item.price">
                   現在只要 {{ item.price }} 元
@@ -437,9 +443,9 @@
                           :class="{ 'is-invalid': failed }"
                           placeholder="請輸入收件人電子郵件"
                         />
-                        <span v-if="failed" class="text-danger">{{
-                          errors[0]
-                        }}</span>
+                        <span v-if="failed" class="text-danger">
+                          {{ errors[0] }}
+                        </span>
                       </ValidationProvider>
                     </div>
                     <div class="form-row">
@@ -462,9 +468,9 @@
                             :class="{ 'is-invalid': failed }"
                             placeholder="請輸入收件人姓名"
                           />
-                          <span v-if="failed" class="text-danger">{{
-                            errors[0]
-                          }}</span>
+                          <span v-if="failed" class="text-danger">
+                            {{ errors[0] }}
+                          </span>
                         </ValidationProvider>
                       </div>
                       <div class="form-group col-md-7">
@@ -486,9 +492,9 @@
                             :class="{ 'is-invalid': failed }"
                             placeholder="請輸入收件人聯絡電話"
                           />
-                          <span v-if="failed" class="text-danger">{{
-                            errors[0]
-                          }}</span>
+                          <span v-if="failed" class="text-danger">
+                            {{ errors[0] }}
+                          </span>
                         </ValidationProvider>
                       </div>
                     </div>
@@ -511,9 +517,9 @@
                           :class="{ 'is-invalid': failed }"
                           placeholder="請輸入收件人地址"
                         />
-                        <span v-if="failed" class="text-danger">{{
-                          errors[0]
-                        }}</span>
+                        <span v-if="failed" class="text-danger">
+                          {{ errors[0] }}
+                        </span>
                       </ValidationProvider>
                     </div>
 
@@ -636,7 +642,7 @@ export default {
     },
     addQty(id) {
       const vm = this;
-      vm.cart.carts.forEach(function(item) {
+      vm.cart.carts.forEach((item) => {
         if (item.id === id) {
           item.qty = item.qty + 1;
         }

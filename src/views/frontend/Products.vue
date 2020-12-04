@@ -54,9 +54,9 @@
                   {{ item.title }}
                   <br />
                   <small>
-                    <span class="badge badge-secondary">{{
-                      item.category
-                    }}</span>
+                    <span class="badge badge-secondary">
+                      {{ item.category }}
+                    </span>
                   </small>
                 </h5>
                 {{ item.content }}
@@ -64,9 +64,9 @@
                   <div class="h5" v-if="!item.price">
                     {{ item.origin_price }} 元
                   </div>
-                  <del class="text-muted" v-if="item.price"
-                    >原價 {{ item.origin_price }} 元</del
-                  >
+                  <del class="text-muted" v-if="item.price">
+                    原價 {{ item.origin_price }} 元
+                  </del>
 
                   <div class="h5" v-if="item.price">
                     現在只要 {{ item.price }} 元
@@ -94,7 +94,7 @@
         </div>
 
         <Pagination
-          v-if="active.path == 'all'"
+          v-if="active.path === 'all'"
           :pages="pagination"
           @event="getPage"
         ></Pagination>

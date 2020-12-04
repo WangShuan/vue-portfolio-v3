@@ -20,9 +20,9 @@
               <div class="h5" v-if="!item.price">
                 {{ item.origin_price }} 元
               </div>
-              <del class="h6 text-muted m-auto" v-if="item.price"
-                >原價${{ item.origin_price }}</del
-              >
+              <del class="h6 text-muted m-auto" v-if="item.price">
+                原價${{ item.origin_price }}
+              </del>
               <div class="h5 text-dark m-auto" v-if="item.price">
                 現在只要${{ item.price }}
               </div>

@@ -36,15 +36,16 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              >用戶選單</a
             >
+              用戶選單
+            </a>
             <div
               class="dropdown-menu dropdown-menu-right"
               aria-labelledby="navbarDropdown"
             >
               <router-link class="dropdown-item" to="/cart">
-                <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i
-                >購物車頁面
+                <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>
+                購物車頁面
               </router-link>
               <router-link class="dropdown-item" to="/coupon">
                 <i class="fa fa-ticket mr-2" aria-hidden="true"></i>優惠券專區
@@ -79,8 +80,9 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          >用戶選單</a
         >
+          用戶選單
+        </a>
         <div
           class="dropdown-menu dropdown-menu-right"
           aria-labelledby="navbarDropdown"
@@ -127,8 +129,12 @@
           <h2 class="mt-3">歡迎光臨拼圖迷❤️</h2>
           <p class="h4 font-weight-normal">
             市面上進口拼圖網路商店的銷售冠軍🏆
-            <br />擁有歐洲三大進口拼圖獨家代理權！ <br />銷量第一產品 ➡️
-            紐約天際線-2000片 <br />本公司產品承諾正版保證- 皆附保證書📖
+            <br />
+            擁有歐洲三大進口拼圖獨家代理權！
+            <br />
+            銷量第一產品 ➡️ 紐約天際線-2000片
+            <br />
+            本公司產品承諾正版保證- 皆附保證書📖
           </p>
         </div>
         <button
@@ -149,15 +155,18 @@
           <h4 class="my-3">歡迎光臨拼圖迷❤️</h4>
           <p class="h6 font-weight-normal">
             進口拼圖網路商店的銷售冠軍🏆
-            <br />擁有歐洲三大拼圖獨家代理權！ <br />銷量第一產品
-            <u
-              ><router-link
+            <br />
+            擁有歐洲三大拼圖獨家代理權！
+            <br />
+            銷量第一產品
+            <u>
+              <router-link
                 class="text-muted ml-2"
                 to="/product/-MN1R8dGkdl9mtI2viKd"
               >
                 紐約天際線-2000片
-              </router-link></u
-            >
+              </router-link>
+            </u>
             <br />本公司承諾正版保證 - 皆附保證書📖
           </p>
         </div>
@@ -175,8 +184,8 @@
               <h2>特快的出貨</h2>
               <p class="lead">
                 當天下訂立即出貨！全店所有商品提供
-                <b class="text-danger">十二小時</b
-                >內到貨服務！快讓拼圖迷用最快速的服務把你寵壞
+                <b class="text-danger"> 十二小時 </b>
+                內到貨服務！快讓拼圖迷用最快速的服務把你寵壞
               </p>
             </div>
             <div class="col-md-4">
@@ -184,8 +193,8 @@
               <h2>完善的安全</h2>
               <p class="lead">
                 拼圖迷採用全世界最先進的
-                <b class="text-danger">SSL傳輸加密</b
-                >機制，讓您能夠絕對安全安心地享受網上購物的樂趣
+                <b class="text-danger">SSL傳輸加密</b>
+                機制，讓您能夠絕對安全安心地享受網上購物的樂趣
               </p>
             </div>
             <div class="col-md-4">
@@ -195,8 +204,8 @@
               />
               <h2>簡單的設計</h2>
               <p class="lead">
-                <b class="text-danger">一目瞭然</b
-                >的排版、分頁，讓您輕鬆知道如何購買、如何結帳，就連第一次瀏覽也不用怕找不到下單方式
+                <b class="text-danger">一目瞭然</b>
+                的排版、分頁，讓您輕鬆知道如何購買、如何結帳，就連第一次瀏覽也不用怕找不到下單方式
               </p>
             </div>
           </div>
@@ -231,9 +240,10 @@
               <p class="lead">
                 轉眼間 2020
                 年了，您的孩子長大了，您也成熟了，而我們，也老了！感謝這一路上多年來所有不管是新客舊客的支持與陪伴！在此宣佈！
-                <b class="font-italic">『拼圖迷』八歲囉！！！</b
-                >就讓我們一同歡慶這個美好的節日！感恩回饋不打烊 - 八週年全館
-                <u class="text-muted">免運費</u> 直接送給您！一起買爆拼圖吧😊
+                <b class="font-italic">『拼圖迷』八歲囉！！！</b>
+                就讓我們一同歡慶這個美好的節日！感恩回饋不打烊 - 八週年全館
+                <u class="text-muted">免運費</u>
+                直接送給您！一起買爆拼圖吧😊
               </p>
             </div>
           </div>
@@ -266,8 +276,8 @@
             <p class="text-lg">
               轉眼間 2020
               年了，您的孩子長大了，您也成熟了，而我們，也老了！感謝這一路上多年來所有不管是新客舊客的支持與陪伴！在此宣佈！
-              <b class="font-italic">『拼圖迷』八歲囉！！！</b
-              >就讓我們一同歡慶這個美好的節日！感恩回饋不打烊 - 八週年全館
+              <b class="font-italic">『拼圖迷』八歲囉！！！</b>
+              就讓我們一同歡慶這個美好的節日！感恩回饋不打烊 - 八週年全館
               <u class="text-muted">八折活動不限期</u>
               直接送給您！讓您買到手軟停不下來！今年也讓我們用破盤價寵壞您吧😊
             </p>
@@ -280,11 +290,7 @@
             <div class="col-md p-2" v-for="item in randoms" :key="item.id">
               <div class="card border-0 shadow-sm">
                 <div
-                  style="
-              height: 200px;
-              background-size: cover;
-              background-position: center;
-            "
+                  style="height: 200px;background-size: cover;background-position: center;"
                   :style="{
                     backgroundImage: `url(${item.imageUrl || item.image})`,
                   }"
@@ -294,9 +300,9 @@
                     {{ item.title }}
                     <br />
                     <small>
-                      <span class="badge badge-dark p-1">{{
-                        item.category
-                      }}</span>
+                      <span class="badge badge-dark p-1">
+                        {{ item.category }}
+                      </span>
                     </small>
                   </h5>
                   <p class="card-text">{{ item.content }}</p>
@@ -337,8 +343,10 @@
               class="text-dark"
               href="#"
               @click.prevent="randomProducts('隨機推薦已更新!')"
-              >點我</a
-            >換一組試試😊
+            >
+              點我
+            </a>
+            換一組試試😊
           </div>
         </div>
       </div>
@@ -371,9 +379,9 @@
         <div>
           <small class="d-block">
             © Company 2020 Made with
-            <a class="text-muted" href="https://bootstrap.hexschool.com/"
-              >Bootstrap4</a
-            >
+            <a class="text-muted" href="https://bootstrap.hexschool.com/">
+              Bootstrap4
+            </a>
           </small>
           <i>本網頁僅供學習使用 無任何商業用途</i>
         </div>

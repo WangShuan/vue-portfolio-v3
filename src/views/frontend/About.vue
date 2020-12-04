@@ -1,7 +1,8 @@
 <template>
   <div class="container ">
     <h2 class="my-4 text-dark">
-      <i aria-hidden="true" class="fa fa-info mr-2"></i>關於拼圖迷
+      <i aria-hidden="true" class="fa fa-info mr-2"></i>
+      關於拼圖迷
     </h2>
     <div class="lead">
       <p>
@@ -81,7 +82,7 @@
       各家品牌介紹
     </h3>
     <div class="card-group">
-      <div class="card">
+      <div class="card" id="castorland">
         <img
           alt="該品牌介紹圖"
           src="@/assets/image/castorland.jpg"
@@ -102,7 +103,7 @@
           <span class="text-muted">最後更新於 2020/10/03</span>
         </div>
       </div>
-      <div class="card">
+      <div class="card" id="clementoni">
         <img
           alt="該品牌介紹圖"
           src="@/assets/image/clementoni.jpg"
@@ -129,7 +130,7 @@
           <span class="text-muted">最後更新於 2020/10/03</span>
         </div>
       </div>
-      <div class="card">
+      <div class="card" id="ravensburger">
         <img
           alt="該品牌介紹圖"
           src="@/assets/image/ravensburger.jpg"
@@ -207,8 +208,8 @@ export default {
     return {};
   },
   methods: {
-    goBrand() {
-      $("html,body").animate({ scrollTop: $(".card-group").offset().top }, 800);
+    goBrand(id) {
+      $("html,body").animate({ scrollTop: $(`#${id}`).offset().top }, 800);
     },
   },
 };

@@ -20,8 +20,9 @@
             class="nav-link text-light font-weight-bold"
             href="#"
             @click.prevent="signout"
-            >登出</a
           >
+            登出
+          </a>
         </li>
       </ul>
     </nav>
@@ -43,8 +44,9 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              >選單</a
             >
+              選單
+            </a>
             <div class="dropdown-menu w-auto dropdown-menu-right">
               <router-link class="dropdown-item text-dark" to="/admin/products">
                 <i class="fa-wrench fa" aria-hidden="true"></i>

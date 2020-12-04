@@ -75,7 +75,7 @@
                 <tbody>
                   <tr>
                     <th class="border-0" width="120">Email :</th>
-                    <td class="border-0" width>{{ order.user.email }}</td>
+                    <td class="border-0">{{ order.user.email }}</td>
                   </tr>
                   <tr>
                     <th>姓名 :</th>

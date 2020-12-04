@@ -52,8 +52,9 @@
                 <span
                   v-if="product.id === '-MN1R8dGkdl9mtI2viKd'"
                   class="badge badge-danger small"
-                  >銷售冠軍</span
                 >
+                  銷售冠軍
+                </span>
               </h4>
               <p class="text-dark">{{ product.content }}</p>
               <div class="input-group mb-2">
@@ -87,9 +88,9 @@
 
               <div class="mt-2 mb-3">
                 <select class="input-group p-2" v-model="product.num">
-                  <option v-for="num in 10" :key="num" :value="num"
-                    >選購 {{ num }} {{ product.unit }}</option
-                  >
+                  <option v-for="num in 10" :key="num" :value="num">
+                    選購 {{ num }} {{ product.unit }}
+                  </option>
                 </select>
                 <div class="input-group m-0 row">
                   <button
@@ -109,9 +110,9 @@
 
               <div>
                 <h5 class="text-right" v-if="product.price > 0">
-                  <del class="text-muted h6"
-                    >原價 {{ product.origin_price }} 元</del
-                  >
+                  <del class="text-muted h6">
+                    原價 {{ product.origin_price }} 元
+                  </del>
                   <br />
 
                   <h2 class="float-right ml-2">
@@ -130,7 +131,7 @@
           <div class="col-md-12 mt-2 text-left">
             <h5 class="bg-light text-dark p-2">商品描述：</h5>
             <pre v-html="product.description" class="m-3 text-dark"></pre>
-            <p class="mt-3 text-center text-muted">
+            <p class="mt-3 text-muted">
               ***溫馨提醒：所有產品皆有提供七天鑑賞期***
             </p>
           </div>
@@ -138,9 +139,10 @@
             <a
               href="#"
               @click.prevent="$router.push(`/products/${product.category}`)"
-              class="float-right m-2"
-              >更多>></a
+              class="float-right m-2 text-muted"
             >
+              更多>>
+            </a>
             <h5 class="bg-light text-left text-dark p-2">類似商品：</h5>
             <div class="row text-dark">
               <div

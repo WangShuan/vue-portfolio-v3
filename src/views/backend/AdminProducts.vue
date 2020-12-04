@@ -114,7 +114,7 @@
         <thead>
           <tr>
             <th scope="col">操作</th>
-            <th scope="col">產品名稱 - 點擊修改</th>
+            <th scope="col">產品名稱 - click to edit</th>
           </tr>
         </thead>
         <tbody>
@@ -134,8 +134,9 @@
                 class="text-dark"
                 :class="{ 'text-muted': !item.is_enabled }"
                 @click.prevent="openModal(false, item)"
-                >{{ item.title }}</a
               >
+                {{ item.title }}
+              </a>
             </td>
           </tr>
         </tbody>
@@ -297,9 +298,9 @@
                       :true-value="1"
                       :false-value="0"
                     />
-                    <label class="form-check-label" for="is_enabled"
-                      >是否啟用</label
-                    >
+                    <label class="form-check-label" for="is_enabled">
+                      是否啟用
+                    </label>
                   </div>
                 </div>
               </div>
@@ -345,11 +346,13 @@
             </button>
           </div>
           <div class="modal-body lead">
-            是否刪除<br />
-            <strong class="text-light bg-dark p-1">{{
-              tempProduct.title
-            }}</strong>
-            商品<br />
+            是否刪除
+            <br />
+            <strong class="text-light bg-dark p-1">
+              {{ tempProduct.title }}
+            </strong>
+            商品
+            <br />
             (刪除後將無法恢復)。
           </div>
           <div class="modal-footer">

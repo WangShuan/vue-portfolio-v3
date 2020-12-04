@@ -13,7 +13,8 @@
           <div class="col-lg-4 col-md-6" v-if="!order.is_paid">
             <div class="border p-3 mb-3">
               <h5 class="mb-4">
-                <i class="fa fa-pencil" aria-hidden="true"></i> 訂單摘要
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                訂單摘要
               </h5>
               <h6>
                 <div class="float-left">小計：</div>
@@ -52,7 +53,8 @@
             </div>
             <div class="border p-3">
               <h5 class="mb-3">
-                <i class="fa fa-list-ol" aria-hidden="true"></i> 購物車內容
+                <i class="fa fa-list-ol" aria-hidden="true"></i>
+                購物車內容
               </h5>
               <hr />
               <table class="table table-borderless text-dark">

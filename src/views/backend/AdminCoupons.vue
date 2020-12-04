@@ -108,7 +108,7 @@
         <thead>
           <tr>
             <th scope="col">操作</th>
-            <th scope="col">優惠券 - 點擊編輯</th>
+            <th scope="col">優惠券 - click to edit</th>
           </tr>
         </thead>
         <tbody>
@@ -130,9 +130,9 @@
                 <b>{{ item.code }}</b>
               </i>
               <br />
-              <i class="text-muted"
-                >{{ new Date(item.due_date).toLocaleDateString() }} 截止</i
-              >
+              <i class="text-muted">
+                {{ new Date(item.due_date).toLocaleDateString() }} 截止
+              </i>
             </td>
           </tr>
         </tbody>
@@ -274,10 +274,10 @@
           </div>
           <div class="modal-body lead">
             是否刪除<br />
-            <strong class="text-light bg-dark p-1">{{
-              tempCoupon.title
-            }}</strong
-            ><br />
+            <strong class="text-light bg-dark p-1">
+              {{ tempCoupon.title }}
+            </strong>
+            <br />
             優惠券(刪除後將無法恢復)。
           </div>
           <div class="modal-footer">

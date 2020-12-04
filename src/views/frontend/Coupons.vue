@@ -75,9 +75,9 @@
               <p>
                 全館不限金額皆享優惠
                 <br />使用期限至
-                <u class="text-dark">{{
-                  new Date(item.due_date).toLocaleDateString()
-                }}</u>
+                <u class="text-dark">
+                  {{ new Date(item.due_date).toLocaleDateString() }}
+                </u>
               </p>
             </div>
             <div class="bg-icon">
@@ -125,17 +125,17 @@
             <hr />
             <p class="card-text text-dark">
               全館不限金額享
-              <span class="text-danger font-width-bolder"
-                >{{ item.percent }} 折</span
-              >
+              <span class="text-danger font-width-bolder">
+                {{ item.percent }} 折
+              </span>
               優惠
               <br />
               使用期限至 {{ new Date(item.due_date).toLocaleDateString() }}
               <br />
               <br />
-              <span class="text-muted"
-                >立即點擊複製下方優惠碼並在結帳時使用</span
-              >
+              <span class="text-muted">
+                立即點擊複製下方優惠碼並在結帳時使用
+              </span>
             </p>
             <input
               type="text"
