@@ -26,20 +26,19 @@ Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 axios.defaults.withCredentials = true
 
-Vue.component("loading", VueLoading)
+Vue.component('loading', VueLoading)
 
-Vue.filter('dollarSign', function(n) {
+Vue.filter('dollarSign', function (n) {
   return `$${n}`
 })
 
-Vue.filter("numFormat", function(n) {
-  let intPart = Number(n).toFixed(0)
-  let intPartFormat = intPart
+Vue.filter('numFormat', function (n) {
+  const intPart = Number(n).toFixed(0)
+  const intPartFormat = intPart
     .toString()
-    .replace(/(\d)(?=(?:\d{3})+$)/g, "$1,")
+    .replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
   return intPartFormat
 })
-
 
 new Vue({
   router,

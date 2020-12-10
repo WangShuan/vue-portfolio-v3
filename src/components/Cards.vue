@@ -51,23 +51,23 @@
 </template>
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  props: ["products"],
+  props: ['products'],
   methods: {
-    getProducts() {
-      this.$emit("getProducts");
+    getProducts () {
+      this.$emit('getProducts')
     },
-    getOneProduct(id) {
-      this.$emit("getOneProduct", id);
+    getOneProduct (id) {
+      this.$emit('getOneProduct', id)
     },
-    addCart(id) {
-      this.$emit("addCart", id);
-    },
+    addCart (id) {
+      this.$emit('addCart', id)
+    }
   },
-  created() {
-    this.$emit("getProducts");
-  },
-};
+  created () {
+    this.$emit('getProducts')
+  }
+}
 </script>

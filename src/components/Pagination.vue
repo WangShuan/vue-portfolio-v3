@@ -37,14 +37,14 @@
 </template>
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  props: ["pages"],
+  props: ['pages'],
   methods: {
-    getPages(num) {
-      this.$emit("event", num);
-    },
-  },
-};
+    getPages (num) {
+      this.$emit('event', num)
+    }
+  }
+}
 </script>

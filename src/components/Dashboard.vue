@@ -14,24 +14,24 @@
 </template>
 
 <script>
-import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
-import Alert from "@/components/MessageAlert";
+import Navbar from '@/components/Navbar'
+import Sidebar from '@/components/Sidebar'
+import Alert from '@/components/MessageAlert'
 
 export default {
   components: {
     Sidebar,
     Navbar,
-    Alert,
+    Alert
   },
-  created() {
+  created () {
     const myCookie = document.cookie.replace(
       /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-    this.$http.defaults.headers.common.Authorization = myCookie;
-  },
-};
+      '$1'
+    )
+    this.$http.defaults.headers.common.Authorization = myCookie
+  }
+}
 </script>
 
 <style>

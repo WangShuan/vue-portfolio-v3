@@ -299,91 +299,91 @@
 </template>
 
 <script>
-import $ from "jquery";
-import Pagination from "@/components/Pagination";
+import $ from 'jquery'
+import Pagination from '@/components/Pagination'
 
 export default {
-  data() {
+  data () {
     return {
       coupons: [],
       pagination: {},
       tempCoupon: {},
       isNew: false,
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   methods: {
-    getCoupons(page = 1) {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/coupons?page=${page}`;
+    getCoupons (page = 1) {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/coupons?page=${page}`
       this.$http.get(api).then((res) => {
-        vm.isLoading = false;
+        vm.isLoading = false
         if (res.data.success) {
-          vm.coupons = res.data.coupons;
-          vm.pagination = res.data.pagination;
+          vm.coupons = res.data.coupons
+          vm.pagination = res.data.pagination
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-      });
+      })
     },
-    openModal(isNew, item) {
+    openModal (isNew, item) {
       if (isNew) {
-        this.tempCoupon = {};
-        this.isNew = true;
+        this.tempCoupon = {}
+        this.isNew = true
       } else {
-        this.tempCoupon = { ...item };
-        this.isNew = false;
+        this.tempCoupon = { ...item }
+        this.isNew = false
       }
-      $("#couponModal").modal("show");
+      $('#couponModal').modal('show')
     },
-    updateCoupon() {
-      const vm = this;
-      vm.isLoading = true;
+    updateCoupon () {
+      const vm = this
+      vm.isLoading = true
 
-      let httpMethod = "post";
-      let api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/coupon`;
+      let httpMethod = 'post'
+      let api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/coupon`
       if (!vm.isNew) {
-        api = `${api}/${vm.tempCoupon.id}`;
-        httpMethod = "put";
+        api = `${api}/${vm.tempCoupon.id}`
+        httpMethod = 'put'
       }
-      vm.tempCoupon.due_date = Date.parse(vm.tempCoupon.due_date);
+      vm.tempCoupon.due_date = Date.parse(vm.tempCoupon.due_date)
       this.$http[httpMethod](api, { data: vm.tempCoupon }).then((res) => {
         if (res.data.success) {
-          $("#couponModal").modal("hide");
+          $('#couponModal').modal('hide')
         } else {
-          $("#couponModal").modal("hide");
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          $('#couponModal').modal('hide')
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-        vm.getCoupons();
-      });
+        vm.isLoading = false
+        vm.getCoupons()
+      })
     },
-    openDelModal(item) {
-      this.tempCoupon = { ...item };
-      $("#delCouponModal").modal("show");
+    openDelModal (item) {
+      this.tempCoupon = { ...item }
+      $('#delCouponModal').modal('show')
     },
-    deleteCoupon() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/coupon/${vm.tempCoupon.id}`;
+    deleteCoupon () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/coupon/${vm.tempCoupon.id}`
       this.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", res.data.message, "dark");
+          vm.$bus.$emit('message:push', res.data.message, 'dark')
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        $("#delCouponModal").modal("hide");
-        vm.isLoading = false;
-        vm.getCoupons();
-      });
-    },
+        $('#delCouponModal').modal('hide')
+        vm.isLoading = false
+        vm.getCoupons()
+      })
+    }
   },
-  created() {
-    this.getCoupons();
+  created () {
+    this.getCoupons()
   },
   components: {
-    Pagination,
-  },
-};
+    Pagination
+  }
+}
 </script>

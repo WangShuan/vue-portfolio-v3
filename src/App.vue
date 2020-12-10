@@ -6,14 +6,14 @@
 
 <script>
 export default {
-  name: "App",
+  name: 'App',
   watch: {
-    $route: function() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    },
-  },
-};
+    $route: function () {
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+    }
+  }
+}
 </script>
 
 <style lang="scss">

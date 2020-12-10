@@ -82,25 +82,25 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   methods: {
-    signout() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}logout`;
+    signout () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}logout`
       vm.$http.post(api).then((res) => {
         if (res.data.success) {
-          vm.isLoading = false;
-          vm.$router.push("/login");
+          vm.isLoading = false
+          vm.$router.push('/login')
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}
 </script>

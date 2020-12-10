@@ -56,74 +56,74 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery'
 export default {
-  name: "Navbar",
-  data() {
+  name: 'Navbar',
+  data () {
     return {
       messages: [],
-      cart: { num: 0 },
-    };
+      cart: { num: 0 }
+    }
   },
   methods: {
-    updateMessage(message, status) {
-      const timestamp = Math.floor(new Date() / 1000);
+    updateMessage (message, status) {
+      const timestamp = Math.floor(new Date() / 1000)
       this.messages.push({
         message,
         status,
-        timestamp,
-      });
-      this.removeMessageWithTiming(timestamp);
+        timestamp
+      })
+      this.removeMessageWithTiming(timestamp)
     },
-    removeMessage(num) {
-      this.messages.splice(num, 1);
+    removeMessage (num) {
+      this.messages.splice(num, 1)
     },
-    removeMessageWithTiming(timestamp) {
-      const vm = this;
+    removeMessageWithTiming (timestamp) {
+      const vm = this
       setTimeout(() => {
         vm.messages.forEach((item, i) => {
           if (item.timestamp === timestamp) {
-            vm.messages.splice(i, 1);
+            vm.messages.splice(i, 1)
           }
-        });
-      }, 5000);
+        })
+      }, 5000)
     },
-    getCart() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+    getCart () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
       vm.$http.get(api).then((res) => {
-        vm.isLoading = false;
+        vm.isLoading = false
         if (res.data.success) {
-          vm.cart.num = res.data.data.carts.length;
+          vm.cart.num = res.data.data.carts.length
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-      });
+      })
     },
-    goCart() {
-      const screenWidth = document.documentElement.clientWidth;
+    goCart () {
+      const screenWidth = document.documentElement.clientWidth
       if (screenWidth < 768) {
-        $("html,body").animate(
-          { scrollTop: $("#cart-list-mobile").offset().top },
+        $('html,body').animate(
+          { scrollTop: $('#cart-list-mobile').offset().top },
           800
-        );
+        )
       } else {
-        $("html,body").animate(
-          { scrollTop: $("#cart-list-pc").offset().top },
+        $('html,body').animate(
+          { scrollTop: $('#cart-list-pc').offset().top },
           800
-        );
+        )
       }
-    },
+    }
   },
-  created() {
-    const vm = this;
-    vm.$bus.$on("message:push", (message, status = "warning") => {
-      vm.getCart();
-      vm.updateMessage(message, status);
-    });
-  },
-};
+  created () {
+    const vm = this
+    vm.$bus.$on('message:push', (message, status = 'warning') => {
+      vm.getCart()
+      vm.updateMessage(message, status)
+    })
+  }
+}
 </script>
 
 <style lang="scss" scope>

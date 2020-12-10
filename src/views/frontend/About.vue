@@ -202,17 +202,17 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery'
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
   methods: {
-    goBrand(id) {
-      $("html,body").animate({ scrollTop: $(`#${id}`).offset().top }, 800);
-    },
-  },
-};
+    goBrand (id) {
+      $('html,body').animate({ scrollTop: $(`#${id}`).offset().top }, 800)
+    }
+  }
+}
 </script>
 
 <style scope>

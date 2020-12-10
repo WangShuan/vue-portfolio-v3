@@ -428,126 +428,128 @@
 </template>
 
 <script>
-import Alert from "@/components/MessageAlert";
+import Alert from '@/components/MessageAlert'
 
 export default {
-  data() {
+  data () {
     return {
       isLoading: false,
       randoms: [],
       cart: [],
-      screenWidth: document.documentElement.clientWidth,
-    };
+      screenWidth: document.documentElement.clientWidth
+    }
   },
   components: { Alert },
   methods: {
-    copy(e) {
-      e.currentTarget.select();
-      document.execCommand("Copy");
-      this.$bus.$emit("message:push", "複製成功", "dark");
+    copy (e) {
+      e.currentTarget.select()
+      document.execCommand('Copy')
+      this.$bus.$emit('message:push', '複製成功', 'dark')
     },
-    randomProducts(msg) {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`;
+    randomProducts (msg) {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
       vm.$http.get(api).then((res) => {
-        vm.isLoading = false;
+        vm.isLoading = false
         if (res.data.success) {
-          vm.randoms = [];
-          let products = res.data.products.filter(
+          vm.randoms = []
+          const products = res.data.products.filter(
             (item) => item.is_enabled === 1
-          );
-          let arr = products;
-          let ranNum = 3;
+          )
+          const arr = products
+          let ranNum = 3
           if (vm.screenWidth > 768) {
-            ranNum = 4;
+            ranNum = 4
           }
           for (let i = 0; i < ranNum; i++) {
-            let ran = Math.floor(Math.random() * arr.length);
-            vm.randoms.push(arr.splice(ran, 1)[0]);
+            const ran = Math.floor(Math.random() * arr.length)
+            vm.randoms.push(arr.splice(ran, 1)[0])
           }
           if (msg) {
-            vm.$bus.$emit("message:push", msg, "dark");
+            vm.$bus.$emit('message:push', msg, 'dark')
           }
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
+        vm.isLoading = false
+      })
     },
-    addCart(id, num = 1) {
-      const vm = this;
-      let rel = vm.cart.find((item) => item.product_id === id);
-      let obj;
+    addCart (id, num = 1) {
+      const vm = this
+      const rel = vm.cart.find((item) => item.product_id === id)
+      let obj
       if (rel) {
-        obj = { product_id: rel.product_id, qty: rel.qty + 1 };
-        vm.isLoading = true;
-        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+        obj = { product_id: rel.product_id, qty: rel.qty + 1 }
+        vm.isLoading = true
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
         vm.$http
           .post(api, {
-            data: obj,
+            data: obj
           })
           .then((res) => {
-            vm.isLoading = false;
+            vm.isLoading = false
             if (res.data.success) {
-              vm.delCart(rel.id);
-              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
+              vm.delCart(rel.id, true)
+              vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
             } else {
-              vm.$bus.$emit("message:push", res.data.message, "danger");
+              vm.$bus.$emit('message:push', res.data.message, 'danger')
             }
-          });
+          })
       } else {
-        obj = { product_id: id, qty: num };
-        vm.isLoading = true;
-        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+        obj = { product_id: id, qty: num }
+        vm.isLoading = true
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
         vm.$http
           .post(api, {
-            data: obj,
+            data: obj
           })
           .then((res) => {
-            vm.isLoading = false;
+            vm.isLoading = false
             if (res.data.success) {
-              vm.getCart();
-              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
+              vm.getCart()
+              vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
             } else {
-              vm.$bus.$emit("message:push", res.data.message, "danger");
+              vm.$bus.$emit('message:push', res.data.message, 'danger')
             }
-          });
+          })
       }
     },
-    delCart(id) {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`;
+    delCart (id, rep = false) {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`
       vm.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
+          if (rep === false) {
+            vm.$bus.$emit('message:push', res.data.message, 'dark')
+          }
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-        vm.getCart();
-      });
+        vm.isLoading = false
+        vm.getCart()
+      })
     },
-    getCart() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+    getCart () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
       vm.$http.get(api).then((res) => {
         if (res.data.success) {
-          vm.cart = res.data.data.carts;
+          vm.cart = res.data.data.carts
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
-    },
+        vm.isLoading = false
+      })
+    }
   },
-  mounted() {
-    const vm = this;
-    vm.randomProducts();
-    vm.$bus.$emit("message:push", "歡迎光臨拼圖迷～❤️", "light");
-    vm.getCart();
-  },
-};
+  mounted () {
+    const vm = this
+    vm.randomProducts()
+    vm.$bus.$emit('message:push', '歡迎光臨拼圖迷～❤️', 'light')
+    vm.getCart()
+  }
+}
 </script>

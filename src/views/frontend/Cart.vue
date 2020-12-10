@@ -559,225 +559,228 @@
   </div>
 </template>
 <script>
-import $ from "jquery";
+/* eslint-disable camelcase */
+import $ from 'jquery'
 export default {
-  data() {
+  data () {
     return {
       isLoading: false,
       cart: [],
-      couponCode: "",
-      hint: "請輸入優惠碼",
+      couponCode: '',
+      hint: '請輸入優惠碼',
       randoms: [],
       tempCart: [],
-      orderId: "",
+      orderId: '',
       form: {
         user: {
-          address: "",
-          email: "",
-          name: "",
-          tel: "",
+          address: '',
+          email: '',
+          name: '',
+          tel: ''
         },
-        message: "",
-      },
-    };
+        message: ''
+      }
+    }
   },
   methods: {
-    getCart() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+    getCart () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
       vm.$http.get(api).then((res) => {
         if (res.data.success) {
-          vm.cart = res.data.data;
+          vm.cart = res.data.data
           if (vm.cart.total === 0) {
-            vm.getProducts();
+            vm.getProducts()
           } else if (
             vm.cart.final_total === vm.cart.total &&
             vm.cart.total > 0
           ) {
-            vm.hint = "請輸入優惠碼";
+            vm.hint = '請輸入優惠碼'
           } else if (
             vm.cart.final_total !== vm.cart.total &&
             vm.cart.total > 0
           ) {
-            vm.hint = "當前折扣碼：" + vm.cart.carts[0].coupon.code;
+            vm.hint = '當前折扣碼：' + vm.cart.carts[0].coupon.code
           }
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
+        vm.isLoading = false
+      })
     },
-    delCart(id) {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`;
+    delCart (id, rep = false) {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`
       vm.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", res.data.message, "dark");
+          if (rep === false) {
+            vm.$bus.$emit('message:push', res.data.message, 'dark')
+          }
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-        vm.getCart();
-      });
+        vm.isLoading = false
+        vm.getCart()
+      })
     },
-    addCoupon() {
-      const vm = this;
-      if (vm.couponCode === "") {
-        vm.$bus.$emit("message:push", "請輸入優惠碼", "danger");
-        return;
+    addCoupon () {
+      const vm = this
+      if (vm.couponCode === '') {
+        vm.$bus.$emit('message:push', '請輸入優惠碼', 'danger')
+        return
       }
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/coupon`;
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/coupon`
       vm.$http.post(api, { data: { code: vm.couponCode } }).then((res) => {
         if (res.data.success) {
-          vm.cart.final_total = res.data.final_total;
-          vm.$bus.$emit("message:push", "已套用優惠券", "dark");
+          vm.cart.final_total = res.data.final_total
+          vm.$bus.$emit('message:push', '已套用優惠券', 'dark')
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.getCart();
-      });
+        vm.getCart()
+      })
     },
-    addQty(id) {
-      const vm = this;
+    addQty (id) {
+      const vm = this
       vm.cart.carts.forEach((item) => {
         if (item.id === id) {
-          item.qty = item.qty + 1;
+          item.qty = item.qty + 1
         }
-      });
+      })
     },
-    lessQty(id) {
-      const vm = this;
-      vm.cart.carts.forEach(function(item) {
+    lessQty (id) {
+      const vm = this
+      vm.cart.carts.forEach(function (item) {
         if (item.id === id) {
           if (item.qty === 1) {
-            vm.delCart(id);
+            vm.delCart(id)
           } else {
-            item.qty = item.qty - 1;
+            item.qty = item.qty - 1
           }
         }
-      });
+      })
     },
-    goCheckout() {
-      const vm = this;
+    goCheckout () {
+      const vm = this
       if (JSON.stringify(vm.cart) === JSON.stringify(vm.tempCart)) {
-        $("#modal").modal("show");
+        $('#modal').modal('show')
       } else {
         vm.tempCart.carts.forEach((item) => {
-          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${item.id}`;
-          vm.$http.delete(api).then();
-        });
-        let times = vm.cart.carts.length;
+          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${item.id}`
+          vm.$http.delete(api).then()
+        })
+        let times = vm.cart.carts.length
         vm.cart.carts.forEach((item) => {
-          vm.isLoading = true;
-          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+          vm.isLoading = true
+          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
           vm.$http
             .post(api, { data: { product_id: item.product_id, qty: item.qty } })
             .then((res) => {
-              vm.isLoading = false;
+              vm.isLoading = false
               if (res.data.success) {
-                times--;
+                times--
                 if (times === 0) {
                   if (vm.cart.carts[0].coupon) {
-                    vm.couponCode = vm.cart.carts[0].coupon.code;
-                    vm.addCoupon();
+                    vm.couponCode = vm.cart.carts[0].coupon.code
+                    vm.addCoupon()
                   }
-                  vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
-                  $("#modal").modal("show");
+                  vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
+                  $('#modal').modal('show')
                 }
               } else {
-                vm.$bus.$emit("message:push", res.data.message, "danger");
+                vm.$bus.$emit('message:push', res.data.message, 'danger')
               }
-            });
-        });
+            })
+        })
       }
     },
-    getProducts() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`;
+    getProducts () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
       vm.$http.get(api).then((res) => {
-        vm.isLoading = false;
+        vm.isLoading = false
         if (res.data.success) {
-          vm.randoms = [];
-          let products = res.data.products.filter(
+          vm.randoms = []
+          const products = res.data.products.filter(
             (item) => item.is_enabled === 1
-          );
-          let arr = products;
-          let ranNum = 4;
+          )
+          const arr = products
+          const ranNum = 4
           for (let i = 0; i < ranNum; i++) {
-            let ran = Math.floor(Math.random() * arr.length);
-            vm.randoms.push(arr.splice(ran, 1)[0]);
+            const ran = Math.floor(Math.random() * arr.length)
+            vm.randoms.push(arr.splice(ran, 1)[0])
           }
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
+        vm.isLoading = false
+      })
     },
-    addOrder() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/order`;
+    addOrder () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/order`
       vm.$refs.form.validate().then((success) => {
         if (success) {
           vm.$http.post(api, { data: vm.form }).then((res) => {
             if (res.data.success) {
-              $("#modal").modal("hide");
-              vm.$router.push(`/checkout/${res.data.orderId}`);
-              vm.$bus.$emit("message:push", res.data.message, "dark");
+              $('#modal').modal('hide')
+              vm.$router.push(`/checkout/${res.data.orderId}`)
+              vm.$bus.$emit('message:push', res.data.message, 'dark')
             } else {
-              vm.$bus.$emit("message:push", res.data.message, "danger");
+              vm.$bus.$emit('message:push', res.data.message, 'danger')
             }
-          });
+          })
         } else {
-          vm.$bus.$emit("message:push", "欄位不完整", "danger");
+          vm.$bus.$emit('message:push', '欄位不完整', 'danger')
         }
-        vm.getCart();
-        vm.isLoading = false;
-      });
-    },
+        vm.getCart()
+        vm.isLoading = false
+      })
+    }
   },
   computed: {
-    total() {
-      const vm = this;
-      let total = 0;
+    total () {
+      const vm = this
+      let total = 0
       vm.cart.carts.forEach((item) => {
-        total += item.qty * item.product.price;
-      });
-      return total;
+        total += item.qty * item.product.price
+      })
+      return total
     },
-    final_total() {
-      const vm = this;
-      let final_total = 0;
+    final_total () {
+      const vm = this
+      let final_total = 0
       if (vm.cart.carts[0].coupon) {
         vm.cart.carts.forEach((item) => {
           final_total +=
             (item.qty * item.product.price * vm.cart.carts[0].coupon.percent) /
-            100;
-        });
+            100
+        })
       } else {
         vm.cart.carts.forEach((item) => {
-          final_total += item.qty * item.product.price;
-        });
+          final_total += item.qty * item.product.price
+        })
       }
-      return final_total;
-    },
+      return final_total
+    }
   },
-  created() {
-    const vm = this;
-    vm.isLoading = true;
-    const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+  created () {
+    const vm = this
+    vm.isLoading = true
+    const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
     vm.$http.get(api).then((res) => {
       if (res.data.success) {
-        vm.tempCart = res.data.data;
+        vm.tempCart = res.data.data
       }
-    });
-    vm.getCart();
-  },
-};
+    })
+    vm.getCart()
+  }
+}
 </script>
 
 <style scoped>

@@ -118,196 +118,202 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       products: [],
       isLoading: false,
       hasLiked: true,
-      cookie: "",
-      time: 0,
-    };
+      cookie: '',
+      time: 0
+    }
   },
   methods: {
-    getLikes(arr) {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`;
+    getLikes (arr) {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
       vm.$http.get(api).then((res) => {
         if (res.data.success) {
-          vm.products = res.data.products;
-          vm.hasLiked = true;
+          vm.products = res.data.products
+          vm.hasLiked = true
           if (arr.length > 20) {
-            arr = arr.split(",");
+            arr = arr.split(',')
           } else {
-            arr = [arr];
+            arr = [arr]
           }
-          vm.isLoading = false;
+          vm.isLoading = false
           vm.products = vm.products.filter(
             (item) => arr.indexOf(item.id) !== -1
-          );
+          )
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-      });
+      })
     },
-    removeLike(id) {
-      const vm = this;
-      vm.isLoading = true;
-      let arr = vm.cookie;
+    removeLike (id) {
+      const vm = this
+      vm.isLoading = true
+      let arr = vm.cookie
       if (arr.length === 20) {
-        document.cookie = `like=;expires=7;path=/`;
+        document.cookie = 'like=;expires=7;path=/'
       } else if (arr.length > 20) {
-        arr = arr.split(",");
-        let i = arr.indexOf(id);
-        arr.splice(i, 1);
-        let str = arr.toString();
-        document.cookie = `like=${str};expires=7;path=/`;
+        arr = arr.split(',')
+        const i = arr.indexOf(id)
+        arr.splice(i, 1)
+        const str = arr.toString()
+        document.cookie = `like=${str};expires=7;path=/`
       }
-      vm.isLoading = false;
-      vm.hasLikes();
+      vm.isLoading = false
+      vm.hasLikes()
     },
-    hasLikes() {
-      const vm = this;
-      let cookieAry = document.cookie.split(";");
-      let cookie;
-      let arr;
-      for (let i = 0, l = cookieAry.length; i < l; ++i) {
-        cookie = cookieAry[i].trim();
-        cookie = cookie.split("=");
-        if (cookie[0] === "like") {
-          arr = cookie[1];
-          vm.cookie = arr;
-          if (arr.length !== 0) {
-            vm.getLikes(arr);
-            vm.getCart();
+    hasLikes () {
+      const vm = this
+      const cookieAry = document.cookie.split(';')
+      let cookie
+      let arr
+      for (let i = 0; i < cookieAry.length; ++i) {
+        cookie = cookieAry[i].trim()
+        cookie = cookie.split('=')
+        if (cookie[0] === 'like') {
+          arr = cookie[1]
+          vm.cookie = arr
+          if (arr.length > 0) {
+            vm.getLikes(arr)
+            vm.getCart()
+          } else {
+            vm.hasLiked = false
+            vm.time = 3
+            setInterval(vm.countDown, 1000)
           }
         } else {
-          vm.hasLiked = false;
-          vm.time = 3;
-          setInterval(vm.countDown, 1000);
+          vm.hasLiked = false
+          vm.time = 3
+          setInterval(vm.countDown, 1000)
         }
       }
     },
-    addCart(id, num = 1) {
-      const vm = this;
-      if (typeof id === "string") {
-        let rel = vm.cart.find((item) => item.product_id === id);
-        let obj;
+    addCart (id, num = 1) {
+      const vm = this
+      if (typeof id === 'string') {
+        const rel = vm.cart.find((item) => item.product_id === id)
+        let obj
         if (rel) {
-          obj = { product_id: rel.product_id, qty: num + rel.qty };
-          vm.isLoading = true;
-          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+          obj = { product_id: rel.product_id, qty: num + rel.qty }
+          vm.isLoading = true
+          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
           vm.$http
             .post(api, {
-              data: obj,
+              data: obj
             })
             .then((res) => {
-              vm.isLoading = false;
+              vm.isLoading = false
               if (res.data.success) {
-                vm.delCart(rel.id);
+                vm.delCart(rel.id, true)
               } else {
-                vm.$bus.$emit("message:push", res.data.message, "danger");
+                vm.$bus.$emit('message:push', res.data.message, 'danger')
               }
-            });
+            })
         } else {
-          obj = { product_id: id, qty: num };
-          vm.isLoading = true;
-          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+          obj = { product_id: id, qty: num }
+          vm.isLoading = true
+          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
           vm.$http
             .post(api, {
-              data: obj,
+              data: obj
             })
             .then((res) => {
-              vm.isLoading = false;
+              vm.isLoading = false
               if (res.data.success) {
-                vm.getCart();
-                vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
+                vm.getCart()
+                vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
               } else {
-                vm.$bus.$emit("message:push", res.data.message, "danger");
+                vm.$bus.$emit('message:push', res.data.message, 'danger')
               }
-            });
+            })
         }
       } else {
-        id.forEach(function(item) {
-          let rel = vm.cart.find((cart) => cart.product_id === item.id);
-          let obj;
+        id.forEach(function (item) {
+          const rel = vm.cart.find((cart) => cart.product_id === item.id)
+          let obj
           if (rel) {
-            obj = { product_id: rel.product_id, qty: num + rel.qty };
-            vm.isLoading = true;
-            const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+            obj = { product_id: rel.product_id, qty: num + rel.qty }
+            vm.isLoading = true
+            const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
             vm.$http
               .post(api, {
-                data: obj,
+                data: obj
               })
               .then((res) => {
-                vm.isLoading = false;
+                vm.isLoading = false
                 if (res.data.success) {
-                  vm.delCart(rel.id);
+                  vm.delCart(rel.id, true)
                 } else {
-                  vm.$bus.$emit("message:push", res.data.message, "danger");
+                  vm.$bus.$emit('message:push', res.data.message, 'danger')
                 }
-              });
+              })
           } else {
-            obj = { product_id: item.id, qty: 1 };
-            vm.isLoading = true;
-            const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+            obj = { product_id: item.id, qty: 1 }
+            vm.isLoading = true
+            const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
             vm.$http
               .post(api, {
-                data: obj,
+                data: obj
               })
               .then((res) => {
-                vm.isLoading = false;
+                vm.isLoading = false
                 if (res.data.success) {
-                  vm.getCart();
-                  vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
+                  vm.getCart()
+                  vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
                 } else {
-                  vm.$bus.$emit("message:push", res.data.message, "danger");
+                  vm.$bus.$emit('message:push', res.data.message, 'danger')
                 }
-              });
+              })
           }
-        });
+        })
       }
     },
-    delCart(id) {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`;
+    delCart (id, rep = false) {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`
       vm.$http.delete(api).then((res) => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
+          if (rep === false) {
+            vm.$bus.$emit('message:push', res.data.message, 'dark')
+          }
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-        vm.getCart();
-      });
+        vm.isLoading = false
+        vm.getCart()
+      })
     },
-    getCart() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+    getCart () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
       vm.$http.get(api).then((res) => {
         if (res.data.success) {
-          vm.cart = res.data.data.carts;
+          vm.cart = res.data.data.carts
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
+        vm.isLoading = false
+      })
     },
-    countDown() {
-      this.time--;
-    },
+    countDown () {
+      this.time--
+    }
   },
   watch: {
-    time: function(newVal) {
+    time: function (newVal) {
       if (newVal === 0) {
-        this.$router.push("/products/all");
+        this.$router.push('/products/all')
       }
-    },
+    }
   },
-  created() {
-    this.hasLikes();
-  },
-};
+  created () {
+    this.hasLikes()
+  }
+}
 </script>

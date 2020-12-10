@@ -112,45 +112,45 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       order: {},
-      orderId: "",
-      isLoading: false,
-    };
+      orderId: '',
+      isLoading: false
+    }
   },
   methods: {
-    getOrder() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/order/${vm.orderId}`;
+    getOrder () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/order/${vm.orderId}`
       vm.$http.get(api).then((res) => {
         if (res.data.success) {
-          vm.order = res.data.order;
+          vm.order = res.data.order
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
+        vm.isLoading = false
+      })
     },
-    payOrder() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/pay/${vm.orderId}`;
+    payOrder () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/pay/${vm.orderId}`
       vm.$http.post(api).then((res) => {
-        vm.isLoading = false;
+        vm.isLoading = false
         if (res.data.success) {
-          vm.$bus.$emit("message:push", res.data.message, "dark");
-          vm.getOrder();
+          vm.$bus.$emit('message:push', res.data.message, 'dark')
+          vm.getOrder()
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-      });
-    },
+      })
+    }
   },
-  created() {
-    this.orderId = this.$route.params.orderId;
-    this.getOrder();
-  },
-};
+  created () {
+    this.orderId = this.$route.params.orderId
+    this.getOrder()
+  }
+}
 </script>

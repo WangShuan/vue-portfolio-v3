@@ -39,45 +39,45 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       user: {
-        username: "",
-        password: "",
+        username: '',
+        password: ''
       },
       isLoading: false,
-      remember: false,
-    };
+      remember: false
+    }
   },
   methods: {
-    signin() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}admin/signin`;
+    signin () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}admin/signin`
       vm.$http.post(api, vm.user).then((res) => {
         if (res.data.success) {
-          const token = res.data.token;
-          const expired = res.data.expired;
-          vm.$router.push("/admin/products");
-          document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
+          const token = res.data.token
+          const expired = res.data.expired
+          vm.$router.push('/admin/products')
+          document.cookie = `hexToken=${token}; expires=${new Date(expired)};`
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
-    },
+        vm.isLoading = false
+      })
+    }
   },
   watch: {
-    remember: function(newV) {
-      const vm = this;
+    remember: function (newV) {
+      const vm = this
       if (newV) {
-        vm.user = { username: "loveabo103103@gmail.com", password: "John1007" };
+        vm.user = { username: 'loveabo103103@gmail.com', password: 'John1007' }
       } else {
-        vm.user = { username: "", password: "" };
+        vm.user = { username: '', password: '' }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -155,47 +155,47 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       coupons: [
         {
-          code: "GAMESKY9",
+          code: 'GAMESKY9',
           due_date: 1631750400000,
           num: 1,
           percent: 9,
-          title: "週年慶全館九折優惠券",
+          title: '週年慶全館九折優惠券'
         },
         {
-          code: "8YEARS8",
+          code: '8YEARS8',
           due_date: 1665878400000,
           id: 2,
           percent: 8,
-          title: "遊戲天堂八週年優惠券",
+          title: '遊戲天堂八週年優惠券'
         },
         {
-          code: "LOVEYOUTHX75",
+          code: 'LOVEYOUTHX75',
           due_date: 1613865600000,
           id: 3,
           percent: 75,
-          title: "佛心優惠券限時搶購",
-        },
-      ],
-    };
+          title: '佛心優惠券限時搶購'
+        }
+      ]
+    }
   },
   methods: {
-    copy(e) {
-      e.currentTarget.select();
-      document.execCommand("Copy");
-      this.$bus.$emit("message:push", "複製成功", "dark");
+    copy (e) {
+      e.currentTarget.select()
+      document.execCommand('Copy')
+      this.$bus.$emit('message:push', '複製成功', 'dark')
     },
-    copyBtn(className) {
-      let ipt = document.getElementById(className);
-      ipt.select();
-      document.execCommand("copy");
-      this.$bus.$emit("message:push", "複製成功", "dark");
-    },
-  },
-};
+    copyBtn (className) {
+      const ipt = document.getElementById(className)
+      ipt.select()
+      document.execCommand('copy')
+      this.$bus.$emit('message:push', '複製成功', 'dark')
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

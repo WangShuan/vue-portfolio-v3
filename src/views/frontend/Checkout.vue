@@ -246,84 +246,84 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery'
 
 export default {
-  data() {
+  data () {
     return {
       order: {},
-      orderId: "",
+      orderId: '',
       isLoading: false,
       step: {
-        "w-50": false,
-        "w-100": false,
+        'w-50': false,
+        'w-100': false
       },
       times: 1,
-      paymethods: "1",
+      paymethods: '1',
       card: {
-        name: "",
-        num: "",
-        key: "",
-        mm: "",
-        yy: "",
-      },
-    };
+        name: '',
+        num: '',
+        key: '',
+        mm: '',
+        yy: ''
+      }
+    }
   },
   methods: {
-    getOrder() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/order/${vm.orderId}`;
+    getOrder () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/order/${vm.orderId}`
       vm.$http.get(api).then((res) => {
-        vm.isLoading = false;
+        vm.isLoading = false
         if (res.data.success) {
-          vm.order = res.data.order;
+          vm.order = res.data.order
           if (vm.order.is_paid) {
-            vm.times = 3;
-            vm.step["w-100"] = true;
+            vm.times = 3
+            vm.step['w-100'] = true
           }
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-      });
+      })
     },
-    payOrder(times) {
-      const vm = this;
-      vm.isLoading = true;
-      vm.times++;
+    payOrder (times) {
+      const vm = this
+      vm.isLoading = true
+      vm.times++
       if (times === 1) {
-        vm.step["w-50"] = true;
+        vm.step['w-50'] = true
       } else if (times === 2) {
-        vm.step["w-100"] = true;
-        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/pay/${vm.orderId}`;
+        vm.step['w-100'] = true
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/pay/${vm.orderId}`
         vm.$http.post(api).then((res) => {
           if (res.data.success) {
-            vm.$bus.$emit("message:push", "結帳確認完成", "dark");
-            vm.getOrder();
-            $(".down").show();
+            vm.$bus.$emit('message:push', '結帳確認完成', 'dark')
+            vm.getOrder()
+            $('.down').show()
           } else {
-            vm.$bus.$emit("message:push", res.data.message, "danger");
+            vm.$bus.$emit('message:push', res.data.message, 'danger')
           }
-        });
+        })
       }
-      vm.isLoading = false;
-    },
+      vm.isLoading = false
+    }
   },
-  created() {
-    this.orderId = this.$route.params.orderId;
-    this.getOrder();
+  created () {
+    this.orderId = this.$route.params.orderId
+    this.getOrder()
   },
   watch: {
-    paymethods: function() {
-      const vm = this;
-      if (vm.paymethods === "1") {
-        $(".bank").hide();
-      } else if (vm.paymethods === "2") {
-        $(".bank").show();
+    paymethods: function () {
+      const vm = this
+      if (vm.paymethods === '1') {
+        $('.bank').hide()
+      } else if (vm.paymethods === '2') {
+        $('.bank').show()
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

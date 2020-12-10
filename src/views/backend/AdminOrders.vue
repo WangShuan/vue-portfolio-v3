@@ -207,50 +207,50 @@
 </template>
 
 <script>
-import Pagination from "@/components/Pagination";
-import $ from "jquery";
+import Pagination from '@/components/Pagination'
+import $ from 'jquery'
 
 export default {
-  data() {
+  data () {
     return {
       orders: [],
       pagination: {},
       isLoading: false,
-      order: {},
-    };
+      order: {}
+    }
   },
   methods: {
-    getOrders(page = 1) {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/orders?page=${page}`;
+    getOrders (page = 1) {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/orders?page=${page}`
       vm.$http.get(api).then((res) => {
-        vm.isLoading = false;
+        vm.isLoading = false
         if (res.data.success) {
-          vm.orders = res.data.orders;
-          vm.pagination = res.data.pagination;
+          vm.orders = res.data.orders
+          vm.pagination = res.data.pagination
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-      });
+      })
     },
-    copy(e) {
-      e.currentTarget.select();
-      document.execCommand("Copy");
-      this.$bus.$emit("message:push", "複製成功", "dark");
+    copy (e) {
+      e.currentTarget.select()
+      document.execCommand('Copy')
+      this.$bus.$emit('message:push', '複製成功', 'dark')
     },
-    openModal(item) {
-      this.order = item;
-      $("#orderModal").modal("show");
-    },
+    openModal (item) {
+      this.order = item
+      $('#orderModal').modal('show')
+    }
   },
-  created() {
-    this.getOrders();
+  created () {
+    this.getOrders()
   },
   components: {
-    Pagination,
-  },
-};
+    Pagination
+  }
+}
 </script>
 
 <style scoped>

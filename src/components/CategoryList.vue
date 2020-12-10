@@ -18,14 +18,14 @@
 
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  props: ["categories", "active"],
+  props: ['categories', 'active'],
   methods: {
-    getProducts(item) {
-      this.$emit("getProducts", item);
-    },
-  },
-};
+    getProducts (item) {
+      this.$emit('getProducts', item)
+    }
+  }
+}
 </script>

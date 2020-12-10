@@ -49,7 +49,7 @@ const routes = [
         path: 'like',
         name: 'Like',
         component: () => import('../views/frontend/Like.vue')
-      },
+      }
     ]
   },
   {
@@ -62,17 +62,17 @@ const routes = [
         path: 'products',
         name: 'AdminProducts',
         component: () => import('../views/backend/AdminProducts.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true }
       }, {
         path: 'orders',
         name: 'AdminOrders',
         component: () => import('../views/backend/AdminOrders.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true }
       }, {
         path: 'coupons',
         name: 'AdminCoupons',
         component: () => import('../views/backend/AdminCoupons.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true }
       }
     ]
   },
@@ -83,12 +83,12 @@ const routes = [
       {
         path: 'test_orders',
         name: 'TestOrders',
-        component: () => import('../views/backend/TestOrders.vue'),
+        component: () => import('../views/backend/TestOrders.vue')
       },
       {
         path: 'test_checkout/:orderId',
         name: 'TestCheckout',
-        component: () => import('../views/backend/TestCheckout.vue'),
+        component: () => import('../views/backend/TestCheckout.vue')
       }
     ]
   },

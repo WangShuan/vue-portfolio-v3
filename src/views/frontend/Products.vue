@@ -46,7 +46,7 @@
               <div
                 style="height: 200px;background-size: cover;background-position: center;"
                 :style="{
-                  backgroundImage: `url(${item.imageUrl || item.image})`,
+                  backgroundImage: `url(${item.imageUrl || item.image})`
                 }"
               ></div>
               <div class="card-body">
@@ -104,181 +104,181 @@
 </template>
 
 <script>
-import Pagination from "@/components/Pagination";
-import CategoryList from "@/components/CategoryList";
+import Pagination from '@/components/Pagination'
+import CategoryList from '@/components/CategoryList'
 
 export default {
-  data() {
+  data () {
     return {
       isLoading: false,
       products: [],
       categories: [],
-      active: { name: "", path: "" },
+      active: { name: '', path: '' },
       pagination: {},
-      cart: [],
-    };
+      cart: []
+    }
   },
   components: { Pagination, CategoryList },
   methods: {
-    getProducts(category = this.$route.params.category) {
-      const vm = this;
-      vm.isLoading = true;
-      vm.$router.push("/products/" + category).catch((err) => err);
-      vm.active.path = category;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`;
-      this.$http.get(api).then((res) => {
+    getProducts (category = this.$route.params.category) {
+      const vm = this
+      vm.isLoading = true
+      vm.$router.push('/products/' + category).catch(err => err)
+      vm.active.path = category
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
+      this.$http.get(api).then(res => {
         if (res.data.success) {
-          if (category == "all") {
-            vm.products = res.data.products;
-            vm.active.name = "全部";
-            vm.pagination.current_page = 1;
-          } else if (category == "Castorland") {
-            vm.products = res.data.products.filter(function(item) {
-              return item.category === "Castorland";
-            });
-            vm.active.name = "Castorland";
-          } else if (category == "Clementoni") {
-            vm.products = res.data.products.filter(function(item) {
-              return item.category === "Clementoni";
-            });
-            vm.active.name = "Clementoni";
-          } else if (category == "Ravensburger") {
-            vm.products = res.data.products.filter(function(item) {
-              return item.category === "Ravensburger";
-            });
-            vm.active.name = "Ravensburger";
+          if (category === 'all') {
+            vm.products = res.data.products
+            vm.active.name = '全部'
+            vm.pagination.current_page = 1
+          } else if (category === 'Castorland') {
+            vm.products = res.data.products.filter(function (item) {
+              return item.category === 'Castorland'
+            })
+            vm.active.name = 'Castorland'
+          } else if (category === 'Clementoni') {
+            vm.products = res.data.products.filter(function (item) {
+              return item.category === 'Clementoni'
+            })
+            vm.active.name = 'Clementoni'
+          } else if (category === 'Ravensburger') {
+            vm.products = res.data.products.filter(function (item) {
+              return item.category === 'Ravensburger'
+            })
+            vm.active.name = 'Ravensburger'
           }
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
+        vm.isLoading = false
+      })
     },
-    getPage(page = 1) {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products?page=${page}`;
-      this.$http.get(api).then((res) => {
-        vm.isLoading = false;
+    getPage (page = 1) {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products?page=${page}`
+      this.$http.get(api).then(res => {
+        vm.isLoading = false
         if (res.data.success) {
-          vm.products = res.data.products;
-          vm.pagination = res.data.pagination;
+          vm.products = res.data.products
+          vm.pagination = res.data.pagination
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-      });
+      })
     },
-    getProduct(item) {
-      this.$router.push(`/product/${item.id}`);
+    getProduct (item) {
+      this.$router.push(`/product/${item.id}`)
     },
-    addCart(id, num = 1) {
-      const vm = this;
-      let rel = vm.cart.find((item) => item.product_id === id);
-      let obj;
+    addCart (id, num = 1) {
+      const vm = this
+      const rel = vm.cart.find(item => item.product_id === id)
+      let obj
       if (rel) {
-        obj = { product_id: rel.product_id, qty: num + rel.qty };
-        vm.isLoading = true;
-        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+        obj = { product_id: rel.product_id, qty: num + rel.qty }
+        vm.isLoading = true
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
         vm.$http
           .post(api, {
-            data: obj,
+            data: obj
           })
-          .then((res) => {
-            vm.isLoading = false;
+          .then(res => {
+            vm.isLoading = false
             if (res.data.success) {
-              vm.delCart(rel.id);
+              vm.delCart(rel.id, true)
             } else {
-              vm.$bus.$emit("message:push", res.data.message, "danger");
+              vm.$bus.$emit('message:push', res.data.message, 'danger')
             }
-          });
+          })
       } else {
-        obj = { product_id: id, qty: num };
-        vm.isLoading = true;
-        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
+        obj = { product_id: id, qty: num }
+        vm.isLoading = true
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
         vm.$http
           .post(api, {
-            data: obj,
+            data: obj
           })
-          .then((res) => {
-            vm.isLoading = false;
+          .then(res => {
+            vm.isLoading = false
             if (res.data.success) {
-              vm.getCart();
-              vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
+              vm.getCart()
+              vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
             } else {
-              vm.$bus.$emit("message:push", res.data.message, "danger");
+              vm.$bus.$emit('message:push', res.data.message, 'danger')
             }
-          });
+          })
       }
     },
-    delCart(id) {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`;
-      vm.$http.delete(api).then((res) => {
+    delCart (id, rep = false) {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`
+      vm.$http.delete(api).then(res => {
         if (res.data.success) {
-          vm.$bus.$emit("message:push", "購物車清單已更新", "dark");
+          vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-        vm.getCart();
-      });
+        vm.isLoading = false
+        vm.getCart()
+      })
     },
-    getCart() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`;
-      vm.$http.get(api).then((res) => {
+    getCart () {
+      const vm = this
+      vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
+      vm.$http.get(api).then(res => {
         if (res.data.success) {
-          vm.cart = res.data.data.carts;
+          vm.cart = res.data.data.carts
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
-    },
+        vm.isLoading = false
+      })
+    }
   },
-  created() {
-    const vm = this;
-    const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`;
-    this.$http.get(api).then((res) => {
+  created () {
+    const vm = this
+    const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
+    this.$http.get(api).then(res => {
       if (res.data.success) {
-        let arr = res.data.products;
-        const set = new Set();
-        arr.filter((item) =>
+        const arr = res.data.products
+        const set = new Set()
+        arr.filter(item =>
           !set.has(item.category) ? set.add(item.category) : false
-        );
-        let temCategory = [...set];
-        temCategory.forEach(function(item) {
-          vm.categories.push({ title: item, num: 0, path: "" });
-        });
-        vm.categories.unshift({ title: "全部", num: 0, path: "" });
-        let arr2 = [];
+        )
+        const temCategory = [...set]
+        temCategory.forEach(function (item) {
+          vm.categories.push({ title: item, num: 0, path: '' })
+        })
+        vm.categories.unshift({ title: '全部', num: 0, path: '' })
+        const arr2 = []
         for (let i = 1; i < vm.categories.length; i++) {
-          let arr = res.data.products.filter(function(item) {
-            return item.category === vm.categories[i].title;
-          });
-          arr2.push(arr.length);
+          const arr = res.data.products.filter(function (item) {
+            return item.category === vm.categories[i].title
+          })
+          arr2.push(arr.length)
         }
-        arr2.unshift(arr.length);
+        arr2.unshift(arr.length)
         for (let j = 0; j < arr2.length; j++) {
-          vm.categories[j].num = arr2[j];
+          vm.categories[j].num = arr2[j]
         }
-        let arr3 = vm.categories;
-        let arr4 = ["all", "Castorland", "Clementoni", "Ravensburger"];
+        const arr3 = vm.categories
+        const arr4 = ['all', 'Castorland', 'Clementoni', 'Ravensburger']
         for (let i = 0; i < arr3.length; i++) {
-          arr3[i].path = arr4[i];
+          arr3[i].path = arr4[i]
         }
-        vm.categories = arr3;
-        vm.getProducts();
+        vm.categories = arr3
+        vm.getProducts()
       } else {
-        vm.$bus.$emit("message:push", res.data.message, "danger");
+        vm.$bus.$emit('message:push', res.data.message, 'danger')
       }
-    });
-    vm.getPage();
-    vm.getCart();
-  },
-};
+    })
+    vm.getPage()
+    vm.getCart()
+  }
+}
 </script>
 
 <style lang="scss" scoped>
