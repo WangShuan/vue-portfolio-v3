@@ -1,5 +1,17 @@
 # vue 出一個電商教學手冊
 
+## 專案說明
+
+該專案使用 `vue-cli v3` 以上版本 並添加了 `ESLint`
+
+  * 若一開始沒有為專案添加 ESLint 可通過以下方式加入：
+
+    1. 開啟終端機 切到當前專案資料夾
+
+    2. 輸入 `vue add eslint`
+
+    3. 選擇風格(不熟悉者建議選擇 Standard 風格)
+
 ## 結構說明
 
 ### src
@@ -37,6 +49,10 @@
  - `webpack.config.js` 用來設定路徑 在該檔案中設定用 `@` 取代 `src` 資料夾路徑
 
  - `vue.config.js` 用來設定生產環境模式下的 `gh-page` 引用路徑
+
+ - `.editorconfig` 加入 ESLint 後自動創建的檔案
+
+ - `jsconfig.json` 手動設定 ESLint
 
 ## 一些比較重要的代碼詳解
 
