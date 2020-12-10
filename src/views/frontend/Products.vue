@@ -216,7 +216,11 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`
       vm.$http.delete(api).then(res => {
         if (res.data.success) {
-          vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
+          if (rep === false) {
+            vm.$bus.$emit('message:push', res.data.message, 'dark')
+          } else {
+            vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
+          }
         } else {
           vm.$bus.$emit('message:push', res.data.message, 'danger')
         }

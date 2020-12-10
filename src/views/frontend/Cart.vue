@@ -617,6 +617,8 @@ export default {
         if (res.data.success) {
           if (rep === false) {
             vm.$bus.$emit('message:push', res.data.message, 'dark')
+          } else {
+            vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
           }
         } else {
           vm.$bus.$emit('message:push', res.data.message, 'danger')
