@@ -225,7 +225,7 @@ export default {
               vm.isLoading = false
               if (res.data.success) {
                 vm.getCart()
-                vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
+                vm.$bus.$emit('message:push', res.data.message, 'dark')
               } else {
                 vm.$bus.$emit('message:push', res.data.message, 'danger')
               }
@@ -263,7 +263,7 @@ export default {
                 vm.isLoading = false
                 if (res.data.success) {
                   vm.getCart()
-                  vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
+                  vm.$bus.$emit('message:push', res.data.message, 'dark')
                 } else {
                   vm.$bus.$emit('message:push', res.data.message, 'danger')
                 }
