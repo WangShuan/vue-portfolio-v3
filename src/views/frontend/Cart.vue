@@ -696,7 +696,7 @@ export default {
             let times = vm.cart.carts.length
             vm.cart.carts.forEach((item) => {
               times--
-              const code = ''
+              let code = ''
               if (vm.cart.carts[0].coupon.code) {
                 code = vm.cart.carts[0].coupon.code
               }
