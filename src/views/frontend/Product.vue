@@ -5,45 +5,21 @@
     </loading>
     <div class="row">
       <div class="col-lg-12">
-        <div class="mobile">
-          <div class="btn-group text-dark mt-4 mb-2">
-            <h6>當前商品類別：</h6>
-            <a
-              class="text-muted h6"
-              data-toggle="dropdown"
-              data-display="static"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              {{ active.name }}
-              <i class="fa fa-caret-down" aria-hidden="true"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg-right">
-              <button
-                v-for="item in categories"
-                :key="item.title"
-                :class="{ active: item.title === active.name }"
-                @click.prevent="getProducts(item.path)"
-                class="dropdown-item"
-                type="button"
-              >
-                {{ item.title }}
-              </button>
-            </div>
-          </div>
-          <h5 class="my-2 text-left">商品內容</h5>
+        <div class="sm">
+          <router-link class="btn py-0 btn-sm border-dark float-right" to="/products/all">回商品列表</router-link>
+          <h5 class="my-3 text-left">商品內容</h5>
         </div>
-        <h4 class="py-4 text-left pc pad">商品內容</h4>
+        <h4 class="py-4 text-left lg md">商品內容</h4>
         <div class="row mb-3 media">
           <img
             :src="product.imageUrl"
             :alt="product.title"
-            class="mobile media-mobile-img mb-3"
+            class="sm media-sm-img mb-3"
           />
           <img
             :src="product.imageUrl"
             :alt="product.title"
-            class="border ml-3 media-pc-img pc pad col-md-6 align-self-center"
+            class="border ml-3 media-lg-img lg md col-md-6 align-self-center"
           />
           <div class="media-body px-3">
             <div class="text-justify">
@@ -161,7 +137,7 @@
                     }"
                   ></div>
                   <div class="card-body">
-                    <h5 class="text-dark">{{ item.title }}</h5>
+                    <h5>{{ item.title }}</h5>
                     <b class="h6 text-muted">優惠價 {{ item.price }}元</b>
                   </div>
                 </div>
@@ -214,13 +190,13 @@ export default {
       vm.isLoading = true
       vm.$router.push('/product/' + id).catch((err) => err)
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/product/${id}`
-      this.$http.get(api).then((res) => {
+      vm.$http.get(api).then((res) => {
         if (res.data.success) {
           vm.product = res.data.product
           vm.product.num = 1
           vm.active.name = vm.product.category
           const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
-          this.$http.get(api).then((res) => {
+          vm.$http.get(api).then((res) => {
             vm.isLoading = false
             if (res.data.success) {
               const arr = res.data.products.filter(function (item) {
@@ -294,7 +270,7 @@ export default {
       }
       vm.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
-      this.$http.post(api, { data: obj }).then((res) => {
+      vm.$http.post(api, { data: obj }).then((res) => {
         vm.isLoading = false
         if (res.data.success) {
           vm.getCart()
@@ -405,28 +381,30 @@ pre {
 }
 
 .media {
-  &-pc-img {
+  &-lg-img {
     object-fit: contain;
     height: 330px;
     width: 100%;
   }
-  &-mobile-img {
+  &-sm-img {
     width: 90vw;
     height: auto;
     margin: 0 auto;
   }
 }
 
-.card {
+.card:hover{
   cursor: pointer;
+  background-color: #343a40;
+  color: #f8f9fa;
 }
 
 @media screen and (min-width: 420px) and (max-width: 992px) {
-  .pc {
+  .lg {
     display: none;
   }
 
-  .pad {
+  .md {
     display: block;
   }
 }

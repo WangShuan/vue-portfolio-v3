@@ -28,11 +28,9 @@ axios.defaults.withCredentials = true
 
 Vue.component('loading', VueLoading)
 
-Vue.filter('dollarSign', function (n) {
-  return `$${n}`
-})
+Vue.filter('dollarSign', (n) => `$${n}`)
 
-Vue.filter('numFormat', function (n) {
+Vue.filter('numFormat', (n) => {
   const intPart = Number(n).toFixed(0)
   const intPartFormat = intPart
     .toString()
@@ -40,7 +38,25 @@ Vue.filter('numFormat', function (n) {
   return intPartFormat
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  if (to.meta.requiresAuth) {
+    const api = `${process.env.VUE_APP_APIPATH}api/user/check`
+    axios.post(api).then((res) => {
+      if (res.data.success === false) {
+        next('/login')
+      } else {
+        next()
+      }
+    })
+  } else {
+    next()
+  }
+})
+
 new Vue({
   router,
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount('#app')

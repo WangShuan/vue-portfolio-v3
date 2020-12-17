@@ -2,7 +2,9 @@
   position: relative;
   overflow: hidden;
   width: 95%;
+  height: 106px;
   margin: auto;
+  display: inline-block;
 
   &-big {
     width: 35%;
@@ -15,6 +17,10 @@
   }
 
   &-content {
+    position: absolute;
+    right: 0;
+    z-index: 999;
+    top: 0;
     width: 65%;
   }
 }
@@ -50,15 +56,25 @@
 }
 
 .bg-icon {
-  opacity: 0.15;
-  position: absolute;
-  right: 0px;
-  top: 0;
-  z-index: 0;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  float: right;
+  margin-top: -20px;
+  margin-right: -15px;
+  opacity: .4;
 }
 
 .icon-big {
   font-size: 120px;
+}
+
+.sm-bg-icon{
+  opacity: 0.4;
+  position: absolute;
+  right: 0px;
+  bottom: 0;
+  z-index: 0;
 }
 
 .input-bg {

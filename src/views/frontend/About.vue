@@ -8,7 +8,7 @@
       <p>
         本公司成立於2012年，由一群特別喜愛進口拼圖的同仁們合力創建，經過不斷接洽後，最終取得了三大品牌授權:
       </p>
-      <div class="row pc">
+      <div class="row lg">
         <div class="col-md-4 border my-3 py-3">
           <a
             href="#"
@@ -40,7 +40,7 @@
           </a>
         </div>
       </div>
-      <div class="row mobile">
+      <div class="row sm">
         <div class="border m-3 py-3">
           <a
             href="#"
@@ -159,7 +159,7 @@
     <li class="media row">
       <img
         src="https://images.unsplash.com/photo-1472457847783-3d10540b03d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-        class="col-lg-5 pc align-self-center"
+        class="col-lg-5 lg align-self-center"
         alt="飛高高圖片"
       />
       <div class="media-body col-lg-7 align-self-center">
@@ -167,7 +167,7 @@
         <img
           alt="飛高高圖片"
           src="https://images.unsplash.com/photo-1472457847783-3d10540b03d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-          class="col-lg-5 mobile align-self-center"
+          class="col-lg-5 sm align-self-center"
         />
         <p class="lead">
           讓大人與小孩透過我們的產品獲得更多親子同樂時光，促進交流，
@@ -183,7 +183,7 @@
         <img
           src="https://images.unsplash.com/photo-1518331647614-7a1f04cd34cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80"
           alt="一起玩圖片"
-          class="col-lg-5 mobile align-self-center"
+          class="col-lg-5 sm align-self-center"
         />
         <p class="lead">
           我們從 2012 年開幕至今，已經擁有許多像家人般存在的老顧客了，
@@ -195,7 +195,7 @@
       <img
         src="https://images.unsplash.com/photo-1518331647614-7a1f04cd34cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80"
         alt="一起玩圖片"
-        class="col-lg-5 pc align-self-center"
+        class="col-lg-5 lg align-self-center"
       />
     </li>
   </div>

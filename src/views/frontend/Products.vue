@@ -6,7 +6,7 @@
 
     <div class="row mb-3">
       <CategoryList
-        class="pc col-lg-3"
+        class="lg col-lg-3"
         :categories="categories"
         :active="active"
         @getProducts="getProducts"
@@ -14,37 +14,31 @@
 
       <div class="col-lg-9">
         <h4 class="my-lg-4 mt-4 text-left">商品列表</h4>
-        <div class="btn-group mobile pad mb-2">
+        <div class="dropdown sm md">
           當前商品類別：
-          <a
-            class="h6 text-muted"
-            data-toggle="dropdown"
-            data-display="static"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
+          <button class="btn btn-sm border-dark mb-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ active.name }}
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg-right">
-            <button
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a
               v-for="item in categories"
+              href="#"
               :key="item.title"
               :class="{ active: item.title === active.name }"
               @click.prevent="getProducts(item.path)"
               class="dropdown-item"
-              type="button"
             >
               {{ item.title }}
-            </button>
+            </a>
           </div>
         </div>
-
         <div class="row">
-          <div class="col-md-4 p-2" v-for="item in products" :key="item.id">
-            <div class="card border-0 shadow-sm">
+          <div class="col-md-4" v-for="item in products" :key="item.id">
+            <div class="card my-2"
+                @click="$router.push(`/product/${item.id}`)"
+            >
               <div
-                style="height: 200px;background-size: cover;background-position: center;"
+                class="card-img"
                 :style="{
                   backgroundImage: `url(${item.imageUrl || item.image})`
                 }"
@@ -73,22 +67,6 @@
                   </div>
                 </div>
               </div>
-              <div class="card-footer d-flex">
-                <button
-                  type="button"
-                  class="btn border border-dark btn-sm"
-                  @click="$router.push(`/product/${item.id}`)"
-                >
-                  查看更多
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-dark btn-sm ml-auto"
-                  @click="addCart(item.id)"
-                >
-                  加到購物車
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -114,39 +92,33 @@ export default {
       products: [],
       categories: [],
       active: { name: '', path: '' },
-      pagination: {},
-      cart: []
+      pagination: {}
     }
   },
   components: { Pagination, CategoryList },
+  watch: {
+    products: () => {
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+    }
+  },
   methods: {
     getProducts (category = this.$route.params.category) {
       const vm = this
       vm.isLoading = true
-      vm.$router.push('/products/' + category).catch(err => err)
+      vm.$router.push('/products/' + category).catch((err) => err)
       vm.active.path = category
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
-      this.$http.get(api).then(res => {
+      vm.$http.get(api).then((res) => {
         if (res.data.success) {
           if (category === 'all') {
-            vm.products = res.data.products
+            vm.getPage()
             vm.active.name = '全部'
-            vm.pagination.current_page = 1
-          } else if (category === 'Castorland') {
-            vm.products = res.data.products.filter(function (item) {
-              return item.category === 'Castorland'
+          } else {
+            vm.products = res.data.products.filter((item) => {
+              return item.category === category
             })
-            vm.active.name = 'Castorland'
-          } else if (category === 'Clementoni') {
-            vm.products = res.data.products.filter(function (item) {
-              return item.category === 'Clementoni'
-            })
-            vm.active.name = 'Clementoni'
-          } else if (category === 'Ravensburger') {
-            vm.products = res.data.products.filter(function (item) {
-              return item.category === 'Ravensburger'
-            })
-            vm.active.name = 'Ravensburger'
+            vm.active.name = category
           }
         } else {
           vm.$bus.$emit('message:push', res.data.message, 'danger')
@@ -158,7 +130,7 @@ export default {
       const vm = this
       vm.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products?page=${page}`
-      this.$http.get(api).then(res => {
+      vm.$http.get(api).then((res) => {
         vm.isLoading = false
         if (res.data.success) {
           vm.products = res.data.products
@@ -171,116 +143,47 @@ export default {
     getProduct (item) {
       this.$router.push(`/product/${item.id}`)
     },
-    addCart (id, num = 1) {
+    getCategory () {
       const vm = this
-      const rel = vm.cart.find(item => item.product_id === id)
-      let obj
-      if (rel) {
-        obj = { product_id: rel.product_id, qty: num + rel.qty }
-        vm.isLoading = true
-        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
-        vm.$http
-          .post(api, {
-            data: obj
-          })
-          .then(res => {
-            vm.isLoading = false
-            if (res.data.success) {
-              vm.delCart(rel.id, true)
-            } else {
-              vm.$bus.$emit('message:push', res.data.message, 'danger')
-            }
-          })
-      } else {
-        obj = { product_id: id, qty: num }
-        vm.isLoading = true
-        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
-        vm.$http
-          .post(api, {
-            data: obj
-          })
-          .then(res => {
-            vm.isLoading = false
-            if (res.data.success) {
-              vm.getCart()
-              vm.$bus.$emit('message:push', res.data.message, 'dark')
-            } else {
-              vm.$bus.$emit('message:push', res.data.message, 'danger')
-            }
-          })
-      }
-    },
-    delCart (id, rep = false) {
-      const vm = this
-      vm.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${id}`
-      vm.$http.delete(api).then(res => {
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
+      vm.$http.get(api).then((res) => {
         if (res.data.success) {
-          if (rep === false) {
-            vm.$bus.$emit('message:push', res.data.message, 'dark')
-          } else {
-            vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
+          const arr = res.data.products
+          const set = new Set()
+          arr.filter((item) =>
+            !set.has(item.category) ? set.add(item.category) : false
+          )
+          const temCategory = [...set]
+          temCategory.forEach((item) => {
+            vm.categories.push({ title: item, num: 0, path: '' })
+          })
+          vm.categories.unshift({ title: '全部', num: 0, path: '' })
+          const arr2 = []
+          for (let i = 1; i < vm.categories.length; i++) {
+            const arr = res.data.products.filter((item) => {
+              return item.category === vm.categories[i].title
+            })
+            arr2.push(arr.length)
           }
+          arr2.unshift(arr.length)
+          for (let j = 0; j < arr2.length; j++) {
+            vm.categories[j].num = arr2[j]
+          }
+          const arr4 = ['all', 'Castorland', 'Clementoni', 'Ravensburger']
+          for (let i = 0; i < vm.categories.length; i++) {
+            vm.categories[i].path = arr4[i]
+          }
+          vm.getProducts()
         } else {
           vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false
-        vm.getCart()
-      })
-    },
-    getCart () {
-      const vm = this
-      vm.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
-      vm.$http.get(api).then(res => {
-        if (res.data.success) {
-          vm.cart = res.data.data.carts
-        } else {
-          vm.$bus.$emit('message:push', res.data.message, 'danger')
-        }
-        vm.isLoading = false
       })
     }
   },
   created () {
-    const vm = this
-    const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
-    this.$http.get(api).then(res => {
-      if (res.data.success) {
-        const arr = res.data.products
-        const set = new Set()
-        arr.filter(item =>
-          !set.has(item.category) ? set.add(item.category) : false
-        )
-        const temCategory = [...set]
-        temCategory.forEach(function (item) {
-          vm.categories.push({ title: item, num: 0, path: '' })
-        })
-        vm.categories.unshift({ title: '全部', num: 0, path: '' })
-        const arr2 = []
-        for (let i = 1; i < vm.categories.length; i++) {
-          const arr = res.data.products.filter(function (item) {
-            return item.category === vm.categories[i].title
-          })
-          arr2.push(arr.length)
-        }
-        arr2.unshift(arr.length)
-        for (let j = 0; j < arr2.length; j++) {
-          vm.categories[j].num = arr2[j]
-        }
-        const arr3 = vm.categories
-        const arr4 = ['all', 'Castorland', 'Clementoni', 'Ravensburger']
-        for (let i = 0; i < arr3.length; i++) {
-          arr3[i].path = arr4[i]
-        }
-        vm.categories = arr3
-        vm.getProducts()
-      } else {
-        vm.$bus.$emit('message:push', res.data.message, 'danger')
-      }
-    })
-    vm.getPage()
-    vm.getCart()
+    this.getCategory()
+    this.getProducts()
+    this.getPage(1)
   }
 }
 </script>
@@ -290,12 +193,24 @@ export default {
   width: 35%;
 }
 
+.card-img{
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card:hover{
+  cursor: pointer;
+  background-color: #343a40;
+  color: #f8f9fa;
+}
+
 @media screen and (min-width: 420px) and (max-width: 992px) {
-  .pc {
+  .lg {
     display: none;
   }
 
-  .pad {
+  .md {
     display: block;
   }
 }

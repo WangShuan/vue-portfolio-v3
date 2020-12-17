@@ -5,7 +5,7 @@
     </loading>
 
     <nav
-      class="navbar pc navbar-dark fixed-top bg-secondary flex-md-nowrap p-0 shadow"
+      class="navbar lg navbar-dark fixed-top bg-secondary flex-md-nowrap p-0 shadow"
     >
       <router-link
         class="navbar-brand col-md-3 text-white col-lg-2 mr-0 font-weight-bold"
@@ -27,9 +27,9 @@
       </ul>
     </nav>
 
-    <div class="mobile">
+    <div class="sm">
       <div class="d-flex justify-content-between">
-        <div class="navbar w-100 mobile-header mobile bg-secondary">
+        <div class="navbar w-100 sm-header sm bg-secondary">
           <router-link class="h4 text-light float-left mt-2" to="/">
             <i class="fa fa-cog" aria-hidden="true"></i>
             拼圖迷後台管理

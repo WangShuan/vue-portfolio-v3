@@ -3,12 +3,12 @@
     <loading :active.sync="isLoading">
       <h4>載入中 請稍候...</h4>
     </loading>
-    <h3 class="my-4 pc text-dark">
+    <h3 class="my-4 lg text-dark">
       <i class="fa fa-heart-o" aria-hidden="true"></i>
       喜好項目
     </h3>
     <div v-if="hasLiked == false">
-      <h4 class="my-5 pc">
+      <h4 class="my-5 lg">
         您的喜好項目為空，
         <br />
         將在
@@ -17,13 +17,13 @@
       </h4>
     </div>
 
-    <h5 class="my-3 mobile text-dark">
+    <h5 class="my-3 sm text-dark">
       <i class="fa fa-heart-o" aria-hidden="true"></i>
       喜好項目
     </h5>
 
     <div v-if="hasLiked == false">
-      <h6 class="my-5 mobile">
+      <h6 class="my-5 sm">
         您的喜好項目為空，
         <br />
         將在
@@ -33,7 +33,7 @@
     </div>
 
     <div id="cart-list" v-else>
-      <table class="pc table table-striped table-bordered text-dark mt-4">
+      <table class="lg table table-striped table-bordered text-dark mt-4">
         <thead class="thead">
           <th>操作</th>
           <th>品名</th>
@@ -72,7 +72,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="mobile">
+      <div class="sm">
         <table class="table table-striped table-bordered text-dark my-2">
           <thead class="thead">
             <th>操作</th>
@@ -170,26 +170,27 @@ export default {
       const vm = this
       const cookieAry = document.cookie.split(';')
       let cookie
-      let arr
+      // let arr
       for (let i = 0; i < cookieAry.length; ++i) {
         cookie = cookieAry[i].trim()
         cookie = cookie.split('=')
         if (cookie[0] === 'like') {
-          arr = cookie[1]
-          vm.cookie = arr
-          if (arr.length > 0) {
-            vm.getLikes(arr)
-            vm.getCart()
-          } else {
-            vm.hasLiked = false
-            vm.time = 3
-            setInterval(vm.countDown, 1000)
-          }
+          vm.cookie = cookie[1]
+        }
+      }
+      if (vm.cookie) {
+        if (vm.cookie.length > 0) {
+          vm.getLikes(vm.cookie)
+          vm.getCart()
         } else {
           vm.hasLiked = false
           vm.time = 3
           setInterval(vm.countDown, 1000)
         }
+      } else {
+        vm.hasLiked = false
+        vm.time = 3
+        setInterval(vm.countDown, 1000)
       }
     },
     addCart (id, num = 1) {

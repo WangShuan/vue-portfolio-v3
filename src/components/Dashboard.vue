@@ -2,7 +2,7 @@
   <div>
     <div class="container-fluid">
       <Navbar></Navbar>
-      <Alert></Alert>
+      <MessageAlert></MessageAlert>
       <div class="row mt-3">
         <Sidebar></Sidebar>
         <main role="main" class="mt-1 ml-sm-auto col-md-9 col-lg-10 px-4 pt-0">
@@ -16,13 +16,13 @@
 <script>
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
-import Alert from '@/components/MessageAlert'
+import MessageAlert from '@/components/MessageAlert'
 
 export default {
   components: {
     Sidebar,
     Navbar,
-    Alert
+    MessageAlert
   },
   created () {
     const myCookie = document.cookie.replace(

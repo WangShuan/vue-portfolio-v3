@@ -1,6 +1,6 @@
 <template>
   <div class="container text-dark">
-    <div class="pc mb-5">
+    <div class="lg mb-5">
       <h3 class="py-4 border-bottom">
         <i class="fa fa-ticket"></i>
         優惠券專區
@@ -9,8 +9,10 @@
         <h4 class="pt-3 text-muted">新客優惠</h4>
       </i>
       <div class="row">
-        <div class="col-lg-4 col-md-6 m-auto">
-          <div class="my-4 sawtooth p-2 bg-warning">
+          <div
+          class="col-lg-4 col-md-6 m-auto"
+        >
+          <div class="sawtooth bg-warning p-2 my-4">
             <div class="float-left pt-2 sawtooth-big">
               <h1 class="m-0 mb-2">
                 88
@@ -18,7 +20,7 @@
               </h1>
               <button
                 class="btn rounded px-1 py-0 btn-sm btn-danger"
-                @focus="copyBtn('new88')"
+                @click="copyBtn('new88')"
               >
                 點擊領取
               </button>
@@ -32,8 +34,11 @@
             <div class="float-right pt-3 border-left sawtooth-content">
               <h5 class="text-dark">新客專屬優惠碼</h5>
               <p>
-                全館不限金額皆可使用
-                <br />無使用期限 - 限首購
+                全館不限金額皆享優惠
+                <br />
+                <u class="text-dark">
+                  無使用期限 - 限首購
+                </u>
               </p>
             </div>
             <div class="bg-icon">
@@ -87,7 +92,7 @@
         </div>
       </div>
     </div>
-    <div class="m-3 mobile">
+    <div class="m-3 sm">
       <h5 class="my-3">
         <i class="fa fa-ticket"></i>
         優惠券專區
@@ -109,11 +114,11 @@
             <input
               type="text"
               class="text-center text-muted input-bg"
-              value="new888"
+              value="new88"
               @focus="copy"
             />
           </div>
-          <div class="bg-icon">
+          <div class="sm-bg-icon">
             <div class="icon-big">🎁</div>
           </div>
         </div>
@@ -144,7 +149,7 @@
               v-model="item.code"
             />
           </div>
-          <div class="bg-icon">
+          <div class="sm-bg-icon">
             <div class="icon-big">🎊</div>
           </div>
         </div>
@@ -188,8 +193,8 @@ export default {
       document.execCommand('Copy')
       this.$bus.$emit('message:push', '複製成功', 'dark')
     },
-    copyBtn (className) {
-      const ipt = document.getElementById(className)
+    copyBtn (id) {
+      const ipt = document.getElementById(id)
       ipt.select()
       document.execCommand('copy')
       this.$bus.$emit('message:push', '複製成功', 'dark')

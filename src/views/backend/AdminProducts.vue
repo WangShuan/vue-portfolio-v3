@@ -31,7 +31,7 @@
       </div>
     </loading>
 
-    <div class="pc">
+    <div class="lg">
       <div class="mt-5">
         <div class="float-left">
           <h4 class="mt-3 font-weight-bold">
@@ -48,7 +48,7 @@
           </button>
         </div>
       </div>
-      <table class="table pc table-striped table-bordered mt-4 text-dark">
+      <table class="table lg table-striped table-bordered mt-4 text-dark">
         <thead>
           <tr>
             <th scope="col">名稱</th>
@@ -93,7 +93,7 @@
       </table>
     </div>
 
-    <div class="mobile">
+    <div class="sm">
       <div>
         <div class="float-left">
           <h5 class="font-weight-bold mb-3">

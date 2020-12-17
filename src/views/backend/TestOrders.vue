@@ -30,7 +30,7 @@
         </div>
       </div>
     </loading>
-    <div class="pc mt-5">
+    <div class="lg mt-5">
       <div class="float-left">
         <h4 class="mt-3 font-weight-bold">
           <i class="fa fa-th" aria-hidden="true"></i>
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="mobile">
+    <div class="sm">
       <div class="float-left">
         <h5 class="mt-3 font-weight-bold">
           <i class="fa fa-th" aria-hidden="true"></i>
@@ -56,8 +56,8 @@
     ></Cards>
 
     <div
-      id="cart-list-pc"
-      class="col-md-10 py-2 border-top mx-auto pc"
+      id="cart-list-lg"
+      class="col-md-10 py-2 border-top mx-auto lg"
       v-if="cart.total > 0"
     >
       <h4 class="my-3">
@@ -76,7 +76,7 @@
             <td class="align-middle">
               <button
                 type="button"
-                class="btn btn-outline-dark btn-sm"
+                class="btn btn-outline-danger btn-sm"
                 @click="delCart(item.id)"
               >
                 <i class="fa fa-trash" aria-hidden="true"></i>
@@ -118,24 +118,20 @@
           </tr>
         </tfoot>
       </table>
-      <div class="row">
-        <div class="input-group mb-3 input-group-sm col-5 float-right pr-0">
-          <input
+      <div class="input-group">
+        <input
             type="text"
             class="form-control"
             placeholder="請輸入優惠碼"
             v-model="couponCode"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-dark" type="button" @click="addCoupon">
-              套用優惠碼
-            </button>
-          </div>
-        </div>
+        />
+        <button class="btn btn-dark w-25" type="button" @click="addCoupon">
+          套用優惠碼
+        </button>
       </div>
     </div>
 
-    <div id="cart-list-mobile" class="mobile" v-if="cart.total > 0">
+    <div id="cart-list-sm" class="sm" v-if="cart.total > 0">
       <h5><i class="fa fa-shopping-cart" aria-hidden="true"></i> 購物車清單</h5>
       <table class="table table-striped table-bordered text-dark mt-4">
         <thead class="thead">
@@ -269,13 +265,13 @@
                 <div class="form-group col-md-7">
                   <ValidationProvider
                     v-slot="{ failed, errors }"
-                    name="mobile"
+                    name="sm"
                     rules="required|numeric"
                   >
                     <label for="usertel">電話號碼</label>
                     <input
                       type="text"
-                      name="mobile"
+                      name="sm"
                       v-model="form.user.tel"
                       id="usertel"
                       class="form-control form-control-sm"
@@ -571,7 +567,7 @@ export default {
     },
     goCart () {
       $('html,body').animate(
-        { scrollTop: $('#cart-list-pc').offset().top },
+        { scrollTop: $('#cart-list-lg').offset().top },
         800
       )
     }

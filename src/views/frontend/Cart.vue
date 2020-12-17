@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading">
       <h4>載入中 請稍候...</h4>
     </loading>
-    <div class="pc row">
+    <div class="lg row">
       <div class="col-lg-7 mb-3" :class="{ 'col-lg-8': cart.total > 0 }">
         <h4 class="my-4 text-dark">
           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -37,7 +37,7 @@
                       {{ item.product.title }}
                     </router-link>
                   </u>
-                  <div class="text-muted" v-if="final_total !== total">
+                  <div class="text-muted" v-if="finalTotal !== total">
                     已套用優惠券
                   </div>
                 </td>
@@ -67,7 +67,7 @@
                   </div>
                 </td>
                 <td class="align-middle text-right">
-                  <del class="text-muted" v-if="final_total !== total">
+                  <del class="text-muted" v-if="finalTotal !== total">
                     {{ item.product.price | numFormat | dollarSign }}
                     /
                     {{ item.product.unit }}
@@ -77,7 +77,7 @@
                     /
                     {{ item.product.unit }}
                   </template>
-                  <div class="text-dark" v-if="final_total !== total">
+                  <div class="text-dark" v-if="finalTotal !== total">
                     折扣後
                     {{
                       ((item.product.price * cart.carts[0].coupon.percent) /
@@ -138,15 +138,15 @@
           </h6>
           <h4
             class="mt-5 border-top py-3"
-            :class="{ 'h5 text-secondary': final_total !== total }"
+            :class="{ 'h5 text-secondary': finalTotal !== total }"
           >
             <div class="float-left">總計</div>
             <div class="float-right">{{ total | numFormat | dollarSign }}</div>
           </h4>
-          <h4 v-if="final_total !== total" class="py-3 text-dark">
+          <h4 v-if="finalTotal !== total" class="py-3 text-dark">
             <div class="float-left">最終折扣價</div>
             <div class="float-right">
-              {{ final_total | numFormat | dollarSign }}
+              {{ finalTotal | numFormat | dollarSign }}
             </div>
           </h4>
           <button
@@ -158,7 +158,7 @@
         </div>
       </div>
       <div class="col-lg-5 col-md-8 mx-auto" v-if="cart.total === 0">
-        <h4 class="my-4 pc">
+        <h4 class="my-4 lg">
           <i class="fa fa-star" aria-hidden="true"></i>
           為您推薦
         </h4>
@@ -198,7 +198,7 @@
         </ul>
       </div>
     </div>
-    <div class="mobile" v-if="cart.total > 0">
+    <div class="sm" v-if="cart.total > 0">
       <h5 class="my-4">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
         購物車清單
@@ -268,26 +268,23 @@
           class="form-control text-center"
           :placeholder="hint"
           v-model="couponCode"
-        />
-      </div>
-      <div class="input-group row input-group-sm mx-0">
-        <button
-          class="btn border border-dark rounded-0 col-6 btn-sm font-weight-bold"
+        /><button
+          class="btn border border-dark rounded-0 col-3 btn-sm font-weight-bold"
           type="button"
           @click="addCoupon"
         >
           套用優惠碼
         </button>
-        <button
-          class="btn btn-dark rounded-0 col-6 btn-sm font-weight-bold"
+      </div>
+      <button
+          class="btn btn-dark w-100 btn-sm my-4 font-weight-bold"
           @click="goCheckout"
         >
           立即結帳
         </button>
-      </div>
       <br />
     </div>
-    <div class="mobile" v-if="cart.total === 0">
+    <div class="sm" v-if="cart.total === 0">
       <h5 class="my-4">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
         購物車清單
@@ -301,7 +298,7 @@
         選購。
       </p>
       <hr />
-      <h5 class="my-4 mobile">
+      <h5 class="my-4 sm">
         <i class="fa fa-star" aria-hidden="true"></i>
         為您推薦
       </h5>
@@ -559,7 +556,6 @@
   </div>
 </template>
 <script>
-/* eslint-disable camelcase */
 import $ from 'jquery'
 export default {
   data () {
@@ -583,7 +579,7 @@ export default {
     }
   },
   methods: {
-    getCart () {
+    getCart (openModal = false) {
       const vm = this
       vm.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
@@ -607,6 +603,9 @@ export default {
           vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
         vm.isLoading = false
+        if (openModal === true) {
+          $('#modal').modal('show')
+        }
       })
     },
     delCart (id, rep = false) {
@@ -617,8 +616,6 @@ export default {
         if (res.data.success) {
           if (rep === false) {
             vm.$bus.$emit('message:push', res.data.message, 'dark')
-          } else {
-            vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
           }
         } else {
           vm.$bus.$emit('message:push', res.data.message, 'danger')
@@ -627,23 +624,43 @@ export default {
         vm.getCart()
       })
     },
-    addCoupon () {
+    addCoupon (changeLoading = true) {
       const vm = this
       if (vm.couponCode === '') {
         vm.$bus.$emit('message:push', '請輸入優惠碼', 'danger')
         return
       }
-      vm.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/coupon`
-      vm.$http.post(api, { data: { code: vm.couponCode } }).then((res) => {
-        if (res.data.success) {
-          vm.cart.final_total = res.data.final_total
-          vm.$bus.$emit('message:push', '已套用優惠券', 'dark')
-        } else {
-          vm.$bus.$emit('message:push', res.data.message, 'danger')
-        }
-        vm.getCart()
-      })
+      if (changeLoading === false) {
+        vm.isLoading = true
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/coupon`
+        vm.$http.post(api, { data: { code: vm.couponCode } }).then((res) => {
+          if (res.data.success) {
+            vm.cart.final_total = res.data.final_total
+            vm.$bus.$emit('message:push', '已套用優惠券', 'dark')
+            if (changeLoading === true) {
+              vm.isLoading = false
+            }
+          } else {
+            vm.$bus.$emit('message:push', res.data.message, 'danger')
+          }
+          vm.getCart(true)
+        })
+      } else {
+        vm.isLoading = true
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/coupon`
+        vm.$http.post(api, { data: { code: vm.couponCode } }).then((res) => {
+          if (res.data.success) {
+            vm.cart.final_total = res.data.final_total
+            vm.$bus.$emit('message:push', '已套用優惠券', 'dark')
+            if (changeLoading === true) {
+              vm.isLoading = false
+            }
+          } else {
+            vm.$bus.$emit('message:push', res.data.message, 'danger')
+          }
+          vm.getCart()
+        })
+      }
     },
     addQty (id) {
       const vm = this
@@ -670,32 +687,49 @@ export default {
       if (JSON.stringify(vm.cart) === JSON.stringify(vm.tempCart)) {
         $('#modal').modal('show')
       } else {
-        vm.tempCart.carts.forEach((item) => {
-          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${item.id}`
-          vm.$http.delete(api).then()
-        })
-        let times = vm.cart.carts.length
-        vm.cart.carts.forEach((item) => {
-          vm.isLoading = true
-          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
-          vm.$http
-            .post(api, { data: { product_id: item.product_id, qty: item.qty } })
-            .then((res) => {
-              vm.isLoading = false
-              if (res.data.success) {
-                times--
-                if (times === 0) {
-                  if (vm.cart.carts[0].coupon) {
-                    vm.couponCode = vm.cart.carts[0].coupon.code
-                    vm.addCoupon()
-                  }
-                  vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
-                  $('#modal').modal('show')
-                }
-              } else {
-                vm.$bus.$emit('message:push', res.data.message, 'danger')
+        vm.isLoading = true
+        vm.tempCart.carts = vm.cart.carts
+        const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
+        vm.$http.get(api).then((res) => {
+          if (res.data.success) {
+            vm.cart = res.data.data
+            let times = vm.cart.carts.length
+            vm.cart.carts.forEach((item) => {
+              times--
+              const code = vm.cart.carts[0].coupon.code
+              const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${item.id}`
+              vm.$http.delete(api).then()
+              if (times === 0) {
+                const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
+                let times = vm.tempCart.carts.length
+                vm.tempCart.carts.forEach((item) => {
+                  const obj = { product_id: item.product_id, qty: item.qty }
+                  vm.$http.post(api, { data: obj }).then((res) => {
+                    if (res.data.success) {
+                      times--
+                      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
+                      vm.$http.get(api).then((res) => {
+                        if (res.data.success) {
+                          vm.cart = res.data.data
+                          vm.tempCart = vm.cart
+                          if (code) {
+                            vm.couponCode = code
+                            if (times === 0) {
+                              vm.addCoupon(false)
+                              vm.isLoading = false
+                            }
+                          }
+                        }
+                      })
+                    }
+                  })
+                })
+                vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
               }
             })
+          } else {
+            vm.$bus.$emit('message:push', res.data.message, 'danger')
+          }
         })
       }
     },
@@ -719,7 +753,6 @@ export default {
         } else {
           vm.$bus.$emit('message:push', res.data.message, 'danger')
         }
-        vm.isLoading = false
       })
     },
     addOrder () {
@@ -740,7 +773,6 @@ export default {
         } else {
           vm.$bus.$emit('message:push', '欄位不完整', 'danger')
         }
-        vm.getCart()
         vm.isLoading = false
       })
     }
@@ -754,21 +786,21 @@ export default {
       })
       return total
     },
-    final_total () {
+    finalTotal () {
       const vm = this
-      let final_total = 0
+      let finalTotal = 0
       if (vm.cart.carts[0].coupon) {
         vm.cart.carts.forEach((item) => {
-          final_total +=
+          finalTotal +=
             (item.qty * item.product.price * vm.cart.carts[0].coupon.percent) /
             100
         })
       } else {
         vm.cart.carts.forEach((item) => {
-          final_total += item.qty * item.product.price
+          finalTotal += item.qty * item.product.price
         })
       }
-      return final_total
+      return finalTotal
     }
   },
   created () {

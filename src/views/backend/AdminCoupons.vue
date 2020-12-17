@@ -31,7 +31,7 @@
       </div>
     </loading>
 
-    <div class="pc mt-5">
+    <div class="lg mt-5">
       <div class="float-left">
         <h4 class="mt-3 font-weight-bold">
           <i class="fa fa-ticket" aria-hidden="true"></i>
@@ -89,7 +89,7 @@
       </table>
     </div>
 
-    <div class="mobile">
+    <div class="sm">
       <div class="float-left">
         <h5 class="font-weight-bold">
           <i class="fa fa-ticket"></i>
@@ -117,7 +117,7 @@
               <button
                 @click="openDelModal(item)"
                 type="button"
-                class="btn btn-outline-dark btn-sm"
+                class="btn btn-outline-danger btn-sm"
               >
                 <i class="fa fa-trash"></i>
               </button>
@@ -149,7 +149,7 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-md" role="document">
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="exampleModalLabel">
@@ -317,7 +317,7 @@ export default {
       const vm = this
       vm.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/coupons?page=${page}`
-      this.$http.get(api).then((res) => {
+      vm.$http.get(api).then((res) => {
         vm.isLoading = false
         if (res.data.success) {
           vm.coupons = res.data.coupons
@@ -348,7 +348,7 @@ export default {
         httpMethod = 'put'
       }
       vm.tempCoupon.due_date = Date.parse(vm.tempCoupon.due_date)
-      this.$http[httpMethod](api, { data: vm.tempCoupon }).then((res) => {
+      vm.$http[httpMethod](api, { data: vm.tempCoupon }).then((res) => {
         if (res.data.success) {
           $('#couponModal').modal('hide')
         } else {
@@ -367,7 +367,7 @@ export default {
       const vm = this
       vm.isLoading = true
       const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/admin/coupon/${vm.tempCoupon.id}`
-      this.$http.delete(api).then((res) => {
+      vm.$http.delete(api).then((res) => {
         if (res.data.success) {
           vm.$bus.$emit('message:push', res.data.message, 'dark')
         } else {

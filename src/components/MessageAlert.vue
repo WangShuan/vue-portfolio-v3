@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div v-if="this.$route.path.indexOf('admin') === -1">
+    <div v-if="this.$route.path.indexOf('admin') === -1&&this.$route.path.indexOf('cart') === -1">
       <router-link
         v-if="this.$route.path.indexOf('test') === -1 && cart.num > 0"
         to="/cart"
@@ -105,12 +105,12 @@ export default {
       const screenWidth = document.documentElement.clientWidth
       if (screenWidth < 768) {
         $('html,body').animate(
-          { scrollTop: $('#cart-list-mobile').offset().top },
+          { scrollTop: $('#cart-list-sm').offset().top },
           800
         )
       } else {
         $('html,body').animate(
-          { scrollTop: $('#cart-list-pc').offset().top },
+          { scrollTop: $('#cart-list-lg').offset().top },
           800
         )
       }

@@ -3,9 +3,9 @@
     <loading :active.sync="isLoading">
       <h4>載入中 請稍候...</h4>
     </loading>
-    <Alert></Alert>
+    <MessageAlert></MessageAlert>
 
-    <header class="navbar pc navbar-expand navbar-light bg-light">
+    <header class="navbar lg navbar-expand navbar-light bg-light">
       <router-link class="h4 text-muted mt-2" to="/">
         <img src="@/assets/image/logo.png" alt="Logo" class="logo" />
         拼圖迷
@@ -64,7 +64,7 @@
     </header>
 
     <header
-      class="navbar mobile-header mobile navbar-expand-lg navbar-light bg-light"
+      class="navbar sm-header sm navbar-expand-lg navbar-light bg-light"
     >
       <router-link class="h4 float-left text-muted mt-2" to="/">
         <img src="@/assets/image/logo.png" alt="Logo" class="logo" />
@@ -120,12 +120,12 @@
     ></router-view>
 
     <div class="main-content" v-else>
-      <div class="main-img-pc pc">
+      <div class="main-img-lg lg">
         <img
           src="https://images.unsplash.com/photo-1590146757941-486a0c8385ec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80"
           class="d-block w-100"
         />
-        <div class="main-img-pc-caption bg-light text-dark">
+        <div class="main-img-lg-caption bg-light text-dark">
           <h2 class="mt-3">歡迎光臨拼圖迷❤️</h2>
           <p class="h4 font-weight-normal">
             市面上進口拼圖網路商店的銷售冠軍🏆
@@ -139,37 +139,37 @@
         </div>
         <button
           @click="$router.push('/product/-MN1R8dGkdl9mtI2viKd')"
-          class="pc btn main-img-pc-btn btn-dark"
+          class="lg btn main-img-lg-btn btn-dark"
         >
           立即搶購
           <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
         </button>
       </div>
 
-      <div class="main-img mobile">
+      <div class="main-img-sm sm">
         <img
           src="https://images.unsplash.com/photo-1590146757941-486a0c8385ec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80"
           class="d-block w-100"
         />
-        <div class="main-img-caption text-dark">
+        <div class="main-img-sm-caption text-dark">
           <h4 class="my-3">歡迎光臨拼圖迷❤️</h4>
           <p class="h6 font-weight-normal">
-            進口拼圖網路商店的銷售冠軍🏆
+            市面上進口拼圖網路商店的銷售冠軍🏆
             <br />
-            擁有歐洲三大拼圖獨家代理權！
+            擁有歐洲三大進口拼圖獨家代理權！
             <br />
-            銷量第一產品
-            <u>
-              <router-link
-                class="text-muted ml-2"
-                to="/product/-MN1R8dGkdl9mtI2viKd"
-              >
-                紐約天際線-2000片
-              </router-link>
-            </u>
-            <br />本公司承諾正版保證 - 皆附保證書📖
+            銷量第一產品 ➡️ 紐約天際線-2000片
+            <br />
+            本公司產品承諾正版保證- 皆附保證書📖
           </p>
         </div>
+        <button
+          @click="$router.push('/product/-MN1R8dGkdl9mtI2viKd')"
+          class="btn main-img-sm-btn btn-dark btn-sm"
+        >
+          立即搶購
+          <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+        </button>
       </div>
 
       <div class="container">
@@ -211,7 +211,7 @@
           </div>
         </div>
         <hr />
-        <div class="news pc my-5">
+        <div class="news lg my-5">
           <h3 class="my-4">
             <i class="fa fa-newspaper-o" aria-hidden="true"></i>
             最新消息
@@ -248,7 +248,7 @@
             </div>
           </div>
         </div>
-        <div class="news mobile mt-4">
+        <div class="news sm mt-4">
           <h4 class="my-4">
             <i class="fa fa-newspaper-o" aria-hidden="true"></i>
             最新消息
@@ -428,7 +428,7 @@
 </template>
 
 <script>
-import Alert from '@/components/MessageAlert'
+import MessageAlert from '@/components/MessageAlert'
 
 export default {
   data () {
@@ -439,7 +439,7 @@ export default {
       screenWidth: document.documentElement.clientWidth
     }
   },
-  components: { Alert },
+  components: { MessageAlert },
   methods: {
     copy (e) {
       e.currentTarget.select()

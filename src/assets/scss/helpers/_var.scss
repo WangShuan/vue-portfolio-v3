@@ -32,7 +32,7 @@ $purple: #6f42c1 !default;
 $pink: #e83e8c !default;
 $red: #dc3545 !default;
 $orange: #fd7e14 !default;
-$yellow: #ffc107 !default;
+$yellow: #ffe28b !default;
 $green: #28a745 !default;
 $teal: #20c997 !default;
 $cyan: #17a2b8 !default;
@@ -237,7 +237,7 @@ $box-shadow: 0 0.5rem 1rem rgba($black, 0.15) !default;
 $box-shadow-lg: 0 1rem 3rem rgba($black, 0.175) !default;
 
 $component-active-color: $white !default;
-$component-active-bg: theme-color("primary") !default;
+$component-active-bg: theme-color("dark") !default;
 
 $caret-width: 0.3em !default;
 $caret-vertical-align: $caret-width * 0.85 !default;

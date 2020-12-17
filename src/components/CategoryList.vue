@@ -1,6 +1,6 @@
 <template>
   <div class="col-md pr-0">
-    <h4 class="my-4 text-left pc">商品分類</h4>
+    <h4 class="my-4 text-left lg">商品分類</h4>
     <ul class="p-0 m-0">
       <li
         class="list-group-item d-flex justify-content-between align-items-center"
