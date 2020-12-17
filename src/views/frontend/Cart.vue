@@ -696,8 +696,9 @@ export default {
             let times = vm.cart.carts.length
             vm.cart.carts.forEach((item) => {
               times--
+              const code = ''
               if (vm.cart.carts[0].coupon.code) {
-                const code = vm.cart.carts[0].coupon.code
+                code = vm.cart.carts[0].coupon.code
               }
               const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${item.id}`
               vm.$http.delete(api).then()
