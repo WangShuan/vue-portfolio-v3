@@ -697,7 +697,7 @@ export default {
             vm.cart.carts.forEach((item) => {
               times--
               let code = ''
-              if (vm.cart.carts[0].coupon.code) {
+              if (vm.cart.carts[0].coupon) {
                 code = vm.cart.carts[0].coupon.code
               }
               const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${item.id}`
@@ -715,12 +715,14 @@ export default {
                         if (res.data.success) {
                           vm.cart = res.data.data
                           vm.tempCart = vm.cart
-                          if (code) {
+                          if (code !== '') {
                             vm.couponCode = code
                             if (times === 0) {
                               vm.addCoupon(false)
                               vm.isLoading = false
                             }
+                          } else {
+                            vm.getCart(true)
                           }
                         }
                       })
