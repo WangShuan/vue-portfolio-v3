@@ -477,7 +477,7 @@ export default {
     },
     addCart (id, num = 1) {
       const vm = this
-      const rel = vm.cart.find((item) => item.product_id === id)
+      let rel = vm.cart.find((item) => item.product_id === id)
       let obj
       if (rel) {
         obj = { product_id: rel.product_id, qty: rel.qty + 1 }
@@ -491,6 +491,7 @@ export default {
             vm.isLoading = false
             if (res.data.success) {
               vm.delCart(rel.id, true)
+              rel = ''
             } else {
               vm.$bus.$emit('message:push', res.data.message, 'danger')
             }
@@ -546,11 +547,18 @@ export default {
       })
     }
   },
-  mounted () {
+  created () {
     const vm = this
     vm.randomProducts()
     vm.$bus.$emit('message:push', '歡迎光臨拼圖迷～❤️', 'light')
     vm.getCart()
+  },
+  watch: {
+    $route: function (to, from) {
+      if (to.path === '/' && from !== '/') {
+        this.getCart()
+      }
+    }
   }
 }
 </script>
