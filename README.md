@@ -61,8 +61,13 @@
 vue-router 中提供了一個路由守衛的功能，我們可以藉由它來阻止路由跳轉，比如某些頁面需要登入後才能訪問，就可以藉由路由守衛判斷登入狀態再進行頁面訪問。
 
 ```js
-
+ 
 router.beforeEach((to, from, next) => {
+  // 這裏更改網頁的 title
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  // 這裏檢查是否登入
   if(to.meta.requiresAuth) {
     const api = process.env.APIPATH + "api/user/check"
     axios.post(api).then((res) => {
@@ -86,6 +91,8 @@ router.beforeEach((to, from, next) => {
  - 通過在路由對象中添加 `children:[]` 就可以增加子路由 子路由會生成在父組件中放有 `<router-view></router-view>` 標籤的位置
 
  - 在路由中可以添加上 `{path: '*',redirect: '/'}` 即可讓所有沒被定義的路徑都會重定向到首頁
+
+ - 在路由對象中添加 `meta: { title: '拼圖迷 - 進口拼圖專賣店'}` 可以更改`index.html` 的 `title`
 
  - `vue-cli v3` 以上的版本可以通過新的方法引入 `.vue` 檔 代碼如下：
 
@@ -253,6 +260,86 @@ addCart(id, num = 1) {
         vm.$bus.$emit("message:push", res.data.message, "danger");
       }
     });
+}
+
+```
+
+## 9. 結帳前重新確認品項
+
+在購物車頁面中可以修改產品購買數量與添加優惠券
+
+在最後按下確認結帳時才將剛才修改的數量與優惠券重新傳送
+
+整個過程會先刪除原本購物車的內容 再添加更新後的數量與優惠券 
+
+ajax 跑完後會開啟 modal 讓用戶填寫資料 按下送出後才跳轉至結帳頁面
+
+主要代碼如下：
+
+```js
+
+goCheckout () {
+  const vm = this
+  // 判斷購物車內容是否更新過
+  if (JSON.stringify(vm.cart) === JSON.stringify(vm.tempCart)) {
+    $('#modal').modal('show')
+  } else {
+    vm.isLoading = true
+    // 讓 tempCart 為更新後的購買內容
+    vm.tempCart.carts = vm.cart.carts
+    const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
+    vm.$http.get(api).then((res) => {
+      if (res.data.success) {
+        // 重新獲取購買內容
+        vm.cart = res.data.data
+        let times = vm.cart.carts.length
+        vm.cart.carts.forEach((item) => {
+          times--
+          let code = ''
+          // 判斷是否有折價券
+          if (vm.cart.carts[0].coupon) {
+            code = vm.cart.carts[0].coupon.code
+          }
+          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart/${item.id}`
+          // 刪除所有購買產品
+          vm.$http.delete(api).then()
+          if (times === 0) {
+            const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
+            let times = vm.tempCart.carts.length
+            // 重新添加更新後的購買產品、數量
+            vm.tempCart.carts.forEach((item) => {
+              const obj = { product_id: item.product_id, qty: item.qty }
+              vm.$http.post(api, { data: obj }).then((res) => {
+                if (res.data.success) {
+                  times--
+                  const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/cart`
+                  vm.$http.get(api).then((res) => {
+                    if (res.data.success) {
+                      vm.cart = res.data.data
+                      vm.tempCart = vm.cart
+                      // 判斷是否使用優惠券並添加優惠券
+                      if (code !== '') {
+                        vm.couponCode = code
+                        if (times === 0) {
+                          vm.addCoupon(false)
+                          vm.isLoading = false
+                        }
+                      } else {
+                        vm.getCart(true)
+                      }
+                    }
+                  })
+                }
+              })
+            })
+            vm.$bus.$emit('message:push', '購物車清單已更新', 'dark')
+          }
+        })
+      } else {
+        vm.$bus.$emit('message:push', res.data.message, 'danger')
+      }
+    })
+  }
 }
 
 ```
