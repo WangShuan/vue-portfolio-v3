@@ -361,7 +361,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link p-1 text-dark" href="#">
+            <a class="nav-link p-1 text-dark" href="https://github.com/WangShuan/vue-portfolio-v3">
               <i class="fa fa-lg fa-github" aria-hidden="true"></i>
             </a>
           </li>
