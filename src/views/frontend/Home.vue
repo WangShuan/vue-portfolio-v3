@@ -549,13 +549,12 @@ export default {
   },
   created () {
     const vm = this
-    vm.randomProducts()
-    vm.$bus.$emit('message:push', '歡迎光臨拼圖迷～❤️', 'light')
+    vm.randomProducts('歡迎光臨拼圖迷～❤️')
     vm.getCart()
   },
   watch: {
     $route: function (to, from) {
-      if (to.path === '/' && from !== '/') {
+      if (to.path === '/' && from.path !== '/') {
         this.getCart()
       }
     }

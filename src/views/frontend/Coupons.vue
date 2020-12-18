@@ -168,14 +168,14 @@ export default {
           due_date: 1631750400000,
           num: 1,
           percent: 9,
-          title: '週年慶全館九折優惠券'
+          title: '週年慶優惠券'
         },
         {
           code: '8YEARS8',
           due_date: 1665878400000,
           id: 2,
           percent: 8,
-          title: '遊戲天堂八週年優惠券'
+          title: '開幕八週年優惠券'
         },
         {
           code: 'LOVEYOUTHX75',

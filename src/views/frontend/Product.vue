@@ -195,25 +195,29 @@ export default {
           vm.product = res.data.product
           vm.product.num = 1
           vm.active.name = vm.product.category
-          const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
-          vm.$http.get(api).then((res) => {
-            vm.isLoading = false
-            if (res.data.success) {
-              const arr = res.data.products.filter(function (item) {
-                return item.category === vm.product.category
-              })
-              arr.forEach((item) => {
-                if (vm.products.length < 4 && item.id !== vm.product.id) {
-                  vm.products.push(item)
-                }
-              })
-              if (document.cookie.indexOf(vm.$route.params.id) !== -1) {
-                vm.isLiked = true
-              }
-            } else {
-              vm.$bus.$emit('message:push', res.data.message, 'danger')
+          vm.filterProducts()
+        } else {
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
+        }
+      })
+    },
+    filterProducts () {
+      const vm = this
+      const api = `${process.env.VUE_APP_APIPATH}api/${process.env.VUE_APP_MYPATH}/products/all`
+      vm.$http.get(api).then((res) => {
+        vm.isLoading = false
+        if (res.data.success) {
+          const arr = res.data.products.filter(function (item) {
+            return item.category === vm.product.category
+          })
+          arr.forEach((item) => {
+            if (vm.products.length < 4 && item.id !== vm.product.id) {
+              vm.products.push(item)
             }
           })
+          if (document.cookie.indexOf(vm.$route.params.id) !== -1) {
+            vm.isLiked = true
+          }
         } else {
           vm.$bus.$emit('message:push', res.data.message, 'danger')
         }

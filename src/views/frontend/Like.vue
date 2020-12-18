@@ -3,12 +3,12 @@
     <loading :active.sync="isLoading">
       <h4>載入中 請稍候...</h4>
     </loading>
-    <h3 class="my-4 lg text-dark">
+    <h3 class="my-4 text-dark">
       <i class="fa fa-heart-o" aria-hidden="true"></i>
       喜好項目
     </h3>
     <div v-if="hasLiked == false">
-      <h4 class="my-5 lg">
+      <h4 class="my-5">
         您的喜好項目為空，
         <br />
         將在
@@ -16,22 +16,6 @@
         秒後跳轉回商品列表
       </h4>
     </div>
-
-    <h5 class="my-3 sm text-dark">
-      <i class="fa fa-heart-o" aria-hidden="true"></i>
-      喜好項目
-    </h5>
-
-    <div v-if="hasLiked == false">
-      <h6 class="my-5 sm">
-        您的喜好項目為空，
-        <br />
-        將在
-        <span class="h3 text-danger" v-if="time >= 0"> {{ time }} </span>
-        秒後跳轉回商品列表
-      </h6>
-    </div>
-
     <div id="cart-list" v-else>
       <table class="lg table table-striped table-bordered text-dark mt-4">
         <thead class="thead">
@@ -170,7 +154,6 @@ export default {
       const vm = this
       const cookieAry = document.cookie.split(';')
       let cookie
-      // let arr
       for (let i = 0; i < cookieAry.length; ++i) {
         cookie = cookieAry[i].trim()
         cookie = cookie.split('=')

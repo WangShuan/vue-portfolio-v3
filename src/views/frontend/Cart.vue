@@ -269,7 +269,7 @@
           :placeholder="hint"
           v-model="couponCode"
         /><button
-          class="btn border border-dark rounded-0 col-3 btn-sm font-weight-bold"
+          class="btn border border-dark rounded-0 btn-sm font-weight-bold"
           type="button"
           @click="addCoupon"
         >

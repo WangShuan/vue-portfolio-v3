@@ -27,7 +27,7 @@
 
 .sawtooth:before,
 .sawtooth:after {
-  content: " ";
+  content: "";
   width: 0;
   height: 100%;
   position: absolute;
@@ -47,8 +47,9 @@
 .card {
   overflow: hidden;
   position: relative;
-  border-radius: 0% 0% 50% 50% / 0% 0% 15% 5%;
+  border-radius: 0 0 50% 50%/10% 10% 25% 25%;
   box-shadow: 5px 5px 5px #ccc;
+  border-bottom: 0;
 }
 
 .index {
@@ -72,8 +73,8 @@
 .sm-bg-icon{
   opacity: 0.4;
   position: absolute;
-  right: 0px;
-  bottom: 0;
+  right: -5%;
+  top: 40%;
   z-index: 0;
 }
 

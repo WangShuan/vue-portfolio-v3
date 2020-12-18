@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div v-if="this.$route.path.indexOf('admin') === -1&&this.$route.path.indexOf('cart') === -1">
+    <div v-if="this.$route.path.indexOf('admin') === -1 && this.$route.path !== '/login' && this.$route.path !== '/cart'  ">
       <router-link
         v-if="this.$route.path.indexOf('test') === -1 && cart.num > 0"
         to="/cart"
@@ -41,12 +41,11 @@
         v-if="this.$route.path.indexOf('test_order') !== -1"
       >
         <div class="cart">
-          <span v-if="cart.num > 0" class="badge cart-badge badge-danger">
+          <span class="badge cart-badge badge-danger">
             {{ cart.num }}
           </span>
           <i
-            :class="{ 'text-muted': cart.num === 0, 'text-dark': cart.num > 0 }"
-            class="fa fa-shopping-cart"
+            class="fa fa-shopping-cart text-dark"
             aria-hidden="true"
           ></i>
         </div>
@@ -122,6 +121,11 @@ export default {
       vm.getCart()
       vm.updateMessage(message, status)
     })
+  },
+  watch: {
+    $route: function () {
+      this.getCart()
+    }
   }
 }
 </script>

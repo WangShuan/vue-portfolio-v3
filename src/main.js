@@ -13,9 +13,7 @@ import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-va
 import * as rules from 'vee-validate/dist/rules'
 import TW from 'vee-validate/dist/locale/zh_TW.json'
 
-Object.keys(rules).forEach((rule) => {
-  extend(rule, rules[rule])
-})
+Object.keys(rules).forEach((rule) => extend(rule, rules[rule]))
 
 localize('zh_TW', TW)
 
