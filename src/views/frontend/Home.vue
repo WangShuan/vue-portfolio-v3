@@ -416,7 +416,7 @@
                 class="h4 text-danger copy"
                 type="text"
                 @focus="copy"
-                value="new888"
+                value="new88"
               />
               <br />不限金額結帳即享88折優惠
             </h6>
