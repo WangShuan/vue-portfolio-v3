@@ -1,0 +1,31 @@
+#app {
+  text-align: center;
+}
+
+.table th,
+.table td {
+  vertical-align: inherit;
+}
+
+.table-striped {
+  tbody tr:nth-of-type(#{$table-striped-order}) {
+    background-color: $light;
+  }
+}
+
+.text-lg {
+  font-size: 1.2em;
+}
+
+
+.card-footer {
+  background-color: lighten($light, 10%);
+}
+
+pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap !important;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}

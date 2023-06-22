@@ -1,0 +1,27 @@
+@import "~bootstrap/scss/functions";
+@import "./helpers/_var";
+@import "~bootstrap/scss/bootstrap";
+@import "./helpers/_loading";
+@import "./helpers/_base";
+@import "./_dashboard";
+@import "./_index";
+
+.list-group-item:hover {
+  cursor: pointer;
+  background-color: $light;
+}
+
+.sm {
+  display: none;
+}
+
+@media screen and (max-width: 420px) {
+  .lg {
+    display: none;
+  }
+
+  .sm {
+    display: block;
+  }
+
+}

@@ -1,0 +1,184 @@
+.logo {
+  height: 30px;
+}
+
+.main-img-lg {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+
+  &>img {
+    height: 600px;
+    object-fit: cover;
+    opacity: 0.8;
+    object-position: top;
+  }
+
+  &-caption {
+    position: absolute;
+    top: calc(50% - 160px);
+    left: calc(50% - 270px);
+    width: 540px;
+    height: 320px;
+    opacity: 0.7;
+    padding: 30px;
+
+    &>p {
+      line-height: 1.5em;
+    }
+  }
+
+  &-btn {
+    font-size: 25px;
+    z-index: 99999;
+    opacity: 0.8;
+    position: absolute;
+    top: calc(50% + 90px);
+    left: calc(50% + 80px);
+    animation: jittery 1.15s infinite;
+  }
+}
+
+.main-img-sm {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+
+  &>img {
+    height: 65vh;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  &-caption {
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 230px;
+    opacity: 0.7;
+    background-color: $light;
+    padding: 10px;
+
+    &>p {
+      line-height: 1.5em;
+    }
+  }
+
+  &-btn {
+    position: absolute;
+    bottom: 15px;
+    left: calc(50vw - 44px);
+    animation: jittery-sm 1.15s infinite;
+  }
+}
+
+.copy {
+  width: 96px;
+  background: none;
+  border: 0;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@keyframes jittery {
+
+  5%,
+  50% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(0.9);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+
+  40% {
+    transform: scale(1.15) rotate(0);
+    opacity: 1;
+    font-size: 25px;
+  }
+}
+
+@keyframes jittery-sm {
+
+  5%,
+  50% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(0.9);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+
+  40% {
+    transform: scale(1.15) rotate(0);
+    opacity: 1;
+    font-size: 1.15em;
+  }
+}
+
+.main-content {
+  min-height: calc(100vh - 190px) !important;
+}
+
+.sm-header {
+  height: 60px;
+
+  & .dropdown {
+    &-toggle {
+      line-height: 45px;
+    }
+
+    &-menu {
+      top: 40px;
+      right: 0;
+    }
+
+    &-item {
+      padding: 10px 25px;
+    }
+  }
+}
